@@ -65,6 +65,7 @@ export default function ContactForm() {
   const [state, setState] = useState<FormState>(EMPTY);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -102,8 +103,10 @@ export default function ContactForm() {
     });
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting) return;
+
     if (
       !state.name.trim() ||
       !state.vector ||
@@ -133,10 +136,34 @@ export default function ContactForm() {
       requestAnimationFrame(() => emailRef.current?.focus());
       return;
     }
+
     setError(null);
-    const href = buildMailto(state);
-    window.location.href = href;
-    setSent(href);
+    setSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(state),
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as {
+          error?: string;
+        } | null;
+        throw new Error(payload?.error || CONTACT_FORM.errorSubmit);
+      }
+
+      setSent(buildMailto(state));
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : CONTACT_FORM.errorSubmit
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (sent) {
@@ -334,8 +361,12 @@ export default function ContactForm() {
         </p>
       ) : null}
 
-      <button className="uch-btn uch-btn-solid ct-submit" type="submit">
-        {CONTACT_FORM.submit} <ArrowIcon />
+      <button
+        className="uch-btn uch-btn-solid ct-submit"
+        type="submit"
+        disabled={submitting}
+      >
+        {submitting ? CONTACT_FORM.sending : CONTACT_FORM.submit} <ArrowIcon />
       </button>
     </form>
   );

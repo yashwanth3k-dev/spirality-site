@@ -109,13 +109,15 @@ export const CONTACT_FORM = {
   processPlaceholder:
     "What happens today, who does it, where it breaks, and what 2am looks like if it fails.",
   submit: "Send the process",
-  sending: "Opening mail…",
+  sending: "Sending…",
   errorRequired:
     "Name, work email, what you're improving, how far you want to go, and the process are required.",
   errorEmail: "Use a work email we can reply to.",
-  successHeading: "Your mail client should open with the brief.",
+  errorSubmit:
+    "We couldn't send this just now. Please try again or email us directly.",
+  successHeading: "We got your brief.",
   successBody:
-    "If it doesn't, copy the note below or email us directly. We'll start with the process you named — not a model shortlist.",
+    "Thanks. It has been sent to the Spirality team, and we'll start with the process you named — not a model shortlist.",
   successAgain: "Send another",
 } as const;
 

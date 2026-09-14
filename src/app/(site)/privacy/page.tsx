@@ -25,7 +25,7 @@ export default function PrivacyPage() {
         {
           heading: "Information we collect",
           paragraphs: [
-            "When you write to us (including via our contact form, which opens your email client), we receive whatever you choose to send — typically your name, email address, organisation, and message details.",
+            "When you write to us, including via our contact form, we receive whatever you choose to send — typically your name, email address, organisation, and message details.",
             "Our hosting and analytics providers may collect standard technical data such as IP address, browser type, device information, and pages viewed. We do not sell personal information.",
           ],
         },
