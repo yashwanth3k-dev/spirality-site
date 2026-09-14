@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "eslint src",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,css}'",
-    "preinstall": "lefthook install",
+    "preinstall": "node -e \"if (!process.env.CI && !process.env.VERCEL) require('child_process').execSync('lefthook install',{stdio:'inherit'})\"",
     "release": "release-it"
   },
   "dependencies": {
