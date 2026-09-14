@@ -20,7 +20,7 @@ export default function CookiesPage() {
           heading: "What we use today",
           paragraphs: [
             "This site uses essential local storage to remember your theme preference (light or dark). That preference stays on your device and is not used to track you across other sites.",
-            "We do not currently set non-essential advertising or analytics cookies on the public marketing pages.",
+            "We use Google Analytics 4 to measure site usage. Google may set cookies or similar storage for that purpose. We do not use advertising cookies.",
           ],
         },
         {
@@ -30,9 +30,9 @@ export default function CookiesPage() {
           ],
         },
         {
-          heading: "If we add analytics later",
+          heading: "Analytics",
           paragraphs: [
-            "If we introduce optional analytics or similar tools, we will update this page and, where required, ask for consent before setting non-essential cookies.",
+            "Google Analytics 4 helps us see which pages are visited, roughly where visitors come from, and which devices they use. You can block it with a browser tracker blocker or Google’s opt-out tools.",
           ],
         },
         {

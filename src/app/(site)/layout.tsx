@@ -1,5 +1,6 @@
 import { type Metadata } from "next";
 import { Inter } from "next/font/google";
+import GoogleAnalytics from "~/components/google-analytics";
 import SiteScrollReveal from "~/components/sections/site-scroll-reveal";
 import { absoluteUrl } from "~/lib/seo";
 
@@ -37,6 +38,7 @@ export default function SiteLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
       </head>
       <body className={inter.className} style={{ margin: 0 }}>
+        <GoogleAnalytics />
         <SiteScrollReveal />
         {children}
       </body>

@@ -39,7 +39,7 @@ export default function PrivacyPage() {
         {
           heading: "Sharing",
           paragraphs: [
-            "We share information only with service providers who help us run the site or deliver services (for example hosting), when required by law, or with your direction in the course of a project.",
+            "We share information only with service providers who help us run the site or deliver services (for example hosting and Google Analytics), when required by law, or with your direction in the course of a project.",
           ],
         },
         {
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
         {
           heading: "Cookies",
           paragraphs: [
-            "The site may use essential cookies or local storage for preferences such as theme. If we add non-essential analytics cookies later, we will update this policy accordingly.",
+            "The site uses essential local storage for preferences such as theme. We also use Google Analytics 4 to understand how the website is used (pages viewed, approximate location, device, and traffic source). Google processes this data under its own terms. We do not use it for advertising.",
           ],
         },
         {
