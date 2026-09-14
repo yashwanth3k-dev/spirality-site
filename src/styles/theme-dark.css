@@ -1,0 +1,466 @@
+/* Marketing dark theme — activated by html.il-dark from the nav switch. */
+
+html.il-dark:has(.il-page),
+html.il-dark:has(.uch-page),
+html.il-dark:has(.ih-root) {
+  background: #0b0e14;
+  color-scheme: dark;
+}
+
+html.il-dark:has(.il-page) body,
+html.il-dark:has(.uch-page) body,
+html.il-dark:has(.ih-root) body,
+html.il-dark body:has(.il-page),
+html.il-dark body:has(.ih-root) {
+  background: #0b0e14 !important;
+  color: #eef2fb;
+}
+
+html.il-dark .il-page {
+  --il-bg: #0b0e14;
+  --il-ink: #eef2fb;
+  --il-dim: rgba(238, 242, 251, 0.64);
+  --il-faint: rgba(238, 242, 251, 0.56);
+  --il-violet: #6b7cff;
+  --il-magenta: #8ea0ff;
+  --il-line: rgba(107, 124, 255, 0.18);
+  --il-line-hi: rgba(107, 124, 255, 0.32);
+  background:
+    radial-gradient(
+      ellipse 90% 50% at 50% -12%,
+      rgba(21, 57, 209, 0.28),
+      transparent 56%
+    ),
+    linear-gradient(180deg, #101522 0%, #0b0e14 38%, #0d111c 100%);
+  color: var(--il-ink);
+  color-scheme: dark;
+}
+
+html.il-dark .ih-root {
+  --ih-bg: #0b0e14;
+  --ih-ink: #eef2fb;
+  --ih-dim: rgba(238, 242, 251, 0.5);
+  background:
+    radial-gradient(
+      ellipse 90% 55% at 50% -8%,
+      rgba(21, 57, 209, 0.32),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #12182a 0%, #0b0e14 48%, #0d111c 100%);
+  color: var(--ih-ink);
+  color-scheme: dark;
+}
+
+html.il-dark .uch-page {
+  --uch-canvas: #121722;
+  --uch-elevated: #171d2a;
+  --uch-panel: #1a2130;
+  --uch-ink: #eef2fb;
+  --uch-muted: rgba(238, 242, 251, 0.64);
+  --uch-dim: rgba(238, 242, 251, 0.56);
+  --uch-line: rgba(107, 124, 255, 0.18);
+  --uch-blue: #8ea0ff;
+  --uch-blue-hi: #8ea0ff;
+  --uch-cyan: #7bd0ff;
+  --uch-green: #34d399;
+  background:
+    radial-gradient(
+      ellipse 80% 42% at 50% -8%,
+      rgba(21, 57, 209, 0.26),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #12182a 0%, #0b0e14 40%, #101522 100%);
+  color: var(--uch-ink);
+  color-scheme: dark;
+}
+
+html.il-dark .uch-page.abt-page {
+  --abt-deep: #0b0e14;
+  --abt-alt: #101522;
+  --abt-high: #1d2536;
+  background:
+    radial-gradient(
+      ellipse 70% 40% at 50% -8%,
+      rgba(21, 57, 209, 0.28),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #12182a 0%, #0b0e14 42%, #101522 100%);
+}
+
+html.il-dark .uch-page.ct-page {
+  --ct-deep: #101522;
+  --ct-alt: #0e131e;
+  --ct-high: #1d2536;
+  background:
+    radial-gradient(
+      ellipse 70% 40% at 50% -8%,
+      rgba(21, 57, 209, 0.28),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #12182a 0%, #0b0e14 42%, #101522 100%);
+}
+
+html.il-dark .abt-hero-scrim {
+  background: linear-gradient(
+    180deg,
+    rgba(11, 14, 20, 0.12),
+    rgba(11, 14, 20, 0.82) 70%,
+    var(--abt-deep)
+  );
+}
+
+html.il-dark .il-bridge {
+  --bridge-bg: #0b0e14;
+  --bridge-surface: #171d2a;
+  --bridge-ink: #eef2fb;
+  --bridge-muted: rgba(238, 242, 251, 0.62);
+  --bridge-faint: rgba(238, 242, 251, 0.42);
+  --bridge-line: rgba(107, 124, 255, 0.18);
+  --bridge-line-hi: rgba(107, 124, 255, 0.32);
+  --bridge-blue: #6b7cff;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 42%,
+      rgba(21, 57, 209, 0.22),
+      transparent 70%
+    ),
+    var(--bridge-bg);
+  color: var(--bridge-ink);
+}
+
+html.il-dark .sp-nav {
+  background: rgba(11, 14, 20, 0.9);
+  border-bottom-color: rgba(107, 124, 255, 0.16);
+}
+
+html.il-dark.sp-nav-lock .sp-nav,
+html.il-dark .sp-drawer {
+  background: #0b0e14;
+}
+
+html.il-dark .sp-logo,
+html.il-dark .ih-logo,
+html.il-dark .sp-brand-word,
+html.il-dark .il-back {
+  color: #eef2fb;
+}
+
+html.il-dark .sp-burger {
+  background: #171d2a;
+  border-color: rgba(107, 124, 255, 0.28);
+  color: #eef2fb;
+}
+
+html.il-dark .sp-drawer-group h2 {
+  color: rgba(238, 242, 251, 0.45);
+}
+
+html.il-dark .sp-drawer-group a,
+html.il-dark .sp-hero-tagline,
+html.il-dark .sp-hero-support,
+html.il-dark .sp-close-note {
+  color: rgba(238, 242, 251, 0.78);
+}
+
+html.il-dark .sp-article-go {
+  color: #eef2fb;
+}
+
+html.il-dark .sp-page {
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% -10%,
+      rgba(21, 57, 209, 0.24),
+      transparent 55%
+    ),
+    #0b0e14;
+}
+
+html.il-dark ul.ih-slidetabs {
+  border-color: rgba(238, 242, 251, 0.2);
+  background: #171d2a;
+}
+
+html.il-dark ul.ih-slidetabs > li.ih-slidetab > .ih-slidetab-trigger {
+  color: #eef2fb;
+}
+
+html.il-dark ul.ih-slidetabs > li.ih-slidetabs-cursor {
+  background: #27314a;
+  box-shadow: inset 0 0 0 1px rgba(142, 160, 255, 0.24);
+}
+
+html.il-dark .ih-slidedrop-panel {
+  border-color: rgba(142, 160, 255, 0.28);
+  background: #171d2a;
+}
+
+html.il-dark .ih-slidedrop-link {
+  color: #eef2fb !important;
+}
+
+html.il-dark .ih-slidedrop-link:hover {
+  background: #27314a;
+  color: #ffffff !important;
+}
+
+html.il-dark .il-card,
+html.il-dark .gfc-card,
+html.il-dark .doc-card,
+html.il-dark .om-card,
+html.il-dark .so-card,
+html.il-dark .auc-card,
+html.il-dark .oc-card,
+html.il-dark .gap-card,
+html.il-dark .sc-card,
+html.il-dark .il-offer-face,
+html.il-dark .il-offer-back-content,
+html.il-dark .il-offer-media,
+html.il-dark .il-offer-desc {
+  background: #171d2a;
+  background-color: #171d2a;
+  color: #eef2fb;
+}
+
+html.il-dark .il-offer-badge,
+html.il-dark .il-offer-flip-close {
+  background: rgba(11, 14, 20, 0.88);
+  color: #8ea0ff;
+}
+
+html.il-dark .il-band {
+  background:
+    radial-gradient(
+      circle at 50% 128%,
+      rgba(21, 57, 209, 0.28),
+      transparent 62%
+    ),
+    #171d2a;
+}
+
+html.il-dark .il-card:hover {
+  background: #1d2536;
+}
+
+html.il-dark .il-offer-media-shade {
+  background: linear-gradient(
+    180deg,
+    rgba(11, 14, 20, 0) 0%,
+    rgba(11, 14, 20, 0.2) 48%,
+    rgba(23, 29, 42, 0.94) 72%,
+    #171d2a 100%
+  );
+}
+
+html.il-dark .gfc-section,
+html.il-dark .doc-section,
+html.il-dark .om-section,
+html.il-dark .so-section,
+html.il-dark .auc-section,
+html.il-dark .oc-section,
+html.il-dark .gap-section,
+html.il-dark .dd-section,
+html.il-dark .dn-section,
+html.il-dark .af-section,
+html.il-dark .sc-section {
+  background-color: transparent;
+  background-image:
+    radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(21, 57, 209, 0.16),
+      transparent 60%
+    ),
+    linear-gradient(#0b0e14, #0b0e14);
+}
+
+html.il-dark .gfc-title,
+html.il-dark .doc-title,
+html.il-dark .om-card-title,
+html.il-dark .so-title,
+html.il-dark .auc-title,
+html.il-dark .oc-title,
+html.il-dark .gap-card-title,
+html.il-dark .dd-title,
+html.il-dark .dn-title,
+html.il-dark .af-title,
+html.il-dark .af-wave-label-title,
+html.il-dark .il-h2,
+html.il-dark .il-offer-back-content strong,
+html.il-dark .il-offer-front,
+html.il-dark .il-wave-title {
+  color: #eef2fb;
+}
+
+html.il-dark .gfc-desc,
+html.il-dark .doc-line,
+html.il-dark .om-footer,
+html.il-dark .om-card-line,
+html.il-dark .so-line,
+html.il-dark .sc-legend-line,
+html.il-dark .dn-footer,
+html.il-dark .dn-line,
+html.il-dark .dd-line,
+html.il-dark .dd-footer,
+html.il-dark .auc-promise,
+html.il-dark .auc-text,
+html.il-dark .auc-tags-soft,
+html.il-dark .auc-related a,
+html.il-dark .auc-text-lg,
+html.il-dark .auc-footer,
+html.il-dark .oc-bridge,
+html.il-dark .oc-desc,
+html.il-dark .af-line,
+html.il-dark .af-footer,
+html.il-dark .af-wave-label-line,
+html.il-dark .il-lead,
+html.il-dark .il-offer-hint,
+html.il-dark .il-offer-front-copy,
+html.il-dark .il-wave-copy,
+html.il-dark .gap-card-desc {
+  color: rgba(238, 242, 251, 0.55);
+}
+
+html.il-dark .gap-sub,
+html.il-dark .auc-related-sep,
+html.il-dark .il-offer-tap-btn {
+  color: rgba(238, 242, 251, 0.64);
+}
+
+html.il-dark .auc-label,
+html.il-dark .auc-toggle {
+  color: #8ea0ff;
+}
+
+html.il-dark .om-card-title,
+html.il-dark .sc-legend-title,
+html.il-dark .dn-title,
+html.il-dark .so-title,
+html.il-dark .auc-name,
+html.il-dark .oc-heading,
+html.il-dark .oc-title,
+html.il-dark .gap-heading {
+  color: #eef2fb;
+}
+
+html.il-dark .gfc-card:hover,
+html.il-dark .doc-card:hover,
+html.il-dark .om-card:hover,
+html.il-dark .auc-card:hover {
+  background: #1d2536;
+}
+
+html.il-dark .sc-legend-item,
+html.il-dark .so-card {
+  background: #171d2a;
+}
+
+html.il-dark
+  :is(
+    .uch-card,
+    .csd-card,
+    .blg-card,
+    .ucd-card,
+    .ucd-spec,
+    .ucd-runtime,
+    .ucd-node,
+    .ucd-pipe-panel
+  ) {
+  border-color: rgba(142, 160, 255, 0.22);
+}
+
+html.il-dark .oc-card:hover {
+  background: #1d2536;
+}
+
+html.il-dark .ucd-section:nth-of-type(even) {
+  background:
+    radial-gradient(
+      ellipse 80% 80% at 50% 0%,
+      rgba(21, 57, 209, 0.16),
+      transparent 70%
+    ),
+    #121722;
+}
+
+html.il-dark .uch-banner {
+  background: linear-gradient(
+    90deg,
+    var(--uch-elevated),
+    #202a40 50%,
+    var(--uch-elevated)
+  );
+}
+
+html.il-dark .ct-console-bar {
+  background: #0b0e14;
+}
+
+html.il-dark .ct-field input::placeholder,
+html.il-dark .ct-field textarea::placeholder {
+  color: rgba(238, 242, 251, 0.42);
+}
+
+html.il-dark .ct-person-bio {
+  color: rgba(238, 242, 251, 0.64);
+}
+
+html.il-dark .ct-error {
+  color: #fca5a5;
+}
+
+html.il-dark .ct-field input[aria-invalid="true"],
+html.il-dark .ct-field textarea[aria-invalid="true"] {
+  border-color: #f87171;
+  box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.16);
+}
+
+html.il-dark
+  .ct-fieldset:has(input[type="radio"][aria-invalid="true"])
+  .ct-choice {
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+html.il-dark .ct-h1-accent {
+  background-image: linear-gradient(90deg, #6b7cff, #7bd0ff, #8ea0ff);
+}
+
+html.il-dark .ucd-chip-warn {
+  color: #fca5a5;
+}
+
+html.il-dark .ih-heading .lo {
+  color: rgba(238, 242, 251, 0.5);
+}
+
+html.il-dark .il-bridge-chip {
+  color: #eef2fb;
+}
+
+html.il-dark .il-bridge-q-text {
+  color: #eef2fb;
+}
+
+html.il-dark .il-footer,
+html.il-dark .il-footer a,
+html.il-dark .il-footer p {
+  color: rgba(238, 242, 251, 0.72);
+}
+
+html.il-dark .il-footer-mark {
+  color: #eef2fb;
+}
+
+html.il-dark .il-more,
+html.il-dark .il-path,
+html.il-dark .il-domain:hover dd {
+  color: rgba(238, 242, 251, 0.64) !important;
+}
+
+html.il-dark .ih-cta,
+html.il-dark .ih-sub {
+  color: rgba(238, 242, 251, 0.72);
+}
+
+html.il-dark .ih-line {
+  color: #eef2fb;
+}

@@ -1,0 +1,79 @@
+/* Index for the printable document set. Borrows the sheet chrome from
+   one-pager.css and only styles the list of documents. */
+
+.dx-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dx-item a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: clamp(20px, 1.8vw, 26px) clamp(16px, 1.8vw, 24px);
+  border: 1px solid var(--op-blue-line);
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      152deg,
+      var(--op-blue-wash),
+      var(--op-blue-wash-soft) 46%,
+      rgba(255, 255, 255, 0) 72%
+    ),
+    var(--op-sheet);
+  box-shadow:
+    0 1px 1px rgba(19, 19, 24, 0.03),
+    0 20px 38px -28px var(--op-blue-shadow);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+@media (hover: hover) {
+  .dx-item a:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 1px rgba(19, 19, 24, 0.04),
+      0 26px 46px -26px var(--op-blue-shadow);
+  }
+}
+
+.dx-kind {
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--op-blue-ink);
+}
+
+.dx-item h3 {
+  margin: 7px 0 0;
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+.dx-item p {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--op-dim);
+}
+
+.dx-meta {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--op-line);
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}

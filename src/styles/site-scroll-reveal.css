@@ -1,0 +1,57 @@
+/* Shared marketing-page viewport choreography. JS only adds these classes
+   when IntersectionObserver is available, so content remains visible by
+   default if scripting fails. */
+
+.ssr-item {
+  --ssr-x: 0px;
+  --ssr-y: 38px;
+  opacity: 0;
+  transform: translate3d(var(--ssr-x), var(--ssr-y), 0);
+  transition:
+    opacity 420ms ease,
+    transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.ssr-item[data-reveal-direction="left"] {
+  --ssr-x: -42px;
+  --ssr-y: 0px;
+}
+
+.ssr-item[data-reveal-direction="right"] {
+  --ssr-x: 42px;
+  --ssr-y: 0px;
+}
+
+.ssr-item[data-reveal-direction="down"] {
+  --ssr-y: -34px;
+}
+
+.ssr-item.ssr-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+/* Existing authored scroll scenes control their own transforms. */
+.ib-root.ssr-item,
+.ih-root.ssr-item,
+.il-bridge.ssr-item {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .ssr-item {
+    --ssr-x: 0px !important;
+    --ssr-y: 24px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ssr-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

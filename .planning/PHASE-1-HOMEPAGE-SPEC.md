@@ -12,7 +12,7 @@
 |--------|--------|
 | `title` | Spirality Solutions \| AI Systems & Managed Operations |
 | `description` | We don't sell you AI. We assemble it around your business — strategy, agents, automation, digital systems, and managed operations built on your processes, rules, and edge cases. |
-| `canonical` | `https://spirality.in/` |
+| `canonical` | `https://spirality.com/` |
 | OG title | Spirality Solutions — AI Systems & Managed Operations |
 | OG description | Same as meta description |
 | OG image | `/og/home.png` (1200×630, brand mark + proposition line) |
@@ -33,8 +33,8 @@ AI systems, managed AI operations, AI strategy, AI agents, enterprise AI, organi
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Spirality Solutions",
-  "url": "https://spirality.in",
-  "logo": "https://spirality.in/icon.png",
+  "url": "https://spirality.com",
+  "logo": "https://spirality.com/icon.png",
   "description": "AI Systems & Managed Operations — assembling AI around real business processes, rules, and operational context.",
   "email": "info@bizdaptive.com",
   "sameAs": []
@@ -48,7 +48,7 @@ AI systems, managed AI operations, AI strategy, AI agents, enterprise AI, organi
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Spirality Solutions",
-  "url": "https://spirality.in",
+  "url": "https://spirality.com",
   "publisher": {
     "@type": "Organization",
     "name": "Spirality Solutions"

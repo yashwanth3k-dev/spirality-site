@@ -1,7 +1,7 @@
 # Spirality Website — Locked Master Plan
 
 **Status:** Locked  
-**Canonical domain:** `https://spirality.in`  
+**Canonical domain:** `https://spirality.com`  
 **Stack:** Next.js App Router (TSX)
 
 ## Out of scope (do not touch)

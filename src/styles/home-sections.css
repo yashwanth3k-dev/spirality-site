@@ -1,0 +1,1426 @@
+/* Homepage sections below the hero. Plain CSS, dark, hover-led.
+   Class prefix `il-` is shared with the hero's landing shell. */
+
+.il-page {
+  --il-bg: #f4f7fc;
+  --il-ink: #101624;
+  --il-dim: rgba(16, 22, 36, 0.62);
+  --il-faint: rgba(16, 22, 36, 0.6);
+  --il-line: rgba(21, 57, 209, 0.12);
+  --il-line-hi: rgba(21, 57, 209, 0.22);
+  --il-violet: #1539d1; /* brand primary blue (legacy token name) */
+  --il-magenta: #3d63e8; /* brand light blue (legacy token name) */
+  --il-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Roboto Mono", monospace;
+  --il-nav-h: 72px;
+
+  background:
+    radial-gradient(
+      ellipse 90% 50% at 50% -12%,
+      rgba(21, 57, 209, 0.18),
+      transparent 56%
+    ),
+    linear-gradient(180deg, #e8eefb 0%, #f4f7fc 34%, #f8faff 68%, #eaf0fb 100%);
+  color: var(--il-ink);
+  color-scheme: light;
+}
+
+.il-page *,
+.il-page *::before,
+.il-page *::after {
+  box-sizing: border-box;
+}
+
+/* Zero-specificity default so every link class below still wins,
+   and so the hero keeps its own link colors. */
+:where(.il-section, .il-footer) :where(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.il-page a:focus-visible {
+  outline: 2px solid var(--il-violet);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.il-section {
+  position: relative;
+  padding: clamp(64px, 9vh, 128px) clamp(20px, 4vw, 56px);
+  border-top: 1px solid var(--il-line);
+  scroll-margin-top: 24px;
+}
+
+html:has(.ih-root),
+html:has(.il-page) {
+  background: #f4f7fc;
+  scroll-behavior: smooth;
+}
+
+body:has(.ih-root),
+body:has(.il-page) {
+  background: #f4f7fc !important;
+  color: #101624;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.il-page) {
+    scroll-behavior: auto;
+  }
+}
+
+.il-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ——— section headers ——— */
+
+.il-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 18px;
+  font-family: var(--il-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--il-faint);
+}
+
+.il-eyebrow::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--il-violet);
+  box-shadow: 0 0 10px 1px rgba(21, 57, 209, 0.7);
+}
+
+.il-h2 {
+  margin: 0;
+  max-width: 24ch;
+  font-size: clamp(1.5rem, 2.9vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -0.028em;
+}
+
+.il-lead {
+  margin: 16px 0 0;
+  max-width: 52ch;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--il-dim);
+}
+
+.il-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.il-head .il-lead {
+  margin-top: 0;
+}
+
+/* section-level text link */
+
+.il-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: clamp(28px, 3vw, 40px);
+  font-size: 0.88rem;
+  color: var(--il-dim);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.il-link::after {
+  content: "";
+  position: absolute;
+}
+
+.il-link svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-link:hover {
+  color: var(--il-violet);
+}
+
+.il-link:hover svg {
+  transform: translateX(5px);
+}
+
+/* ——— shared card shell + hover ——— */
+
+.il-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(20px, 2vw, 30px);
+  border: 1px solid var(--il-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(21, 57, 209, 0.08);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1),
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
+/* cursor spotlight */
+.il-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(21, 57, 209, 0.18),
+    rgba(107, 124, 255, 0.08) 40%,
+    transparent 68%
+  );
+  transition: opacity 0.35s ease;
+}
+
+/* top hairline that draws in */
+.il-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--il-violet),
+    var(--il-magenta),
+    transparent
+  );
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--il-line-hi);
+  background: #fff;
+  box-shadow: 0 22px 44px rgba(21, 57, 209, 0.12);
+}
+
+.il-card:hover::before,
+.il-card:focus-within::before {
+  opacity: 1;
+}
+
+.il-card:hover::after,
+.il-card:focus-within::after {
+  transform: scaleX(1);
+}
+
+.il-idx {
+  font-family: var(--il-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--il-faint);
+  transition: color 0.3s ease;
+}
+
+.il-card:hover .il-idx {
+  color: var(--il-magenta);
+}
+
+.il-card h3 {
+  margin: 0;
+  font-size: 1.06rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.il-card p {
+  margin: 9px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--il-dim);
+}
+
+.il-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 18px;
+  font-size: 0.82rem;
+  color: rgba(16, 22, 36, 0.62);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.il-card:hover .il-more {
+  color: var(--il-violet);
+}
+
+.il-more svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-card:hover .il-more svg {
+  transform: translateX(5px);
+}
+
+/* stretches the card's link across the whole card */
+.il-hit {
+  position: absolute;
+  inset: 0;
+}
+
+/* dot texture that wakes up on hover */
+.il-dots {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 190px;
+  height: 190px;
+  background-image: radial-gradient(
+    rgba(21, 57, 209, 0.18) 1.4px,
+    transparent 1.4px
+  );
+  background-size: 11px 11px;
+  mask-image: radial-gradient(circle at 70% 70%, black, transparent 68%);
+  -webkit-mask-image: radial-gradient(
+    circle at 70% 70%,
+    black,
+    transparent 68%
+  );
+  opacity: 0.35;
+  transition:
+    opacity 0.45s ease,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+  pointer-events: none;
+}
+
+.il-card:hover .il-dots {
+  opacity: 0.85;
+  transform: scale(1.12) translate(-6px, -6px);
+}
+
+/* ——— offer row: flip cards (Uiverse ElSombrero2, Spirality theme) ——— */
+
+.il-offer-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+  padding-top: 12px;
+  padding-bottom: 36px;
+}
+
+.il-offer-flip {
+  width: 100%;
+  max-width: 260px;
+  height: 320px;
+  margin-inline: auto;
+  overflow: visible;
+  perspective: 1000px;
+}
+
+.il-offer-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease;
+  border-radius: 14px;
+  box-shadow: 0 14px 32px -16px rgba(21, 57, 209, 0.28);
+  /* Keep the flip on its own compositor layer — avoids mid-flip mirror flash */
+  will-change: transform;
+}
+
+.il-offer-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #eef2fa;
+  /* Flatten children so filters/backdrop-filter don't punch through as a mirror */
+  transform-style: flat;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Safari/Chrome: filters & backdrop-filter on kids can ignore parent backface */
+.il-offer-face,
+.il-offer-face * {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.il-offer-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Nudge faces apart in Z so they never z-fight mid-rotate */
+  transform: translateZ(1px);
+}
+
+.il-offer-back::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 170px;
+  height: 160%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #9bb0f0,
+    #1539d1,
+    #9bb0f0,
+    transparent
+  );
+  animation: il-offer-spin 5s linear infinite;
+}
+
+.il-offer-back-content {
+  position: absolute;
+  inset: 1.5%;
+  border-radius: 12px;
+  background-color: #eef2fa;
+  color: #101624;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  padding: 20px;
+}
+
+.il-offer-back-content strong {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.il-offer-hint {
+  font-size: 0.72rem;
+  color: rgba(16, 22, 36, 0.62);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.il-offer-tap-btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 8px 4px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  color: rgba(16, 22, 36, 0.55);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.il-offer-tap-btn:focus-visible {
+  outline: 2px solid var(--il-magenta);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.il-offer-front-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.il-offer-flip-close {
+  appearance: none;
+  border: 0;
+  background: rgba(255, 255, 255, 0.92);
+  color: #101624;
+  padding: 3px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.il-offer-flip-close:focus-visible {
+  outline: 2px solid var(--il-magenta);
+  outline-offset: 3px;
+}
+
+/* Phones / tablets: no hover — tap opens the detail face */
+@media (hover: none) {
+  .il-offer-flip.is-open .il-offer-flip-inner,
+  .il-offer-flip:focus-within .il-offer-flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .il-offer-flip {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Whole back face is also tappable for a larger hit area */
+  .il-offer-back {
+    cursor: pointer;
+  }
+}
+
+.il-offer-mono-icon {
+  display: block;
+  width: 56px;
+  height: 56px;
+  background-color: var(--il-violet);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-source-type: luminance;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  mask-mode: luminance;
+}
+
+.il-offer-front {
+  transform: rotateY(180deg) translateZ(1px);
+  color: #101624;
+}
+
+.il-offer-media {
+  position: absolute;
+  inset: 0;
+  background: #eef2fa;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.il-offer-media-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 62%;
+  object-fit: contain;
+  object-position: center center;
+  padding: 28px 18px 8px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.il-offer-media-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(244, 247, 252, 0) 0%,
+    rgba(244, 247, 252, 0.18) 48%,
+    rgba(238, 242, 250, 0.94) 72%,
+    #eef2fa 100%
+  );
+}
+
+.il-offer-front-content {
+  position: absolute;
+  inset: 0;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.il-offer-badge {
+  background-color: rgba(255, 255, 255, 0.88);
+  padding: 3px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  width: fit-content;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1539d1;
+}
+
+.il-offer-desc {
+  box-shadow: 0 10px 24px -12px rgba(16, 22, 36, 0.18);
+  width: 100%;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+}
+
+.il-offer-front-title {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.il-offer-front-copy {
+  margin: 10px 0 0;
+  color: rgba(16, 22, 36, 0.72);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.il-offer-front-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 7px 12px 7px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    var(--il-violet) 0%,
+    var(--il-magenta) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(107, 124, 255, 0.35),
+    0 6px 16px rgba(21, 57, 209, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.il-offer-front-cta::after {
+  content: "→";
+  font-size: 0.85em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.il-offer-front-cta:hover {
+  color: #fff;
+  filter: brightness(1.08);
+  box-shadow:
+    0 0 0 1px rgba(107, 124, 255, 0.55),
+    0 8px 20px rgba(21, 57, 209, 0.45);
+}
+
+.il-offer-front-cta:hover::after {
+  transform: translateX(2px);
+}
+
+.il-offer-front-cta:focus-visible {
+  outline: 2px solid var(--il-magenta);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .il-offer-flip:hover .il-offer-flip-inner,
+  .il-offer-flip:focus-within .il-offer-flip-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes il-offer-spin {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .il-offer-flip-inner,
+  .il-offer-back::before {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .il-offer-flip:hover .il-offer-flip-inner {
+    transform: none !important;
+  }
+
+  /* Show both faces stacked for reduced motion: front visible via opacity swap */
+  .il-offer-flip:focus-within .il-offer-front,
+  .il-offer-flip:hover .il-offer-front {
+    /* keep hidden — reduced motion already disables the flip above */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* ——— S4 capability grid (kept for other surfaces) ——— */
+
+.il-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.il-grid-4 .il-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 230px;
+}
+
+.il-grid-4 .il-more {
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+/* ——— benefit grid: six short cards, so three up and shorter than a capability ——— */
+
+.il-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.il-grid-3 .il-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 172px;
+}
+
+/* icons sit muted until hover brings primary blue back */
+.il-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(21, 57, 209, 0.15);
+  background: rgba(21, 57, 209, 0.06);
+  margin-bottom: 14px;
+  transition:
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.il-icon {
+  width: 20px;
+  height: 20px;
+  color: #1539d1;
+  filter: none;
+  transition:
+    color 0.35s ease,
+    filter 0.35s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-card:hover .il-icon-wrap,
+.group:hover .il-icon-wrap {
+  border-color: rgba(21, 57, 209, 0.45);
+  background: rgba(21, 57, 209, 0.12);
+  box-shadow: 0 10px 24px -18px rgba(21, 57, 209, 0.7);
+}
+
+.il-card:hover .il-icon,
+.group:hover .il-icon {
+  color: #1539d1;
+  filter: none;
+  transform: scale(1.08);
+}
+
+.il-benefit-card .il-icon-wrap {
+  margin-bottom: 12px;
+}
+
+/* ——— one solution grid + how-we-work wave path ——— */
+
+.il-solution-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.il-wave {
+  position: relative;
+  margin-top: clamp(12px, 2vw, 28px);
+  padding: 8px 0 4px;
+}
+
+.il-wave-path {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 100%;
+  height: 160px;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.il-wave-path path {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  transition: stroke-dashoffset 2.4s linear;
+  transition-delay: 0.08s;
+}
+
+.il-wave.is-visible .il-wave-path path {
+  stroke-dashoffset: 0;
+}
+
+.il-wave-steps {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.il-wave-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.5s cubic-bezier(0.2, 0.7, 0.3, 1),
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+  /* Delays set per-step so nodes land as the wave reaches them */
+  transition-delay: var(--wave-delay, 0ms);
+}
+
+.il-wave.is-visible .il-wave-step {
+  opacity: 1;
+  transform: none;
+}
+
+/* Diagnose high → Engineer low → Prove high → Deliver low */
+.il-wave-step:nth-child(1) {
+  padding-top: 12px;
+}
+
+.il-wave-step:nth-child(2) {
+  padding-top: 92px;
+}
+
+.il-wave-step:nth-child(3) {
+  padding-top: 12px;
+}
+
+.il-wave-step:nth-child(4) {
+  padding-top: 92px;
+}
+
+.il-wave-hex-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+}
+
+.il-wave-glow {
+  position: absolute;
+  width: 92px;
+  height: 40px;
+  bottom: -6px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(21, 57, 209, 0.55),
+    transparent 70%
+  );
+  filter: blur(6px);
+  opacity: 0.85;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.il-wave-hex {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 84px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: linear-gradient(160deg, #3d63e8, #1539d1), #1539d1;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(107, 124, 255, 0.55),
+    0 12px 28px -16px rgba(21, 57, 209, 0.7);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 0.35s ease;
+}
+
+.il-wave-icon {
+  width: 26px;
+  height: 26px;
+  color: #fff;
+  filter: none;
+  transition:
+    color 0.35s ease,
+    filter 0.35s ease,
+    transform 0.35s ease;
+}
+
+.il-wave-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--il-ink);
+}
+
+.il-wave-copy {
+  margin: 10px 0 0;
+  max-width: 22ch;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(16, 22, 36, 0.5);
+}
+
+@media (hover: hover) {
+  .il-wave-step:hover .il-wave-hex {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow:
+      inset 0 0 0 1.5px rgba(107, 124, 255, 0.85),
+      0 18px 36px -14px rgba(21, 57, 209, 0.85);
+  }
+
+  .il-wave-step:hover .il-wave-glow {
+    opacity: 1;
+    transform: scaleX(1.15);
+  }
+
+  .il-wave-step:hover .il-wave-icon {
+    color: #fff;
+    filter: none;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .il-wave-path,
+  .il-wave-path path,
+  .il-wave-step {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* ——— engagement path line (How We Work) ——— */
+
+.il-path {
+  margin-top: 14px !important;
+  font-family: var(--il-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: rgba(16, 22, 36, 0.42) !important;
+  transition: color 0.3s ease;
+}
+
+.il-card:hover .il-path {
+  color: var(--il-magenta) !important;
+}
+
+/* ——— S9 domains ——— */
+
+.il-domains {
+  margin: 0;
+  border-top: 1px solid var(--il-line);
+}
+
+.il-domain {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.9fr 1.6fr;
+  gap: 24px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--il-line);
+  transition: padding-left 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-domain::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: scaleY(0);
+  background: linear-gradient(180deg, var(--il-violet), var(--il-magenta));
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-domain:hover {
+  padding-left: 18px;
+}
+
+.il-domain:hover::before {
+  transform: scaleY(1);
+}
+
+.il-domain dt {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.il-domain dd {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--il-dim);
+  transition: color 0.3s ease;
+}
+
+.il-domain:hover dd {
+  color: rgba(16, 22, 36, 0.72);
+}
+
+/* ——— S10 closing band ——— */
+
+.il-band {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 7vw, 92px) clamp(24px, 4vw, 56px);
+  border: 1px solid var(--il-line);
+  border-radius: 22px;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 50% 128%,
+      rgba(21, 57, 209, 0.16),
+      transparent 62%
+    ),
+    #ffffff;
+}
+
+.il-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at 50% 120%, black, transparent 68%);
+  -webkit-mask-image: radial-gradient(
+    circle at 50% 120%,
+    black,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.il-eyebrow-center {
+  position: relative;
+  z-index: 1;
+}
+
+.il-band .il-h2 {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  max-width: 34ch;
+}
+
+.il-band .il-lead {
+  position: relative;
+  z-index: 1;
+  margin: 16px auto 0;
+  max-width: min(56rem, 92%);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.il-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 26px;
+}
+
+.il-band .il-btn {
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  border-radius: 999px;
+  gap: 6px;
+}
+
+.il-band .il-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.il-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.il-btn svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-btn:hover svg {
+  transform: translateX(4px);
+}
+
+.il-btn-solid {
+  background: #1539d1;
+  color: #fff;
+}
+
+.il-btn-solid:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.il-btn-ghost {
+  border: 1px solid var(--il-line-hi);
+  color: var(--il-ink);
+}
+
+.il-btn-ghost:hover {
+  background: rgba(21, 57, 209, 0.06);
+  border-color: rgba(21, 57, 209, 0.28);
+  transform: translateY(-1px);
+}
+
+/* ——— footer ——— */
+
+.il-footer {
+  border-top: 1px solid var(--il-line);
+  padding: clamp(44px, 6vw, 72px) clamp(20px, 4vw, 56px) 28px;
+}
+
+.il-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+}
+
+.il-footer-mark {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.il-footer-brand p {
+  margin: 10px 0 14px;
+  font-size: 0.85rem;
+  color: var(--il-dim);
+}
+
+.il-footer-brand a {
+  font-family: var(--il-mono);
+  font-size: 0.76rem;
+  color: var(--il-faint);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.il-footer-brand a:hover {
+  color: var(--il-violet);
+}
+
+.il-footer-label {
+  margin: 0 0 14px;
+  font-family: var(--il-mono);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--il-faint);
+}
+
+.il-footer-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 9px;
+}
+
+.il-footer-col a {
+  font-size: 0.86rem;
+  color: var(--il-dim);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    padding-left 0.25s ease;
+}
+
+.il-footer-col a:hover {
+  color: var(--il-violet);
+  padding-left: 4px;
+}
+
+.il-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: clamp(36px, 5vw, 60px);
+  padding-top: 22px;
+  border-top: 1px solid var(--il-line);
+  font-family: var(--il-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--il-faint);
+}
+
+.il-footer-legal-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+}
+
+.il-footer-legal-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.il-footer-legal-nav a:hover {
+  color: var(--il-ink);
+}
+
+/* ——— Phase 2 stub pages ——— */
+
+.il-stub {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+}
+
+.il-stub-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px clamp(20px, 4vw, 56px);
+}
+
+.il-stub-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.il-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--il-ink);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.il-back:hover {
+  opacity: 0.7;
+}
+
+.il-stub-flag {
+  padding: 5px 12px;
+  border: 1px solid var(--il-line);
+  border-radius: 999px;
+  font-family: var(--il-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--il-faint);
+}
+
+.il-stub-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border-top: 0;
+}
+
+.il-h1 {
+  margin: 0;
+  max-width: 24ch;
+  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.032em;
+}
+
+.il-lead-wide {
+  max-width: 58ch;
+  margin-top: 22px;
+}
+
+.il-domains + .il-actions,
+.il-lead-wide + .il-actions {
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.il-actions-start {
+  justify-content: flex-start;
+}
+
+.il-domain-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.il-domain-link svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.il-domain:hover .il-domain-link svg {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.il-stub .il-domains {
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.il-stub-block {
+  margin-top: clamp(44px, 5vw, 72px);
+}
+
+.il-stub-block .il-h2 {
+  font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+}
+
+.il-stub-block .il-path {
+  display: block;
+  margin: 0 0 4px !important;
+}
+
+/* ——— responsive ——— */
+
+@media (max-width: 1024px) {
+  .il-offer-row,
+  .il-grid-4,
+  .il-grid-3,
+  .il-solution-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .il-wave-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .il-wave-path {
+    display: none;
+  }
+
+  .il-wave-step:nth-child(n) {
+    padding-top: 0;
+  }
+
+  .il-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .il-offer-row,
+  .il-grid-4,
+  .il-grid-3,
+  .il-solution-grid,
+  .il-wave-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .il-offer-flip {
+    max-width: 320px;
+    height: 300px;
+  }
+
+  .il-grid-4 .il-card,
+  .il-grid-3 .il-card {
+    min-height: 0;
+  }
+
+  .il-band .il-lead {
+    max-width: 100%;
+  }
+
+  .il-actions {
+    flex-wrap: wrap;
+  }
+
+  .il-domain {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .il-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .il-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .il-page * {
+    transition-duration: 0.01ms !important;
+  }
+}

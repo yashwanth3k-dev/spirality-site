@@ -1,0 +1,244 @@
+/* Founder profile sheet. Rides on the one-pager's `op-` system (imported
+   alongside this file) and only adds what a profile needs. */
+
+/* a name is short, so both columns start at the top rather than baseline-out */
+.pf-hero {
+  align-items: start;
+}
+
+.pf-contact {
+  margin: 12px 0 0;
+  padding-left: 13px;
+  border-left: 2px solid var(--op-violet);
+  display: grid;
+  gap: 3px;
+}
+
+.pf-contact a,
+.pf-contact span {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--op-dim);
+  text-decoration: none;
+}
+
+.pf-contact a {
+  color: var(--op-blue-ink);
+}
+
+.pf-contact a:hover {
+  text-decoration: underline;
+}
+
+/* two-up so four short cards do not leave an orphan column */
+.pf-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(14px, 1.6vw, 20px);
+  margin-top: 16px;
+}
+
+.pf-card-label {
+  display: block;
+  margin-bottom: 7px;
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--op-blue-ink);
+}
+
+/* ——— track record ——— */
+
+.pf-roles {
+  display: grid;
+  gap: 14px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pf-role {
+  display: grid;
+  grid-template-columns: 152px 1fr;
+  gap: 4px 18px;
+  padding-left: 15px;
+  border-left: 2px solid var(--op-line);
+}
+
+.pf-role:first-child {
+  border-left-color: var(--op-violet);
+}
+
+.pf-when {
+  font-family: var(--op-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+  padding-top: 2px;
+}
+
+.pf-role-body h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.014em;
+}
+
+.pf-place {
+  margin-left: 8px;
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}
+
+/* deliberately not blue — the only blue text on this sheet is a real link */
+.pf-role-title {
+  margin: 2px 0 0;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--op-strong);
+}
+
+.pf-role-note {
+  margin: 5px 0 0;
+  max-width: 74ch;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+/* ——— credentials ——— */
+
+.pf-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px 24px;
+  margin-top: 16px;
+}
+
+/* matches the sub-group headings used on the one-pager */
+.pf-col-head {
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--op-line);
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}
+
+.pf-degree {
+  display: grid;
+  gap: 2px;
+}
+
+.pf-degree + .pf-degree {
+  margin-top: 12px;
+}
+
+.pf-degree strong {
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+}
+
+.pf-degree span {
+  font-size: 0.78rem;
+  color: var(--op-dim);
+}
+
+.pf-aside-note {
+  margin: 16px 0 0;
+  padding: 11px 14px;
+  border: 1px solid var(--op-blue-line);
+  border-radius: 10px;
+  background:
+    linear-gradient(
+      152deg,
+      var(--op-blue-wash-soft),
+      rgba(255, 255, 255, 0) 70%
+    ),
+    var(--op-sheet);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+.pf-aside-note strong {
+  color: var(--op-ink);
+  font-weight: 500;
+}
+
+/* ——— responsive ——— */
+
+@media (max-width: 860px) {
+  .pf-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .pf-role {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ——— print ——— */
+
+@media print {
+  .pf-cards,
+  .pf-roles,
+  .pf-cols {
+    margin-top: 3mm;
+  }
+
+  /* the narrow print measure would otherwise trip the mobile stack above */
+  .pf-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3.4mm;
+  }
+
+  .pf-roles {
+    gap: 3mm;
+  }
+
+  .pf-role {
+    break-inside: avoid;
+    grid-template-columns: 34mm 1fr;
+  }
+
+  .pf-card-label,
+  .pf-when,
+  .pf-place,
+  .pf-col-head {
+    font-size: 6.4pt;
+  }
+
+  .pf-role-body h3,
+  .pf-degree strong {
+    font-size: 9pt;
+  }
+
+  .pf-role-title {
+    font-size: 8.2pt;
+  }
+
+  .pf-role-note,
+  .pf-degree span,
+  .pf-aside-note,
+  .pf-contact a,
+  .pf-contact span {
+    font-size: 7.8pt;
+    line-height: 1.4;
+  }
+
+  .pf-aside-note {
+    margin-top: 3mm;
+    padding: 2.6mm 3mm;
+  }
+}

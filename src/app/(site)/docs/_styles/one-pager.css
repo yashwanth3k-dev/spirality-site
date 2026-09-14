@@ -1,0 +1,1057 @@
+/* Spirality capability document. Own `op-` namespace so it borrows the site's
+   visual language without touching any existing UI. Prints to four A4 sheets. */
+
+.op-page {
+  /* light sheet: white paper on a soft grey desk, brand colour kept for accents */
+  --op-bg: #ececef;
+  --op-sheet: #ffffff;
+  --op-ink: #131318;
+  --op-strong: rgba(19, 19, 24, 0.88);
+  --op-dim: rgba(19, 19, 24, 0.66);
+  --op-faint: rgba(19, 19, 24, 0.45);
+  --op-line: rgba(19, 19, 24, 0.13);
+  --op-line-strong: rgba(19, 19, 24, 0.28);
+  --op-grid: rgba(19, 19, 24, 0.042);
+  --op-surface: rgba(19, 19, 24, 0.024);
+  --op-marker: rgba(19, 19, 24, 0.32);
+  --op-blue: #1539d1;
+  --op-violet: #1539d1;
+  --op-magenta: #6b7cff;
+  /* deep enough to stay legible as small text on white */
+  --op-accent-ink: #10309f;
+  --op-blue-ink: #10309f;
+  --op-magenta-soft: rgba(107, 124, 255, 0.26);
+  --op-tint: rgba(21, 57, 209, 0.06);
+  --op-tint-strong: rgba(21, 57, 209, 0.1);
+  /* card wash: blue at the light end so type stays black on near-white */
+  --op-blue-wash: rgba(21, 57, 209, 0.085);
+  --op-blue-wash-soft: rgba(21, 57, 209, 0.035);
+  --op-blue-line: rgba(21, 57, 209, 0.18);
+  --op-blue-shadow: rgba(21, 57, 209, 0.42);
+  --op-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Roboto Mono", monospace;
+
+  color-scheme: light;
+  min-height: 100svh;
+  padding: clamp(20px, 3vw, 48px);
+  background: var(--op-bg);
+  color: var(--op-ink);
+}
+
+/* the shared (site) layout paints the body dark for the other marketing
+   pages, so this one page reclaims it without touching that layout */
+body:has(.op-page) {
+  background: #ececef !important;
+}
+
+.op-page *,
+.op-page *::before,
+.op-page *::after {
+  box-sizing: border-box;
+}
+
+.op-sheet {
+  position: relative;
+  display: grid;
+  gap: clamp(30px, 3.4vw, 52px);
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(26px, 3vw, 48px);
+  border: 1px solid var(--op-line);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      120% 40% at 50% -8%,
+      var(--op-tint-strong),
+      transparent 60%
+    ),
+    var(--op-sheet);
+  box-shadow:
+    0 1px 2px rgba(19, 19, 24, 0.05),
+    0 24px 48px -30px rgba(19, 19, 24, 0.22);
+  overflow: hidden;
+}
+
+/* faint engineering grid, so the sheet reads as a document */
+.op-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--op-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--op-grid) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(90% 40% at 50% 0%, black, transparent 78%);
+  -webkit-mask-image: radial-gradient(
+    90% 40% at 50% 0%,
+    black,
+    transparent 78%
+  );
+  pointer-events: none;
+}
+
+.op-sheet > * {
+  position: relative;
+}
+
+/* ——— masthead ——— */
+
+.op-mast {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--op-line);
+}
+
+.op-wordmark {
+  margin: 0;
+  font-size: clamp(1rem, 1.4vw, 1.22rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.op-kicker {
+  margin: 0;
+  font-family: var(--op-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}
+
+/* ——— hero ——— */
+
+.op-hero {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(18px, 2.4vw, 40px);
+  align-items: end;
+}
+
+.op-h1 {
+  grid-column: 1;
+  margin: 0;
+  font-size: clamp(1.7rem, 3.3vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.032em;
+  text-transform: uppercase;
+}
+
+/* the qualifier is a second voice, so it borrows the mono label treatment
+   instead of hanging off a dash */
+.op-h1-tail {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 0.5em;
+  font-family: var(--op-mono);
+  /* sized on its own scale so it stays legible when the headline shrinks */
+  font-size: clamp(0.66rem, 0.85vw, 0.84rem);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  line-height: 1.3;
+  color: var(--op-accent-ink);
+}
+
+.op-h1-tail::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  flex: none;
+  background: linear-gradient(90deg, var(--op-violet), var(--op-magenta));
+}
+
+.op-hero-copy {
+  grid-column: 2;
+}
+
+.op-lead {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  line-height: 1.6;
+  color: var(--op-dim);
+}
+
+.op-lead strong {
+  font-weight: 500;
+  color: var(--op-ink);
+}
+
+.op-aside {
+  margin: 12px 0 0;
+  padding-left: 13px;
+  border-left: 2px solid var(--op-violet);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+.op-aside strong {
+  display: block;
+  font-weight: 500;
+  color: var(--op-ink);
+}
+
+.op-chips {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.op-chips li {
+  padding: 5px 13px;
+  border: 1px solid var(--op-line);
+  border-radius: 999px;
+  font-family: var(--op-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--op-strong);
+}
+
+/* ——— section shells ——— */
+
+.op-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--op-line);
+  font-family: var(--op-mono);
+  font-size: 0.63rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}
+
+/* accent tick carries the section rhythm */
+.op-label::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--op-violet), var(--op-magenta));
+}
+
+.op-statement {
+  margin: 0 0 10px;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+}
+
+.op-body {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--op-dim);
+}
+
+.op-body + .op-body {
+  margin-top: 6px;
+}
+
+.op-body-wide {
+  max-width: 78ch;
+}
+
+/* ——— service blocks ——— */
+
+/* three services sit side by side as a triptych, stacking on narrow screens */
+.op-svcs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+}
+
+.op-svc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 1.8vw, 26px) clamp(16px, 1.8vw, 24px)
+    clamp(16px, 1.8vw, 24px);
+  border: 1px solid var(--op-blue-line);
+  border-radius: 16px;
+  /* wash falls from the top-left so the accent edge and the number read as
+     one gesture rather than a flat tinted box */
+  background:
+    linear-gradient(
+      152deg,
+      var(--op-blue-wash),
+      var(--op-blue-wash-soft) 46%,
+      rgba(255, 255, 255, 0) 72%
+    ),
+    var(--op-sheet);
+  box-shadow:
+    0 1px 1px rgba(19, 19, 24, 0.03),
+    0 20px 38px -28px var(--op-blue-shadow);
+  overflow: hidden;
+}
+
+/* brand edge along the top of each card */
+.op-svc::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--op-blue),
+    var(--op-violet) 62%,
+    var(--op-magenta)
+  );
+}
+
+@media (hover: hover) {
+  .op-svc {
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .op-svc:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 1px rgba(19, 19, 24, 0.04),
+      0 26px 46px -26px var(--op-blue-shadow);
+  }
+}
+
+.op-svc-head {
+  margin-bottom: 10px;
+}
+
+.op-svc-head h3 {
+  margin: 0;
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+.op-svc-n {
+  font-family: var(--op-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--op-blue-ink);
+}
+
+.op-svc-head .op-svc-n {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.op-svc-sub {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  color: var(--op-ink);
+}
+
+/* ——— capability lists ——— */
+
+/* auto-fit keeps three-group blocks from leaving a dead fourth column */
+.op-subs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px 20px;
+  margin-top: 14px;
+}
+
+.op-subs-one {
+  grid-template-columns: 1fr;
+}
+
+.op-sub h4 {
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--op-line);
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}
+
+.op-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 5px;
+}
+
+.op-list-wide {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 5px 18px;
+}
+
+.op-list li {
+  position: relative;
+  padding-left: 12px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--op-dim);
+}
+
+.op-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--op-marker);
+}
+
+/* ——— pipeline diagrams ——— */
+
+.op-flows {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.op-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.op-flow li {
+  padding: 5px 11px;
+  border: 1px solid var(--op-line);
+  border-radius: 7px;
+  background: var(--op-surface);
+  font-size: 0.78rem;
+  color: var(--op-strong);
+}
+
+.op-flow li + li::before {
+  content: "→";
+  margin-right: 11px;
+  margin-left: -6px;
+  color: var(--op-faint);
+}
+
+/* ——— inset note ——— */
+
+.op-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--op-line);
+  border-radius: 10px;
+  background: var(--op-tint);
+}
+
+.op-note h4 {
+  margin: 0 0 5px;
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--op-accent-ink);
+}
+
+.op-note p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+/* auto top margin lines the takeaway rules up across the three cards */
+.op-take {
+  margin: 14px 0 0;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--op-line);
+  font-size: 0.87rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+  color: var(--op-ink);
+}
+
+/* ——— process ——— */
+
+.op-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.op-step {
+  position: relative;
+  padding-left: 15px;
+}
+
+.op-step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--op-violet), var(--op-magenta-soft));
+}
+
+.op-step .op-svc-n {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--op-faint);
+}
+
+.op-step h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.op-step p {
+  margin: 5px 0 0;
+  font-size: 0.79rem;
+  line-height: 1.5;
+  color: var(--op-dim);
+}
+
+/* ——— entry points ——— */
+
+.op-starts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.op-starts li {
+  padding: 7px 14px;
+  border: 1px solid var(--op-line);
+  border-radius: 8px;
+  background: var(--op-surface);
+  font-size: 0.8rem;
+  color: var(--op-strong);
+}
+
+/* ——— outcomes ——— */
+
+.op-outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+
+/* quieter relative of .op-svc: same wash, no accent edge, no lift */
+.op-outcome {
+  position: relative;
+  padding: 17px;
+  border: 1px solid var(--op-blue-line);
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      152deg,
+      var(--op-blue-wash-soft),
+      rgba(255, 255, 255, 0) 70%
+    ),
+    var(--op-sheet);
+  box-shadow: 0 12px 24px -22px var(--op-blue-shadow);
+}
+
+.op-outcome h3 {
+  display: flex;
+  /* dot sits on the first line, not centred against a wrapped heading */
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--op-mono);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--op-blue-ink);
+}
+
+.op-outcome h3::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  margin-top: 0.42em;
+  flex: none;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--op-blue), var(--op-violet));
+}
+
+.op-outcome p {
+  margin: 9px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+/* ——— founders ——— */
+
+.op-founders {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.op-founders li {
+  padding-left: 15px;
+  border-left: 2px solid var(--op-violet);
+}
+
+.op-founder-role {
+  display: block;
+  font-family: var(--op-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}
+
+.op-founder-name {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.014em;
+}
+
+.op-founder-line {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--op-dim);
+}
+
+/* ——— closing ——— */
+
+/* four facts, one refrain — the gradient rule ties them to the section ticks */
+.op-facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.op-facts li {
+  padding-top: 11px;
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--op-violet), var(--op-magenta)) 1;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.op-fact-subject {
+  display: block;
+  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+}
+
+.op-fact-refrain {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--op-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--op-accent-ink);
+}
+
+.op-resolve {
+  max-width: 62ch;
+  margin: 20px 0 0;
+  padding-left: 13px;
+  border-left: 2px solid var(--op-violet);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.014em;
+  color: var(--op-ink);
+}
+
+.op-close {
+  margin-top: 20px;
+  padding: clamp(18px, 2vw, 26px);
+  border: 1px solid var(--op-blue-line);
+  border-radius: 14px;
+  background:
+    radial-gradient(110% 150% at 0% 0%, var(--op-blue-wash), transparent 64%),
+    linear-gradient(
+      152deg,
+      var(--op-blue-wash-soft),
+      rgba(255, 255, 255, 0) 68%
+    ),
+    var(--op-sheet);
+  box-shadow: 0 18px 34px -28px var(--op-blue-shadow);
+}
+
+.op-ask {
+  max-width: 46ch;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.24;
+  letter-spacing: -0.026em;
+}
+
+.op-answer {
+  margin: 10px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+/* ——— footer ——— */
+
+.op-foot {
+  padding-top: 16px;
+  border-top: 1px solid var(--op-line);
+}
+
+.op-foot-brand {
+  margin: 0;
+  font-family: var(--op-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--op-faint);
+}
+
+.op-foot-brand strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--op-ink);
+}
+
+/* ——— print action (screen only) ——— */
+
+.op-actions {
+  display: flex;
+  justify-content: center;
+  margin: clamp(18px, 2vw, 26px) auto 0;
+}
+
+.op-print {
+  padding: 9px 20px;
+  border: 1px solid var(--op-line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--op-ink);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.op-print:hover {
+  background: var(--op-surface);
+  border-color: var(--op-ink);
+}
+
+/* ——— responsive ——— */
+
+@media screen and (max-width: 960px) {
+  .op-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .op-h1,
+  .op-hero-copy {
+    grid-column: 1;
+  }
+
+  .op-subs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .op-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .op-outcomes,
+  .op-facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .op-subs,
+  .op-steps,
+  .op-outcomes,
+  .op-founders,
+  .op-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .op-list-wide {
+    grid-template-columns: 1fr;
+  }
+
+  .op-mast {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ——— print: A4 sheets, colours intact ——— */
+
+@page {
+  size: A4 portrait;
+  /* A zero page margin is what stops the browser stamping its own URL, title
+     and date onto each sheet; the inner margin is re-created below. */
+  margin: 0;
+}
+
+@media print {
+  .op-page {
+    min-height: 0;
+    padding: 9mm 12mm;
+    background: var(--op-sheet);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .op-sheet {
+    max-width: none;
+    gap: 5mm;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .op-sheet::before {
+    display: none;
+  }
+
+  .op-actions {
+    display: none;
+  }
+
+  /* washes and rules still print; the screen depth does not */
+  .op-svc,
+  .op-outcome,
+  .op-close {
+    box-shadow: none;
+  }
+
+  /* controlled pagination */
+  .op-break {
+    break-before: page;
+  }
+
+  /* .op-page padding only clears the first sheet, so a section that starts a
+     new sheet has to restate the top margin itself */
+  .op-section.op-break {
+    padding-top: 9mm;
+  }
+
+  .op-svc,
+  .op-sub,
+  .op-step,
+  .op-outcome,
+  .op-note,
+  .op-close,
+  .op-flow {
+    break-inside: avoid;
+  }
+
+  .op-label,
+  .op-svc-head,
+  .op-statement {
+    break-after: avoid;
+  }
+
+  /* type scale — sized to fill the sheet while staying comfortably readable */
+  .op-h1 {
+    font-size: 21pt;
+  }
+
+  .op-h1-tail {
+    font-size: 7.6pt;
+    letter-spacing: 0.13em;
+  }
+
+  .op-statement {
+    font-size: 12pt;
+    margin-bottom: 2mm;
+  }
+
+  .op-lead {
+    font-size: 9pt;
+    line-height: 1.5;
+  }
+
+  .op-aside {
+    font-size: 8.2pt;
+    margin-top: 2.6mm;
+  }
+
+  .op-svc-head h3 {
+    font-size: 12pt;
+  }
+
+  .op-svc-sub {
+    font-size: 9.4pt;
+  }
+
+  .op-body,
+  .op-take,
+  .op-answer {
+    font-size: 8.2pt;
+    line-height: 1.42;
+  }
+
+  .op-list li,
+  .op-note p,
+  .op-flow li,
+  .op-starts li,
+  .op-outcome p,
+  .op-step p,
+  .op-founder-line {
+    font-size: 7.8pt;
+    line-height: 1.36;
+  }
+
+  .op-fact-subject,
+  .op-resolve {
+    font-size: 9pt;
+  }
+
+  .op-fact-refrain {
+    font-size: 6.2pt;
+  }
+
+  .op-resolve {
+    margin-top: 4mm;
+  }
+
+  .op-step h3 {
+    font-size: 8.8pt;
+  }
+
+  .op-founder-name {
+    font-size: 9pt;
+  }
+
+  .op-ask {
+    font-size: 14pt;
+  }
+
+  .op-label,
+  .op-chips li,
+  .op-kicker,
+  .op-sub h4,
+  .op-note h4,
+  .op-outcome h3,
+  .op-svc-n,
+  .op-founder-role,
+  .op-wordmark {
+    font-size: 10.5pt;
+  }
+
+  .op-foot-brand {
+    font-size: 6.4pt;
+  }
+
+  .op-foot-brand strong {
+    font-size: 8pt;
+  }
+
+  /* rhythm */
+  .op-svcs {
+    /* keep the triptych on the narrower print measure */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.4mm;
+  }
+
+  .op-svc {
+    /* extra top pad keeps the number clear of the printed accent edge */
+    padding: 4.2mm 4mm 3.4mm;
+  }
+
+  .op-subs {
+    gap: 3mm 5mm;
+    margin-top: 3mm;
+  }
+
+  .op-flows,
+  .op-note,
+  .op-take,
+  .op-steps,
+  .op-starts,
+  .op-outcomes,
+  .op-founders,
+  .op-facts {
+    margin-top: 3mm;
+  }
+
+  .op-take {
+    padding-top: 2.6mm;
+  }
+
+  .op-note {
+    padding: 2.6mm 3mm;
+  }
+
+  .op-outcome {
+    padding: 3mm 3.4mm;
+  }
+
+  .op-close {
+    margin-top: 4mm;
+    padding: 4mm;
+  }
+
+  .op-mast {
+    padding-bottom: 3mm;
+  }
+
+  .op-foot {
+    padding-top: 3mm;
+  }
+}

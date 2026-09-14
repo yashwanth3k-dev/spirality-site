@@ -1,0 +1,198 @@
+/* Agent flow — HTML nodes over SVG wave (no foreignObject) */
+
+.af-section {
+  --af-blue: #1539d1;
+  --af-blue-light: #6b7cff;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(21, 57, 209, 0.14),
+      transparent 60%
+    ),
+    #f4f7fc;
+  overflow: visible;
+}
+
+.af-head {
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.af-head .il-h2 {
+  max-width: 22ch;
+}
+
+.af-wave-wrap {
+  display: none;
+  width: 100%;
+  margin: 28px 0 12px;
+  padding: 72px 0 80px;
+}
+
+@media (min-width: 900px) {
+  .af-wave-wrap {
+    display: block;
+  }
+
+  .af-mobile-flow {
+    display: none !important;
+  }
+}
+
+.af-wave-stage {
+  position: relative;
+  width: 100%;
+}
+
+.af-wave-svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.af-wave-nodes {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 2;
+}
+
+/* Icon center = wave point */
+.af-wave-node {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+.af-wave-node-inner {
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.af-icon {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--af-blue);
+  box-shadow:
+    0 0 0 3px rgba(21, 57, 209, 0.25),
+    0 10px 24px rgba(21, 57, 209, 0.5);
+}
+
+.af-wave-label {
+  position: absolute;
+  left: 50%;
+  width: 150px;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.af-wave-node.is-up .af-wave-label {
+  bottom: calc(100% + 14px);
+}
+
+.af-wave-node.is-down .af-wave-label {
+  top: calc(100% + 14px);
+}
+
+.af-wave-label-title {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #101624;
+}
+
+.af-wave-label-line {
+  display: block;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  color: rgba(16, 22, 36, 0.42);
+}
+
+.af-mobile-flow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.af-mobile-step {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  min-height: 88px;
+}
+
+.af-mobile-rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.af-mobile-rail .af-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+}
+
+.af-mobile-line {
+  flex: 1;
+  width: 2px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--af-blue-light) 0%,
+    rgba(21, 57, 209, 0.12) 100%
+  );
+}
+
+.af-mobile-copy {
+  padding-bottom: 22px;
+  padding-top: 6px;
+}
+
+.af-title {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #101624;
+}
+
+.af-line {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(16, 22, 36, 0.48);
+}
+
+.af-footer {
+  margin: clamp(28px, 4vw, 48px) 0 0;
+  max-width: 54ch;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: rgba(16, 22, 36, 0.72);
+  padding: 24px 0 0;
+  border-top: 1px solid rgba(21, 57, 209, 0.15);
+}

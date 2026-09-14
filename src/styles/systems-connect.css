@@ -1,0 +1,118 @@
+/* Business Systems — Connect Everything (copy left, cards right) */
+
+.sc-section {
+  background:
+    radial-gradient(
+      ellipse 50% 45% at 90% 40%,
+      rgba(21, 57, 209, 0.14),
+      transparent 62%
+    ),
+    #f4f7fc;
+  overflow: hidden;
+}
+
+.sc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+.sc-copy {
+  max-width: 38ch;
+}
+
+.sc-heading {
+  max-width: 18ch !important;
+}
+
+.sc-lead {
+  margin-top: 18px;
+  max-width: 42ch;
+}
+
+.sc-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sc-legend-item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  min-height: 0;
+  padding: 1.05rem 1.1rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(21, 57, 209, 0.12);
+  transition: border-color 0.2s ease;
+}
+
+.sc-legend-item:hover {
+  border-color: rgba(107, 124, 255, 0.32);
+}
+
+.sc-legend-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: rgba(21, 57, 209, 0.08);
+  border: 1px solid rgba(21, 57, 209, 0.12);
+}
+
+.sc-brand-svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.sc-legend-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #101624;
+  line-height: 1.25;
+}
+
+.sc-legend-line {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(16, 22, 36, 0.48);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .sc-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .sc-copy {
+    max-width: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .sc-legend {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-legend-item {
+    transition: none;
+  }
+}

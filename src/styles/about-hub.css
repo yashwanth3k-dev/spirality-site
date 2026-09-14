@@ -1,0 +1,521 @@
+/* About Us — ported from Stitch "Built Around Real Business Work". */
+
+.uch-page.abt-page {
+  --uch-canvas: #eef3fb;
+  --uch-elevated: #ffffff;
+  --uch-panel: #f3f6fd;
+  --abt-deep: #f4f7fc;
+  --abt-alt: #eef3fb;
+  --abt-high: #ffffff;
+  --abt-cyan: #1539d1;
+  --abt-lilac: #3d63e8;
+  --abt-green: #0f766e;
+  background:
+    radial-gradient(
+      ellipse 70% 40% at 50% -8%,
+      rgba(21, 57, 209, 0.16),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #e8eefb 0%, #f4f7fc 42%, #eaf0fb 100%);
+}
+
+.abt-main {
+  color: var(--uch-ink);
+}
+
+.abt-kicker {
+  margin: 0 0 10px;
+  font-family: var(--uch-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--uch-blue-hi);
+}
+
+.abt-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(40px, 7vh, 88px) 0 clamp(36px, 6vh, 64px);
+}
+
+.abt-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(244, 247, 252, 0.2),
+    rgba(244, 247, 252, 0.82) 70%,
+    var(--abt-deep)
+  );
+  pointer-events: none;
+}
+
+.abt-hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+@media (min-width: 980px) {
+  .abt-hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.95fr);
+    gap: 40px;
+  }
+}
+
+.abt-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.abt-hero-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: clamp(240px, 34vw, 420px);
+}
+
+.abt-hero-lottie {
+  width: min(100%, 560px);
+  aspect-ratio: 16 / 9;
+  filter: drop-shadow(0 24px 48px rgba(77, 142, 255, 0.2));
+}
+
+.abt-hero-lottie .sp-hero-lottie {
+  width: 100%;
+  height: 100%;
+}
+
+.abt-h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.abt-h1-accent {
+  background: linear-gradient(90deg, #adc6ff, #7bd0ff, #adc6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.abt-h1-break {
+  display: block;
+}
+
+.abt-lead,
+.abt-body {
+  margin: 0;
+  max-width: 42rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--uch-muted);
+}
+
+.abt-lead-strong {
+  margin-bottom: 14px;
+  color: var(--uch-ink);
+  font-weight: 500;
+}
+
+.abt-band {
+  padding: clamp(36px, 7vh, 88px) 0;
+}
+
+#how-we-think {
+  scroll-margin-top: 96px;
+}
+
+.abt-band-alt {
+  background: var(--abt-alt);
+}
+
+.abt-h2 {
+  margin: 0 0 16px;
+  max-width: 16ch;
+  font-size: clamp(1.7rem, 3.4vw, 2.55rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.abt-origin-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 860px) {
+  .abt-origin-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 40px;
+    align-items: start;
+  }
+}
+
+.abt-refusals {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 860px) {
+  .abt-refusals {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.abt-refuse {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  padding: 20px;
+  border-radius: 14px;
+  background: var(--uch-elevated);
+}
+
+.abt-refuse-yes {
+  background: #252a38;
+  color: #f4f7fc;
+}
+
+.abt-refuse-meta {
+  margin: 0 0 24px;
+  font-family: var(--uch-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--uch-dim);
+}
+
+.abt-refuse-yes .abt-refuse-meta {
+  color: #8ea0ff;
+}
+
+.abt-refuse-yes .abt-refuse-prefix {
+  color: rgba(244, 247, 252, 0.62);
+}
+
+.abt-refuse-prefix {
+  margin: 0;
+  color: var(--uch-muted);
+}
+
+.abt-refuse-line {
+  margin: 4px 0 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.abt-beliefs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+@media (min-width: 720px) {
+  .abt-beliefs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 980px) {
+  .abt-beliefs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .abt-belief {
+    padding: 22px 18px;
+  }
+
+  .abt-belief h3 {
+    font-size: 1.05rem;
+  }
+}
+
+.abt-belief {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px;
+  border-radius: 16px;
+  background: var(--uch-elevated);
+}
+
+.abt-belief-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.abt-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--abt-high);
+  color: var(--uch-blue-hi);
+}
+
+.abt-belief h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.abt-belief p {
+  margin: 0;
+  color: var(--uch-muted);
+  line-height: 1.6;
+}
+
+.abt-discipline {
+  margin-top: auto;
+  padding-top: 8px;
+  font-family: var(--uch-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--uch-dim);
+}
+
+.abt-founders-section {
+  position: relative;
+}
+
+.abt-founders-h2 {
+  max-width: 16ch;
+}
+
+.abt-founders {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+@media (min-width: 960px) {
+  .abt-founders {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.abt-founder {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px;
+  border-radius: 16px;
+  background: var(--uch-elevated);
+}
+
+.abt-founder-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.abt-founder-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: #252a38;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #8ea0ff;
+}
+
+.abt-founder:nth-child(2) .abt-founder-mark {
+  color: #7bd0ff;
+}
+
+.abt-founder:nth-child(3) .abt-founder-mark {
+  color: #8ea0ff;
+}
+
+.abt-founder-tag,
+.abt-founder-focus,
+.abt-founder-role {
+  font-family: var(--uch-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.abt-founder-tag {
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #252a38;
+  color: #34d399;
+}
+
+.abt-founder h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.abt-founder-role {
+  margin: 0 0 8px;
+  color: var(--uch-blue-hi);
+}
+
+.abt-founder-bio {
+  margin: 0;
+  color: var(--uch-muted);
+  line-height: 1.65;
+}
+
+.abt-founder-focus {
+  margin: 12px 0 0;
+  color: var(--uch-dim);
+}
+
+.abt-direction {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 860px) {
+  .abt-direction {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.abt-manifesto {
+  padding: clamp(24px, 4vw, 36px);
+  border-radius: 16px;
+  background: var(--uch-elevated);
+}
+
+.abt-manifesto h2 {
+  margin: 0 0 14px;
+  max-width: 22ch;
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.abt-manifesto p:last-child {
+  margin: 0;
+  color: var(--uch-muted);
+  line-height: 1.65;
+}
+
+.abt-close {
+  border-top: 1px solid rgba(123, 208, 255, 0.12);
+}
+
+.abt-close-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: end;
+}
+
+@media (min-width: 860px) {
+  .abt-close-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.65fr);
+    gap: 64px;
+  }
+}
+
+.abt-close-copy h2 {
+  margin: 0 0 16px;
+  max-width: 11ch;
+  font-size: clamp(2rem, 4.4vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.abt-close-copy p {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--uch-muted);
+}
+
+.abt-close-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.abt-close-mail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--uch-ink);
+  text-decoration: none;
+}
+
+.abt-close-mail span {
+  font-family: var(--uch-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--uch-dim);
+}
+
+.abt-close-mail:hover {
+  color: var(--abt-cyan);
+}
+
+.abt-close-note {
+  margin: 0;
+  max-width: 22ch;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--uch-dim);
+}
+
+@media (max-width: 720px) {
+  .abt-h1,
+  .abt-h2,
+  .abt-founders-h2,
+  .abt-manifesto h2,
+  .abt-close-copy h2 {
+    max-width: none;
+  }
+
+  .abt-hero-media {
+    min-height: 220px;
+  }
+
+  .abt-hero-lottie {
+    width: min(100%, 420px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uch-badge-dot {
+    transition: none;
+    animation: none;
+  }
+}

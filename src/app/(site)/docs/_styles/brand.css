@@ -1,0 +1,123 @@
+/* Brand asset downloads. Rides on the one-pager `op-` sheet chrome. */
+
+.bx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bx-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--op-blue-line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--op-sheet);
+  box-shadow:
+    0 1px 1px rgba(19, 19, 24, 0.03),
+    0 20px 38px -28px var(--op-blue-shadow);
+}
+
+.bx-preview {
+  display: grid;
+  place-items: center;
+  min-height: 148px;
+  padding: 28px 24px;
+}
+
+.bx-preview-light {
+  background: linear-gradient(135deg, #f7f4ee 0%, #ebe6dc 100%);
+}
+
+.bx-preview-dark {
+  background: linear-gradient(135deg, #0e0e0e 0%, #1a1a1a 100%);
+}
+
+.bx-preview img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.bx-preview-mark img {
+  width: 72px;
+  height: 72px;
+}
+
+.bx-preview-wordmark img {
+  width: min(220px, 100%);
+}
+
+.bx-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px 18px;
+  border-top: 1px solid var(--op-line);
+}
+
+.bx-body h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.bx-body p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+.bx-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.bx-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--op-blue-line);
+  border-radius: 999px;
+  background: var(--op-blue-wash-soft);
+  font-family: var(--op-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--op-blue-ink);
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+@media (hover: hover) {
+  .bx-actions a:hover {
+    background: var(--op-blue-wash);
+    border-color: var(--op-blue);
+    color: var(--op-ink);
+  }
+}
+
+.bx-note {
+  margin: 22px 0 0;
+  padding: 14px 16px;
+  border-left: 2px solid var(--op-violet);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--op-dim);
+}
+
+.bx-note strong {
+  color: var(--op-strong);
+  font-weight: 500;
+}

@@ -1,0 +1,105 @@
+/* Business Systems — outcomes */
+
+.so-section {
+  background: #f4f7fc;
+  border-top: 1px solid rgba(21, 57, 209, 0.09);
+}
+
+.so-heading {
+  max-width: 20ch !important;
+}
+
+.so-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+@media (min-width: 640px) {
+  .so-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 980px) {
+  .so-grid,
+  .so-grid[data-count="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .so-grid[data-count="4"] .so-card {
+    padding: 1.1rem 1rem 1.15rem;
+  }
+
+  .so-grid[data-count="6"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.so-card {
+  padding: 1.2rem 1.15rem 1.25rem;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(21, 57, 209, 0.12);
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.so-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(107, 124, 255, 0.32);
+}
+
+.so-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 0.85rem;
+  border-radius: 10px;
+  color: #fff;
+  background: #1539d1;
+  box-shadow: 0 6px 16px rgba(21, 57, 209, 0.4);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.so-card:hover .so-icon {
+  transform: scale(1.05);
+  background: #6b7cff;
+}
+
+.so-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #101624;
+}
+
+.so-line {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(16, 22, 36, 0.48);
+}
+
+@media (max-width: 560px) {
+  .so-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .so-card,
+  .so-icon {
+    transition: none;
+  }
+
+  .so-card:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,120 @@
+/* Outcome cards — heading left, cards right */
+
+.oc-section {
+  --oc-accent: #6b7cff;
+  --oc-accent-glow: rgba(107, 124, 255, 0.35);
+  background: #f4f7fc;
+}
+
+.oc-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 4vw, 48px);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .oc-layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+    gap: clamp(40px, 5vw, 72px);
+    align-items: center;
+  }
+}
+
+.oc-copy {
+  max-width: 28ch;
+}
+
+.oc-heading {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #101624;
+}
+
+.oc-bridge {
+  margin: 16px 0 0;
+  max-width: 28ch;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: rgba(16, 22, 36, 0.5);
+}
+
+.oc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 640px) {
+  .oc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+}
+
+.oc-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 0;
+  padding: 1.25rem 1.2rem 1.3rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(21, 57, 209, 0.15);
+  box-shadow: none;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease,
+    background 0.22s ease;
+}
+
+.oc-card:hover {
+  border-color: var(--oc-accent);
+  background: #eef3fb;
+  box-shadow: 0 12px 36px rgba(21, 57, 209, 0.14);
+  transform: translateY(-2px);
+}
+
+.oc-icon {
+  display: block;
+  margin-bottom: 0.85rem;
+  color: var(--oc-accent);
+  flex: none;
+}
+
+.oc-title {
+  margin: 0 0 0.45rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #101624;
+  transition: color 0.22s ease;
+}
+
+.oc-card:hover .oc-title {
+  color: var(--oc-accent);
+}
+
+.oc-desc {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: rgba(16, 22, 36, 0.48);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oc-card {
+    transition: none;
+  }
+
+  .oc-card:hover {
+    transform: none;
+  }
+}

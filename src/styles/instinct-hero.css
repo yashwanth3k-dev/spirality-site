@@ -1,0 +1,538 @@
+/* Instinct hero — self-contained, no Tailwind utilities */
+
+.ih-root {
+  --ih-bg: #f4f7fc;
+  --ih-ink: #101624;
+  --ih-dim: rgba(16, 22, 36, 0.45);
+  --ih-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Roboto Mono", monospace;
+
+  position: relative;
+  min-height: 100svh;
+  /* room for the fixed site nav */
+  padding-top: var(--il-nav-h, 72px);
+  /* visible so nav dropdowns aren't clipped; stage clips the 3D scene */
+  overflow: visible;
+  background:
+    radial-gradient(
+      ellipse 90% 55% at 50% -8%,
+      rgba(21, 57, 209, 0.2),
+      transparent 58%
+    ),
+    linear-gradient(180deg, #e4ecfb 0%, #f4f7fc 42%, #f7f9fd 100%);
+  color: var(--ih-ink);
+  isolation: isolate;
+  color-scheme: light;
+}
+
+.ih-root *,
+.ih-root *::before,
+.ih-root *::after {
+  box-sizing: border-box;
+}
+
+.ih-root a {
+  text-decoration: none;
+}
+
+/* ——— nav ——— */
+
+.ih-nav {
+  position: relative;
+  z-index: 80;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 26px 34px;
+  overflow: visible;
+}
+
+.ih-logo {
+  justify-self: start;
+  color: var(--ih-ink);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+/* Slide-tabs nav (HOVER.dev pattern) + hover menus */
+ul.ih-slidetabs {
+  position: relative;
+  z-index: 50;
+  justify-self: center;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 4px;
+  list-style: none;
+  border-radius: 999px;
+  border: 2px solid #000;
+  background: #fff;
+  overflow: visible;
+}
+
+ul.ih-slidetabs > li.ih-slidetab {
+  position: relative;
+  z-index: 10;
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  cursor: pointer;
+}
+
+ul.ih-slidetabs > li.ih-slidetab.is-open {
+  z-index: 70;
+}
+
+ul.ih-slidetabs > li.ih-slidetab > .ih-slidetab-trigger {
+  display: block;
+  margin: 0;
+  padding: 10px 18px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #000;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+ul.ih-slidetabs > li.ih-slidetab:hover > .ih-slidetab-trigger,
+ul.ih-slidetabs > li.ih-slidetab.is-open > .ih-slidetab-trigger {
+  color: #fff;
+}
+
+ul.ih-slidetabs > li.ih-slidetabs-cursor {
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  left: 0;
+  height: calc(100% - 8px);
+  border-radius: 999px;
+  background: #000;
+  pointer-events: none;
+}
+
+.ih-slidedrop {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  /* padding creates an invisible hover bridge under the pill */
+  padding: 10px 0 0;
+  border: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  z-index: 60;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+ul.ih-slidetabs > li.ih-slidetab:hover > .ih-slidedrop,
+ul.ih-slidetabs > li.ih-slidetab.is-open > .ih-slidedrop {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+.ih-slidedrop-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  border-radius: 16px;
+  border: 2px solid #000;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.ih-slidedrop-link {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #111 !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.ih-slidedrop-link:hover {
+  background: #000;
+  color: #fff !important;
+}
+
+.ih-navcta {
+  justify-self: end;
+  padding: 9px 20px;
+  border-radius: 999px;
+  background: #1539d1;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ih-navcta:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* ——— copy ——— */
+
+.ih-copy {
+  position: relative;
+  z-index: 30;
+  text-align: center;
+  padding: clamp(32px, 6.5vh, 74px) 24px 0;
+}
+
+.ih-heading {
+  margin: 0 auto;
+  font-size: clamp(1.55rem, 4.2vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -0.032em;
+}
+
+.ih-heading .ih-line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* per-word luminance variance, as in the reference */
+.ih-heading .lo {
+  color: rgba(16, 22, 36, 0.48);
+}
+
+.ih-sub {
+  margin: 20px auto 0;
+  max-width: 58ch;
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+  color: rgba(16, 22, 36, 0.58);
+}
+
+.ih-cta-wrap {
+  display: inline-block;
+}
+
+.ih-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: clamp(26px, 3.4vh, 40px);
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: #1539d1;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.ih-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.ih-cta svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ——— stage ——— */
+
+.ih-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ih-hand {
+  position: absolute;
+  user-select: none;
+}
+
+.ih-hand img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* gap at rest — forefingers meet only after scroll converge */
+.ih-hand-left {
+  left: 0;
+  top: 42%;
+  width: 42%;
+  z-index: 14;
+}
+
+.ih-hand-right {
+  right: -2%;
+  top: 62%;
+  width: 42%;
+  z-index: 14;
+}
+
+/* ——— responsive ——— */
+
+@media (max-width: 1024px) {
+  .ih-hand-left {
+    top: 38%;
+    width: 52%;
+  }
+  .ih-hand-right {
+    top: 54%;
+    width: 52%;
+  }
+}
+
+@media (max-width: 640px) {
+  .ih-heading .ih-line {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 960px) {
+  ul.ih-slidetabs {
+    display: none !important;
+  }
+
+  .ih-nav {
+    grid-template-columns: 1fr auto;
+    padding: 20px 22px;
+  }
+
+  .ih-root {
+    overflow: hidden;
+    min-height: 100svh;
+  }
+
+  .ih-copy {
+    z-index: 40;
+    max-width: 22rem;
+    margin-inline: auto;
+    padding: 28px 20px 0;
+  }
+
+  .ih-heading {
+    font-size: clamp(1.7rem, 8vw, 2.15rem);
+    line-height: 1.18;
+  }
+
+  .ih-sub {
+    margin-top: 14px;
+    font-size: 1rem;
+  }
+
+  .ih-cta {
+    margin-top: 22px;
+  }
+
+  /* Mobile: hands enter from sides at similar heights — classic horizontal approach. */
+  .ih-hand-left {
+    left: -16%;
+    top: 60%;
+    width: 55%;
+    z-index: 12;
+  }
+
+  .ih-hand-right {
+    right: -12%;
+    top: 62%;
+    width: 55%;
+    z-index: 12;
+  }
+}
+
+/* ——— scroll narrative ———
+   Each sentence lands on its own stretch of scroll while the hero stays
+   pinned. Gated on scroll-driven animation support, so browsers without it
+   (and anyone who asked for reduced motion) get the whole hero at once. */
+
+@keyframes ih-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(7px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* start with a clear gap; end with both index fingertips almost touching */
+@keyframes ih-converge-left {
+  from {
+    transform: translate(-6%, 4%);
+  }
+  to {
+    /* raise robot so its index meets human index — not middle finger */
+    transform: translate(17%, -52%);
+  }
+}
+
+@keyframes ih-converge-right {
+  from {
+    transform: translate(6%, 2%);
+  }
+  to {
+    transform: translate(-24%, -48%);
+  }
+}
+
+/* Mobile: classic horizontal sweep from the sides — only the index fingertips touch. */
+@keyframes ih-converge-left-m {
+  from {
+    /* robot hand starts off-screen left, slight outward tilt */
+    transform: translate(-18%, 5%) rotate(-8deg);
+  }
+  to {
+    /* sweeps right, barely any vertical change — fingertip meets human fingertip */
+    transform: translate(28%, 2%) rotate(-2deg);
+  }
+}
+
+@keyframes ih-converge-right-m {
+  from {
+    /* human hand starts off-screen right, slight outward tilt */
+    transform: translate(18%, 5%) rotate(8deg);
+  }
+  to {
+    /* sweeps left and slightly up to reach robot fingertip height */
+    transform: translate(-28%, -8%) rotate(2deg);
+  }
+}
+
+@supports (animation-timeline: scroll(root block)) or
+  (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ih-scroll {
+      height: 220svh;
+    }
+
+    .ih-sticky {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+    }
+
+    .ih-step {
+      animation: ih-reveal linear both;
+      animation-timeline: scroll(root block);
+      will-change: opacity, transform, filter;
+    }
+
+    .ih-step-2 {
+      animation-range: 6svh 30svh;
+    }
+
+    .ih-step-3 {
+      animation-range: 34svh 58svh;
+    }
+
+    .ih-step-4 {
+      animation-range: 62svh 86svh;
+    }
+
+    /* the two hands close in as the question resolves */
+    .ih-hand-left,
+    .ih-hand-right {
+      animation: ih-converge-left linear both;
+      animation-timeline: scroll();
+      animation-timeline: scroll(root block);
+      animation-range: 0 95svh;
+    }
+
+    .ih-hand-right {
+      animation-name: ih-converge-right;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (max-width: 960px) {
+    .ih-hand-left {
+      animation-name: ih-converge-left-m;
+    }
+
+    .ih-hand-right {
+      animation-name: ih-converge-right-m;
+    }
+  }
+}
+
+/* Same converge math when the engine has no scroll-driven animations (older iOS). */
+@supports not (
+  (animation-timeline: scroll(root block)) or (animation-timeline: scroll())
+) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ih-scroll.ih-scroll-js {
+      height: 220svh;
+    }
+
+    .ih-scroll.ih-scroll-js .ih-sticky {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+    }
+
+    .ih-scroll.ih-scroll-js .ih-hand-left {
+      transform: translate(
+        calc(-6% + 23% * var(--ih-p, 0)),
+        calc(4% + -56% * var(--ih-p, 0))
+      );
+    }
+
+    .ih-scroll.ih-scroll-js .ih-hand-right {
+      transform: translate(
+        calc(6% + -30% * var(--ih-p, 0)),
+        calc(2% + -50% * var(--ih-p, 0))
+      );
+    }
+
+    @media (max-width: 960px) {
+      .ih-scroll.ih-scroll-js .ih-hand-left {
+        transform: translate(
+            calc(-18% + 46% * var(--ih-p, 0)),
+            calc(5% + -3% * var(--ih-p, 0))
+          )
+          rotate(calc(-8deg + 6deg * var(--ih-p, 0)));
+      }
+
+      .ih-scroll.ih-scroll-js .ih-hand-right {
+        transform: translate(
+            calc(18% + -46% * var(--ih-p, 0)),
+            calc(5% + -13% * var(--ih-p, 0))
+          )
+          rotate(calc(8deg + -6deg * var(--ih-p, 0)));
+      }
+    }
+  }
+}

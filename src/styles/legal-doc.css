@@ -1,0 +1,82 @@
+.legal-page .legal-body {
+  padding-top: clamp(96px, 14vw, 140px);
+  padding-bottom: clamp(48px, 8vw, 96px);
+}
+
+.legal-inner {
+  max-width: 42rem;
+}
+
+.legal-updated {
+  margin: 0 0 2.5rem;
+  font-family: var(--il-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--il-faint);
+}
+
+.legal-block {
+  margin-bottom: 2rem;
+}
+
+.legal-block h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--il-ink);
+}
+
+.legal-block p {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--il-mute);
+}
+
+.legal-contact {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--il-line);
+  font-size: 0.9rem;
+  color: var(--il-mute);
+}
+
+.legal-contact a {
+  color: var(--il-ink);
+}
+
+.il-error-retry {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--il-ink);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.il-error-retry:hover {
+  opacity: 0.75;
+}
+
+.il-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 70svh;
+  padding: 48px 24px;
+}
+
+.il-loading-label {
+  margin: 0;
+  font-family: var(--il-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--il-faint);
+}

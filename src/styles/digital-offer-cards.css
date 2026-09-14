@@ -1,0 +1,111 @@
+/* Digital Services — What we build (4 offer cards) */
+
+.doc-section {
+  background: #f4f7fc;
+}
+
+.doc-heading {
+  max-width: 28ch !important;
+}
+
+.doc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+@media (min-width: 720px) {
+  .doc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.doc-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100%;
+  padding: 1.25rem 1.2rem 1.3rem;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(21, 57, 209, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.doc-card:hover {
+  transform: translateY(-3px);
+  background: #eef3fb;
+  border-color: rgba(21, 57, 209, 0.35);
+  box-shadow:
+    0 14px 32px rgba(21, 57, 209, 0.12),
+    0 0 0 1px rgba(21, 57, 209, 0.16);
+}
+
+.doc-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 0.9rem;
+  border-radius: 10px;
+  color: #fff;
+  background: #1539d1;
+  box-shadow: 0 6px 16px rgba(21, 57, 209, 0.4);
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease;
+}
+
+.doc-card:hover .doc-icon {
+  transform: scale(1.05);
+  background: #6b7cff;
+}
+
+.doc-title {
+  margin: 0 0 0.45rem;
+  color: #101624;
+  font-weight: 500;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.doc-line {
+  margin: 0;
+  flex: 1;
+  color: rgba(16, 22, 36, 0.48);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.doc-tags {
+  margin: 1rem 0 0;
+  padding-top: 0.85rem;
+  width: 100%;
+  border-top: 1px solid rgba(21, 57, 209, 0.12);
+  font-family: var(--il-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--il-magenta);
+  line-height: 1.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doc-card,
+  .doc-icon {
+    transition: none;
+  }
+
+  .doc-card:hover {
+    transform: none;
+  }
+}

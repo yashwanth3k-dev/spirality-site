@@ -1,0 +1,166 @@
+/* Case-study list — same tokens and card hover as use cases. */
+
+.csd-catalog {
+  padding: 8px 0 clamp(28px, 5vh, 48px);
+}
+
+.csd-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.csd-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background: var(--uch-elevated);
+  box-shadow: 0 10px 32px rgba(21, 57, 209, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+@media (min-width: 860px) {
+  .csd-card {
+    grid-template-columns: minmax(260px, 38%) minmax(0, 1fr);
+  }
+}
+
+.csd-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(107, 124, 255, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(21, 57, 209, 0.2),
+    0 18px 44px rgba(21, 57, 209, 0.12);
+}
+
+.csd-card:hover .csd-card-name a {
+  color: var(--uch-blue-hi);
+}
+
+.csd-card-media {
+  display: block;
+  min-height: 200px;
+  background: var(--uch-canvas);
+}
+
+.csd-card-media img,
+.csd-hero-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.csd-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+
+.csd-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.csd-client {
+  margin: 0;
+  font-family: var(--uch-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--uch-cyan);
+}
+
+.csd-client-hero {
+  margin-top: -8px;
+}
+
+.csd-card-name {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.csd-card-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.csd-card-promise {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--uch-ink);
+}
+
+.csd-card-situation {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--uch-muted);
+}
+
+.csd-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.csd-hero-image {
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  min-height: 280px;
+  background: var(--uch-elevated);
+  box-shadow: 0 12px 40px rgba(21, 57, 209, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.csd-hero-image:hover {
+  transform: translateY(-2px);
+  border-color: rgba(107, 124, 255, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(21, 57, 209, 0.2),
+    0 18px 44px rgba(21, 57, 209, 0.12);
+}
+
+.csd-hero-image img {
+  min-height: 280px;
+}
+
+@media (max-width: 720px) {
+  .csd-card-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csd-card,
+  .csd-hero-image {
+    transition: none;
+  }
+
+  .csd-card:hover,
+  .csd-hero-image:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,564 @@
+/* Scroll-driven bridge — same constellation on desktop and mobile */
+
+@keyframes il-bridge-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.il-bridge {
+  --bridge-bg: #f4f7fc;
+  --bridge-surface: #ffffff;
+  --bridge-ink: #101624;
+  --bridge-muted: rgba(16, 22, 36, 0.58);
+  --bridge-faint: rgba(16, 22, 36, 0.42);
+  --bridge-line: rgba(21, 57, 209, 0.12);
+  --bridge-line-hi: rgba(21, 57, 209, 0.22);
+  --bridge-blue: #1539d1;
+  --bridge-metric: #34d399;
+  --bridge-serif: var(--font-bridge-serif), "Instrument Serif", Georgia, serif;
+
+  position: relative;
+  height: 340vh;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 42%,
+      rgba(21, 57, 209, 0.14),
+      transparent 70%
+    ),
+    var(--bridge-bg);
+  color: var(--bridge-ink);
+  border-top: 1px solid var(--bridge-line);
+  scroll-margin-top: 24px;
+}
+
+.il-bridge-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 92px 28px 22px;
+  box-sizing: border-box;
+}
+
+.il-bridge-stage {
+  flex: 1;
+  position: relative;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 340px;
+}
+
+.il-bridge-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.il-bridge-panel {
+  position: absolute;
+  right: 2.5%;
+  top: 3%;
+  width: 31%;
+  height: 94%;
+  background: var(--bridge-surface);
+  border: 1px solid var(--bridge-line);
+  border-radius: 18px;
+  box-shadow:
+    0 26px 60px -30px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+  opacity: 0.88;
+  z-index: 2;
+}
+
+.il-bridge-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.il-bridge-panel-title {
+  font-weight: 800;
+  font-size: 13.5px;
+  letter-spacing: -0.01em;
+  color: var(--bridge-ink);
+}
+
+.il-bridge-panel-meta {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--bridge-faint);
+}
+
+.il-bridge-floors {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 5px;
+  min-height: 0;
+}
+
+.il-bridge-proc {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid rgba(21, 57, 209, 0.15);
+  border-bottom: 3px solid rgba(21, 57, 209, 0.09);
+  background-color: #161b28;
+  border-radius: 8px;
+  padding: 0 10px;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.il-bridge-proc.is-on {
+  background-color: #1a2448;
+  border-color: rgba(107, 124, 255, 0.55);
+  border-bottom-color: rgba(107, 124, 255, 0.35);
+}
+
+.il-bridge-proc.is-on .il-bridge-proc-bar,
+.il-bridge-proc.is-on .il-bridge-proc-metric {
+  opacity: 1;
+}
+
+.il-bridge-proc.is-on .il-bridge-proc-status {
+  color: #8ea0ff;
+}
+
+.il-bridge-proc-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.il-bridge-proc-bar {
+  width: 4px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--bridge-blue);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.il-bridge-proc-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #f3f6fd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.il-bridge-proc-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.il-bridge-proc-metric {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--bridge-metric);
+  opacity: 0;
+  transition: opacity 0.45s ease 0.1s;
+  white-space: nowrap;
+}
+
+.il-bridge-proc-status {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(243, 246, 253, 0.48);
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+
+.il-bridge-stats {
+  border: 1px solid var(--bridge-line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  background: rgba(21, 57, 209, 0.06);
+}
+
+.il-bridge-stats-label {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--bridge-faint);
+  margin-bottom: 3px;
+}
+
+.il-bridge-stats-value {
+  font-family: var(--bridge-serif);
+  font-size: 21px;
+  line-height: 1;
+  color: var(--bridge-ink);
+}
+
+.il-bridge-stats-value.is-live {
+  color: var(--bridge-blue);
+}
+
+.il-bridge-glow {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 210px;
+  height: 210px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(21, 57, 209, 0.4),
+    rgba(21, 57, 209, 0) 68%
+  );
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.il-bridge-orbit {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 148px;
+  height: 148px;
+  margin: -74px 0 0 -74px;
+  border: 1.5px dashed rgba(107, 124, 255, 0.4);
+  border-radius: 50%;
+  animation: il-bridge-spin 28s linear infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.il-bridge-badge {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, -50%) scale(0.72);
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: var(--bridge-surface);
+  border: 1px solid rgba(107, 124, 255, 0.35);
+  box-shadow: 0 24px 50px -18px rgba(21, 57, 209, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.il-bridge-gatelabel {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, 76px);
+  background: var(--bridge-surface);
+  border: 1px solid rgba(107, 124, 255, 0.45);
+  border-radius: 8px;
+  padding: 4px 11px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--bridge-blue);
+  opacity: 0;
+  z-index: 4;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.il-bridge-q {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, 112px);
+  width: min(460px, 72%);
+  height: 44px;
+  text-align: center;
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.il-bridge-q-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+}
+
+.il-bridge-q-num {
+  font-family: var(--bridge-serif);
+  font-size: 17px;
+  color: var(--bridge-blue);
+}
+
+.il-bridge-q-text {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--bridge-ink);
+  line-height: 1.4;
+}
+
+.il-bridge-agents {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.il-bridge-chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bridge-surface);
+  border: 1px solid var(--bridge-line-hi);
+  border-radius: 999px;
+  padding: 7px 13px 7px 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--bridge-ink);
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+  will-change: transform;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.il-bridge-chip-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.il-bridge-caps {
+  position: relative;
+  height: 104px;
+  max-width: 780px;
+  margin: 6px auto 0;
+  width: 100%;
+  text-align: center;
+}
+
+.il-bridge-cap {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.il-bridge-cap:first-child {
+  opacity: 1;
+}
+
+.il-bridge-cap h3 {
+  font-family: var(--bridge-serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.6vw, 32px);
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+  color: var(--bridge-ink);
+}
+
+.il-bridge-cap p {
+  margin: 0;
+  color: var(--bridge-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Mobile: same scroll theater, scaled to fit the viewport */
+@media (max-width: 900px) {
+  .il-bridge {
+    height: 320vh;
+  }
+
+  .il-bridge-sticky {
+    padding: 76px 14px 16px;
+  }
+
+  .il-bridge-stage {
+    min-height: 0;
+  }
+
+  .il-bridge-panel {
+    right: 1.5%;
+    top: 2%;
+    width: 48%;
+    height: 96%;
+    padding: 10px;
+    gap: 6px;
+    border-radius: 14px;
+  }
+
+  .il-bridge-panel-title {
+    font-size: 11px;
+  }
+
+  .il-bridge-panel-meta {
+    font-size: 7px;
+  }
+
+  .il-bridge-floors {
+    gap: 4px;
+  }
+
+  /* Name on top; metric + AI-ENABLED stacked underneath */
+  .il-bridge-proc {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 3px;
+    padding: 5px 7px;
+    border-radius: 6px;
+    min-height: 0;
+  }
+
+  .il-bridge-proc-left {
+    gap: 6px;
+  }
+
+  .il-bridge-proc-name {
+    font-size: 10px;
+  }
+
+  .il-bridge-proc-right {
+    width: 100%;
+    padding-left: 9px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+
+  .il-bridge-proc-metric {
+    font-size: 8px;
+  }
+
+  .il-bridge-proc-status {
+    font-size: 7px;
+    letter-spacing: 0.04em;
+  }
+
+  .il-bridge-proc-bar {
+    width: 3px;
+    height: 12px;
+  }
+
+  .il-bridge-stats {
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .il-bridge-stats-value {
+    font-size: 16px;
+  }
+
+  .il-bridge-badge {
+    width: 72px;
+    height: 72px;
+  }
+
+  .il-bridge-badge svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .il-bridge-orbit {
+    width: 108px;
+    height: 108px;
+    margin: -54px 0 0 -54px;
+  }
+
+  .il-bridge-glow {
+    width: 150px;
+    height: 150px;
+  }
+
+  .il-bridge-gatelabel {
+    transform: translate(-50%, 52px);
+    font-size: 8px;
+    padding: 3px 8px;
+  }
+
+  .il-bridge-q {
+    transform: translate(-50%, 78px);
+    width: min(280px, 58%);
+    height: auto;
+    min-height: 40px;
+  }
+
+  .il-bridge-q-num {
+    font-size: 13px;
+  }
+
+  .il-bridge-q-text {
+    font-size: 11px;
+  }
+
+  .il-bridge-chip {
+    font-size: 10px;
+    padding: 5px 9px 5px 7px;
+    gap: 5px;
+  }
+
+  .il-bridge-chip-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .il-bridge-caps {
+    height: 92px;
+    margin-top: 4px;
+  }
+
+  .il-bridge-cap h3 {
+    font-size: clamp(1.05rem, 4.6vw, 1.35rem);
+  }
+
+  .il-bridge-cap p {
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .il-bridge {
+    height: auto;
+  }
+
+  .il-bridge-sticky {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+
+  .il-bridge-orbit {
+    animation: none;
+  }
+}
