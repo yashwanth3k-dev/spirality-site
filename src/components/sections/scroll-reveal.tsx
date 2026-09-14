@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion, type HTMLMotionProps } from "motion/react";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 export type RevealDirection = "up" | "down" | "left" | "right";
 
@@ -39,15 +39,26 @@ export default function ScrollReveal({
   ...rest
 }: ScrollRevealProps) {
   const reduceMotion = useReducedMotion();
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const sync = () => setMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;
   }
 
+  const motionDirection: RevealDirection = mobile ? "up" : direction;
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, ...HIDDEN[direction] }}
+      initial={{ opacity: 0, ...HIDDEN[motionDirection] }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: false, amount, margin: "-12% 0px -12% 0px" }}
       transition={{
@@ -67,11 +78,14 @@ export function cardReveal(index: number): {
   initial: { opacity: number; x: number; y: number };
   whileInView: { opacity: number; x: number; y: number };
 } {
+  const mobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 768px)").matches;
   const fromLeft = index % 2 === 0;
   return {
     initial: {
       opacity: 0,
-      x: fromLeft ? -OFFSET : OFFSET,
+      x: mobile ? 0 : fromLeft ? -OFFSET : OFFSET,
       y: 18,
     },
     whileInView: { opacity: 1, x: 0, y: 0 },

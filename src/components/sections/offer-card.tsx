@@ -24,14 +24,20 @@ export default function OfferCard({
   const [tapMode, setTapMode] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(hover: none)");
+    const mobile = window.matchMedia("(max-width: 768px)");
+    const noHover = window.matchMedia("(hover: none)");
     const sync = () => {
-      setTapMode(mq.matches);
-      if (!mq.matches) setOpen(false);
+      const isMobile = mobile.matches;
+      setTapMode(!isMobile && noHover.matches);
+      if (isMobile || !noHover.matches) setOpen(false);
     };
     sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
+    mobile.addEventListener("change", sync);
+    noHover.addEventListener("change", sync);
+    return () => {
+      mobile.removeEventListener("change", sync);
+      noHover.removeEventListener("change", sync);
+    };
   }, []);
 
   return (

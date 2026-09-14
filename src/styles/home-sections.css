@@ -471,7 +471,7 @@ body:has(.il-page) {
 }
 
 /* Phones / tablets: no hover — tap opens the detail face */
-@media (hover: none) {
+@media (hover: none) and (min-width: 769px) {
   .il-offer-flip.is-open .il-offer-flip-inner,
   .il-offer-flip:focus-within .il-offer-flip-inner {
     transform: rotateY(180deg);
@@ -484,6 +484,25 @@ body:has(.il-page) {
   /* Whole back face is also tappable for a larger hit area */
   .il-offer-back {
     cursor: pointer;
+  }
+}
+
+/* Mobile: show the card content directly — no tap-to-explore flip */
+@media (max-width: 768px) {
+  .il-offer-flip-inner {
+    transform: rotateY(180deg) !important;
+    transition: none !important;
+    will-change: auto;
+  }
+
+  .il-offer-back::before {
+    animation: none;
+  }
+
+  .il-offer-hint,
+  .il-offer-tap-btn,
+  .il-offer-flip-close {
+    display: none;
   }
 }
 
@@ -670,6 +689,14 @@ body:has(.il-page) {
     /* keep hidden — reduced motion already disables the flip above */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+  }
+}
+
+@media (max-width: 768px) {
+  .il-offer-flip-inner,
+  .il-offer-flip:hover .il-offer-flip-inner,
+  .il-offer-flip:focus-within .il-offer-flip-inner {
+    transform: rotateY(180deg) !important;
   }
 }
 
@@ -1389,6 +1416,10 @@ body:has(.il-page) {
   .il-offer-flip {
     max-width: 320px;
     height: 300px;
+  }
+
+  html.il-dark .il-offer-flip-inner {
+    transform: rotateY(180deg) !important;
   }
 
   .il-grid-4 .il-card,
