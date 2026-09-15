@@ -28,8 +28,8 @@ const AGENT_BY_LABEL = new Map<string, (typeof BRIDGE_AGENTS)[number]>(
 );
 
 /**
- * Scroll-driven bridge — same constellation experience on desktop and mobile.
- * Reduced-motion users get the final resting state only.
+ * Scroll-driven bridge on desktop. Hidden on phones. Reduced-motion users
+ * get the final resting state only.
  */
 export default function BridgeSection({
   id,
@@ -47,7 +47,8 @@ export default function BridgeSection({
     if (!sec || !stage) return;
 
     const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const mqMobile = window.matchMedia("(max-width: 900px)");
+    const mqMobile = window.matchMedia("(max-width: 960px)");
+    if (mqMobile.matches) return;
     const isCanvasLayout = () => {
       const chip = stage.querySelector<HTMLElement>("[data-chip]");
       return !!chip && getComputedStyle(chip).position === "absolute";
