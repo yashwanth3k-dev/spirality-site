@@ -147,7 +147,13 @@ function Cursor({ position }: { position: Position }) {
   return (
     <motion.li
       aria-hidden="true"
-      animate={position}
+      initial={false}
+      animate={{
+        left: `${position.left}px`,
+        width: `${position.width}px`,
+        opacity: position.opacity,
+      }}
+      transition={{ type: "spring", stiffness: 380, damping: 32 }}
       className="ih-slidetabs-cursor"
     />
   );

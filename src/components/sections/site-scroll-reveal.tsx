@@ -45,8 +45,9 @@ const DIRECTIONS = ["left", "right", "up", "down"] as const;
  * Content re-enters whenever it returns to the viewport; navigation and
  * footers intentionally remain stable.
  *
- * Mutations are deferred until after hydration so React does not see
- * `ssr-item` / `data-reveal-direction` on the first client pass.
+ * Do not mutate React-owned nodes until after hydration. Streaming RSC
+ * inserts HTML, then hydrates; touching className in that window produces
+ * `ssr-item` / `data-reveal-direction` mismatches.
  */
 export default function SiteScrollReveal() {
   useEffect(() => {
@@ -57,8 +58,8 @@ export default function SiteScrollReveal() {
 
     let cancelled = false;
     let directionIndex = 0;
-    let rafOuter = 0;
-    let rafInner = 0;
+    let startTimer = 0;
+    let mutationTimer = 0;
     let observer: IntersectionObserver | null = null;
     let mutationObserver: MutationObserver | null = null;
     const observed = new WeakSet<Element>();
@@ -107,12 +108,11 @@ export default function SiteScrollReveal() {
 
       register(document);
 
-      mutationObserver = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-          for (const node of mutation.addedNodes) {
-            if (node instanceof HTMLElement) register(node);
-          }
-        }
+      mutationObserver = new MutationObserver(() => {
+        window.clearTimeout(mutationTimer);
+        mutationTimer = window.setTimeout(() => {
+          if (!cancelled) register(document);
+        }, 200);
       });
 
       mutationObserver.observe(document.body, {
@@ -121,15 +121,26 @@ export default function SiteScrollReveal() {
       });
     };
 
-    // Double rAF: wait until after paint/hydration before touching the DOM.
-    rafOuter = window.requestAnimationFrame(() => {
-      rafInner = window.requestAnimationFrame(start);
-    });
+    const kick = () => {
+      if (cancelled) return;
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(() => start(), { timeout: 1200 });
+      } else {
+        startTimer = window.setTimeout(start, 400);
+      }
+    };
+
+    if (document.readyState === "complete") {
+      startTimer = window.setTimeout(kick, 250);
+    } else {
+      window.addEventListener("load", kick, { once: true });
+    }
 
     return () => {
       cancelled = true;
-      window.cancelAnimationFrame(rafOuter);
-      window.cancelAnimationFrame(rafInner);
+      window.clearTimeout(startTimer);
+      window.clearTimeout(mutationTimer);
+      window.removeEventListener("load", kick);
       mutationObserver?.disconnect();
       observer?.disconnect();
     };

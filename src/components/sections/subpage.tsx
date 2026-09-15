@@ -383,28 +383,13 @@ export default function Subpage({ page }: { page: SubpageContent }) {
     <div className="il-page sp-page">
       <SubpageNav />
 
-      <header className={`sp-hero${page.heroVisual ? "sp-hero-visual" : ""}`}>
+      <header
+        className={`sp-hero${page.heroVisual ? "sp-hero-visual" : ""}`}
+        data-no-reveal
+      >
         <div className="il-inner sp-hero-grid">
-          {scrollReveal ? (
-            <ScrollReveal direction="left" className="sp-hero-copy-wrap">
-              {heroCopy}
-            </ScrollReveal>
-          ) : (
-            heroCopy
-          )}
-          {heroMedia ? (
-            scrollReveal ? (
-              <ScrollReveal
-                direction="right"
-                delay={0.08}
-                className="sp-hero-media-wrap"
-              >
-                {heroMedia}
-              </ScrollReveal>
-            ) : (
-              heroMedia
-            )
-          ) : null}
+          {heroCopy}
+          {heroMedia}
         </div>
       </header>
 

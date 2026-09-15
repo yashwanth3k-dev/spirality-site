@@ -12,7 +12,7 @@
   --il-magenta: #3d63e8; /* brand light blue (legacy token name) */
   --il-mono:
     ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Roboto Mono", monospace;
-  --il-nav-h: 72px;
+  --il-nav-h: 92px;
 
   background:
     radial-gradient(

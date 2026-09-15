@@ -1,4 +1,4 @@
-import { type Metadata } from "next";
+import { type Metadata, type Viewport } from "next";
 import { Inter } from "next/font/google";
 import GoogleAnalytics from "~/components/google-analytics";
 import SiteScrollReveal from "~/components/sections/site-scroll-reveal";
@@ -21,6 +21,12 @@ export const metadata: Metadata = {
     icon: [{ url: "/brand/spirality-mark-dark.png", type: "image/png" }],
     apple: "/brand/spirality-mark-dark.png",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 const THEME_BOOT = `(function(){try{if(localStorage.getItem("il-theme")==="dark")document.documentElement.classList.add("il-dark")}catch(e){}})();`;

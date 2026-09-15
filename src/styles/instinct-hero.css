@@ -116,10 +116,16 @@ ul.ih-slidetabs > li.ih-slidetabs-cursor {
   z-index: 0;
   top: 4px;
   left: 0;
+  width: 0;
   height: calc(100% - 8px);
+  margin: 0;
+  padding: 0;
+  flex: none;
+  overflow: hidden;
   border-radius: 999px;
   background: #000;
   pointer-events: none;
+  opacity: 0;
 }
 
 .ih-slidedrop {

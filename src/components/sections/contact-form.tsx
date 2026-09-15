@@ -222,6 +222,7 @@ export default function ContactForm() {
                   <span className="ct-choice-title">{item.title}</span>
                   <span className="ct-choice-line">{item.line}</span>
                 </span>
+                <span className="ct-choice-mark" aria-hidden />
               </label>
             );
           })}
@@ -310,6 +311,7 @@ export default function ContactForm() {
                   <span className="ct-choice-title">{item.title}</span>
                   <span className="ct-choice-line">{item.line}</span>
                 </span>
+                <span className="ct-choice-mark" aria-hidden />
               </label>
             );
           })}
@@ -331,7 +333,7 @@ export default function ContactForm() {
                   checked={checked}
                   onChange={() => toggleSystem(label)}
                 />
-                {label}
+                <span className="ct-chip-label">{label}</span>
               </label>
             );
           })}

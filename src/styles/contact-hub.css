@@ -160,26 +160,44 @@
   gap: 12px;
   min-height: 100%;
   padding: 14px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(21, 57, 209, 0.1);
   border-radius: 14px;
   background: var(--ct-deep);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.ct-choice:hover {
+  border-color: rgba(21, 57, 209, 0.28);
 }
 
 .ct-choice input {
+  appearance: none;
+  -webkit-appearance: none;
   position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   opacity: 0;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 .ct-choice.is-on {
-  border-color: rgba(123, 208, 255, 0.45);
-  background: #10182b;
-  color: #f4f7fc;
+  border-color: #1539d1;
+  background: rgba(21, 57, 209, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(21, 57, 209, 0.18);
 }
 
 .ct-choice.is-on .ct-choice-line {
-  color: rgba(244, 247, 252, 0.68);
+  color: var(--uch-muted);
 }
 
 .ct-choice:focus-within {
@@ -188,6 +206,8 @@
 }
 
 .ct-choice-icon {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -197,12 +217,17 @@
   border-radius: 10px;
   background: #1539d1;
   color: #fff;
+  pointer-events: none;
 }
 
 .ct-choice-copy {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
+  pointer-events: none;
 }
 
 .ct-choice-title {
@@ -214,6 +239,27 @@
   font-size: 0.82rem;
   line-height: 1.45;
   color: var(--uch-muted);
+}
+
+.ct-choice-mark {
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  margin-left: auto;
+  flex: none;
+  border-radius: 999px;
+  border: 1.5px solid rgba(16, 22, 36, 0.2);
+  background: transparent;
+  pointer-events: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.ct-choice.is-on .ct-choice-mark {
+  border-color: #1539d1;
+  background: radial-gradient(circle, #fff 0 3px, #1539d1 3.5px);
 }
 
 .ct-fields {
@@ -286,28 +332,96 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 8px 12px;
+  min-height: 40px;
+  padding: 8px 14px;
   border: 1px solid rgba(21, 57, 209, 0.15);
   border-radius: 999px;
   background: var(--ct-deep);
   font-size: 0.82rem;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
 }
 
-.ct-chip input {
-  position: absolute;
-  opacity: 0;
+.ct-chip-label {
+  position: relative;
+  z-index: 1;
   pointer-events: none;
 }
 
+.ct-chip input {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
 .ct-chip.is-on {
-  border-color: rgba(123, 208, 255, 0.5);
-  color: var(--ct-cyan);
+  border-color: #1539d1;
+  background: #1539d1;
+  color: #fff;
+}
+
+.ct-chip:hover:not(.is-on) {
+  border-color: rgba(21, 57, 209, 0.35);
 }
 
 .ct-chip:focus-within {
   outline: 2px solid var(--uch-blue);
   outline-offset: 2px;
+}
+
+html.il-dark .ct-choice {
+  border-color: rgba(238, 242, 251, 0.1);
+}
+
+html.il-dark .ct-choice:hover {
+  border-color: rgba(123, 208, 255, 0.34);
+}
+
+html.il-dark .ct-choice.is-on {
+  border-color: #7bd0ff;
+  background: rgba(21, 57, 209, 0.38);
+  box-shadow: inset 0 0 0 1px rgba(123, 208, 255, 0.22);
+  color: #f4f7fc;
+}
+
+html.il-dark .ct-choice.is-on .ct-choice-line {
+  color: rgba(244, 247, 252, 0.72);
+}
+
+html.il-dark .ct-choice-mark {
+  border-color: rgba(238, 242, 251, 0.28);
+}
+
+html.il-dark .ct-choice.is-on .ct-choice-mark {
+  border-color: #7bd0ff;
+  background: radial-gradient(circle, #101522 0 3px, #7bd0ff 3.5px);
+}
+
+html.il-dark .ct-chip {
+  border-color: rgba(238, 242, 251, 0.14);
+}
+
+html.il-dark .ct-chip:hover:not(.is-on) {
+  border-color: rgba(123, 208, 255, 0.38);
+}
+
+html.il-dark .ct-chip.is-on {
+  border-color: #6b7cff;
+  background: #1539d1;
+  color: #fff;
 }
 
 .ct-error {
