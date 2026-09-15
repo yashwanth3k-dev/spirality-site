@@ -266,7 +266,8 @@ html.sp-nav-lock .il-page > :not(.sp-nav) {
   align-items: center;
 }
 
-.sp-hero-visual .sp-hero-grid {
+.sp-hero-visual .sp-hero-grid,
+.sp-hero-grid:has(.sp-hero-media) {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
 }
 
@@ -650,6 +651,27 @@ html.sp-nav-lock .il-page > :not(.sp-nav) {
 .sp-post-body p:first-child {
   color: var(--il-ink);
   font-size: 1.15rem;
+}
+
+@media (min-width: 961px) {
+  .sp-hero-visual .sp-hero-grid,
+  .sp-hero-grid:has(.sp-hero-media) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+  }
+
+  .sp-hero-copy,
+  .sp-hero-media {
+    order: 0;
+    max-height: none;
+    width: auto;
+  }
+
+  .sp-hero-media {
+    min-height: clamp(280px, 42vw, 460px);
+    overflow: visible;
+  }
 }
 
 @media (max-width: 960px) {

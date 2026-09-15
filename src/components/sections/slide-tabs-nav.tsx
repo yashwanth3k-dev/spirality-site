@@ -7,8 +7,8 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { motion } from "motion/react";
 import { HERO_NAV } from "~/lib/content/site";
+import { cn } from "~/lib/utils";
 
 type Position = {
   left: number;
@@ -27,13 +27,10 @@ type NavItem = {
 };
 
 const CLOSE_DELAY_MS = 180;
+const IDLE: Position = { left: 0, width: 0, opacity: 0 };
 
 export default function SlideTabsNav() {
-  const [position, setPosition] = useState<Position>({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
+  const [position, setPosition] = useState<Position>(IDLE);
   const [openLabel, setOpenLabel] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -47,7 +44,7 @@ export default function SlideTabsNav() {
   const scheduleClose = () => {
     clearCloseTimer();
     closeTimer.current = setTimeout(() => {
-      setPosition((prev) => ({ ...prev, opacity: 0 }));
+      setPosition(IDLE);
       setOpenLabel(null);
       closeTimer.current = null;
     }, CLOSE_DELAY_MS);
@@ -56,23 +53,33 @@ export default function SlideTabsNav() {
   useEffect(() => () => clearCloseTimer(), []);
 
   return (
-    <ul
-      className="ih-slidetabs"
+    <div
+      className={cn("ih-slidetabs", openLabel && "is-hot")}
       onPointerEnter={clearCloseTimer}
       onPointerLeave={scheduleClose}
     >
-      {(HERO_NAV as readonly NavItem[]).map((item) => (
-        <Tab
-          key={item.label}
-          item={item}
-          open={openLabel === item.label}
-          setOpenLabel={setOpenLabel}
-          setPosition={setPosition}
-          onKeepOpen={clearCloseTimer}
-        />
-      ))}
-      <Cursor position={position} />
-    </ul>
+      <ul className="ih-slidetabs-list">
+        {(HERO_NAV as readonly NavItem[]).map((item) => (
+          <Tab
+            key={item.label}
+            item={item}
+            open={openLabel === item.label}
+            setOpenLabel={setOpenLabel}
+            setPosition={setPosition}
+            onKeepOpen={clearCloseTimer}
+          />
+        ))}
+      </ul>
+      <span
+        aria-hidden="true"
+        className="ih-slidetabs-cursor"
+        style={{
+          transform: `translate3d(${position.left}px, 0, 0)`,
+          width: position.width,
+          opacity: position.opacity,
+        }}
+      />
+    </div>
   );
 }
 
@@ -94,10 +101,12 @@ function Tab({
   const activate = () => {
     onKeepOpen();
     if (!ref.current) return;
-    const { width } = ref.current.getBoundingClientRect();
+    const root = ref.current.closest(".ih-slidetabs");
+    const tabBox = ref.current.getBoundingClientRect();
+    const rootBox = root?.getBoundingClientRect();
     setPosition({
-      left: ref.current.offsetLeft,
-      width,
+      left: rootBox ? tabBox.left - rootBox.left : ref.current.offsetLeft,
+      width: tabBox.width,
       opacity: 1,
     });
     setOpenLabel(item.label);
@@ -106,7 +115,7 @@ function Tab({
   return (
     <li
       ref={ref}
-      className={`ih-slidetab${open ? "is-open" : ""}`}
+      className={cn("ih-slidetab", open && "is-open")}
       onPointerEnter={activate}
     >
       <button
@@ -140,21 +149,5 @@ function Tab({
         </div>
       </div>
     </li>
-  );
-}
-
-function Cursor({ position }: { position: Position }) {
-  return (
-    <motion.li
-      aria-hidden="true"
-      initial={false}
-      animate={{
-        left: `${position.left}px`,
-        width: `${position.width}px`,
-        opacity: position.opacity,
-      }}
-      transition={{ type: "spring", stiffness: 380, damping: 32 }}
-      className="ih-slidetabs-cursor"
-    />
   );
 }

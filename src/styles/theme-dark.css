@@ -176,16 +176,16 @@ html.il-dark .sp-page {
     #0b0e14;
 }
 
-html.il-dark ul.ih-slidetabs {
+html.il-dark .ih-slidetabs {
   border-color: rgba(238, 242, 251, 0.2);
   background: #171d2a;
 }
 
-html.il-dark ul.ih-slidetabs > li.ih-slidetab > .ih-slidetab-trigger {
+html.il-dark .ih-slidetabs-list > .ih-slidetab > .ih-slidetab-trigger {
   color: #eef2fb;
 }
 
-html.il-dark ul.ih-slidetabs > li.ih-slidetabs-cursor {
+html.il-dark .ih-slidetabs > .ih-slidetabs-cursor {
   background: #27314a;
   box-shadow: inset 0 0 0 1px rgba(142, 160, 255, 0.24);
 }

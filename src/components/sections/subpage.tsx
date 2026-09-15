@@ -17,6 +17,7 @@ import AgentUseCases from "~/components/sections/agent-use-cases";
 import FooterLegal from "~/components/sections/footer-legal";
 import ScrollReveal from "~/components/sections/scroll-reveal";
 import { FOOTER, ROUTES } from "~/lib/content/home";
+import { cn } from "~/lib/utils";
 import {
   type SubpageContent,
   type SubpageSection,
@@ -384,7 +385,7 @@ export default function Subpage({ page }: { page: SubpageContent }) {
       <SubpageNav />
 
       <header
-        className={`sp-hero${page.heroVisual ? "sp-hero-visual" : ""}`}
+        className={cn("sp-hero", page.heroVisual && "sp-hero-visual")}
         data-no-reveal
       >
         <div className="il-inner sp-hero-grid">

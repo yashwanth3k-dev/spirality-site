@@ -57,7 +57,7 @@
 }
 
 /* Slide-tabs nav (HOVER.dev pattern) + hover menus */
-ul.ih-slidetabs {
+.ih-slidetabs {
   position: relative;
   z-index: 50;
   justify-self: center;
@@ -69,14 +69,25 @@ ul.ih-slidetabs {
   max-width: 100%;
   margin: 0 auto;
   padding: 4px;
-  list-style: none;
   border-radius: 999px;
   border: 2px solid #000;
   background: #fff;
   overflow: visible;
 }
 
-ul.ih-slidetabs > li.ih-slidetab {
+.ih-slidetabs-list {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ih-slidetabs-list > .ih-slidetab {
   position: relative;
   z-index: 10;
   display: block;
@@ -85,11 +96,13 @@ ul.ih-slidetabs > li.ih-slidetab {
   cursor: pointer;
 }
 
-ul.ih-slidetabs > li.ih-slidetab.is-open {
+.ih-slidetabs-list > .ih-slidetab.is-open {
   z-index: 70;
 }
 
-ul.ih-slidetabs > li.ih-slidetab > .ih-slidetab-trigger {
+.ih-slidetabs-list > .ih-slidetab > .ih-slidetab-trigger {
+  position: relative;
+  z-index: 1;
   display: block;
   margin: 0;
   padding: 10px 18px;
@@ -106,12 +119,12 @@ ul.ih-slidetabs > li.ih-slidetab > .ih-slidetab-trigger {
   transition: color 0.15s ease;
 }
 
-ul.ih-slidetabs > li.ih-slidetab:hover > .ih-slidetab-trigger,
-ul.ih-slidetabs > li.ih-slidetab.is-open > .ih-slidetab-trigger {
+.ih-slidetabs-list > .ih-slidetab:hover > .ih-slidetab-trigger,
+.ih-slidetabs-list > .ih-slidetab.is-open > .ih-slidetab-trigger {
   color: #fff;
 }
 
-ul.ih-slidetabs > li.ih-slidetabs-cursor {
+.ih-slidetabs > .ih-slidetabs-cursor {
   position: absolute;
   z-index: 0;
   top: 4px;
@@ -120,12 +133,20 @@ ul.ih-slidetabs > li.ih-slidetabs-cursor {
   height: calc(100% - 8px);
   margin: 0;
   padding: 0;
-  flex: none;
-  overflow: hidden;
   border-radius: 999px;
   background: #000;
   pointer-events: none;
   opacity: 0;
+  transform-origin: left center;
+  transition:
+    width 220ms ease,
+    transform 220ms ease,
+    opacity 160ms ease;
+}
+
+.ih-slidetabs:not(.is-hot) > .ih-slidetabs-cursor {
+  opacity: 0 !important;
+  width: 0 !important;
 }
 
 .ih-slidedrop {
@@ -146,8 +167,8 @@ ul.ih-slidetabs > li.ih-slidetabs-cursor {
   opacity: 0;
 }
 
-ul.ih-slidetabs > li.ih-slidetab:hover > .ih-slidedrop,
-ul.ih-slidetabs > li.ih-slidetab.is-open > .ih-slidedrop {
+.ih-slidetabs-list > .ih-slidetab:hover > .ih-slidedrop,
+.ih-slidetabs-list > .ih-slidetab.is-open > .ih-slidedrop {
   pointer-events: auto;
   visibility: visible;
   opacity: 1;
@@ -326,7 +347,7 @@ ul.ih-slidetabs > li.ih-slidetab.is-open > .ih-slidedrop {
 }
 
 @media (max-width: 960px) {
-  ul.ih-slidetabs {
+  .ih-slidetabs {
     display: none !important;
   }
 
