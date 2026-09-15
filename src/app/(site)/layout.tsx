@@ -1,6 +1,7 @@
 import { type Metadata, type Viewport } from "next";
 import { Inter } from "next/font/google";
 import GoogleAnalytics from "~/components/google-analytics";
+import ContactBubble from "~/components/sections/contact-bubble";
 import SiteScrollReveal from "~/components/sections/site-scroll-reveal";
 import { absoluteUrl } from "~/lib/seo";
 
@@ -47,6 +48,7 @@ export default function SiteLayout({
         <GoogleAnalytics />
         <SiteScrollReveal />
         {children}
+        <ContactBubble />
       </body>
     </html>
   );

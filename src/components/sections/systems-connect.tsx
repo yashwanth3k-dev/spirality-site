@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { CHANNEL_ICON_MAP, ApiIcon } from "~/components/sections/channel-icons";
+import { SCROLL_REVEAL_VIEWPORT } from "~/components/sections/scroll-reveal";
 import "~/styles/systems-connect.css";
 
 export default function SystemsConnect({
@@ -39,11 +40,7 @@ export default function SystemsConnect({
                   className="sc-legend-item"
                   initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{
-                    once: false,
-                    margin: "-12% 0px -12% 0px",
-                    amount: 0.3,
-                  }}
+                  viewport={SCROLL_REVEAL_VIEWPORT}
                   transition={{
                     duration: 0.4,
                     delay: reduceMotion ? 0 : i * 0.05,

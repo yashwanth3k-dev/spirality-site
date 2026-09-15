@@ -103,7 +103,6 @@ export default function BlogDetail({ item }: { item: BlogPost }) {
                 <BlogIcon name={BLOG_CATEGORY_ICON[item.category]} size={13} />
                 {BLOG_CATEGORY_LABEL[item.category]}
               </span>
-              <span className="uch-pattern">Note {item.pattern}</span>
             </div>
 
             <h1 className="blg-h1">{item.title}</h1>
@@ -231,7 +230,6 @@ export default function BlogDetail({ item }: { item: BlogPost }) {
                       />
                       {BLOG_CATEGORY_LABEL[other.category]}
                     </span>
-                    <span className="uch-pattern">Note {other.pattern}</span>
                   </div>
                   <h3>{other.title}</h3>
                   <p>{other.lead}</p>
@@ -244,30 +242,6 @@ export default function BlogDetail({ item }: { item: BlogPost }) {
           </div>
         </section>
       ) : null}
-
-      <div className="uch-inner">
-        <aside className="uch-banner">
-          <div className="uch-banner-glow" aria-hidden />
-          <div className="uch-banner-copy">
-            <p className="uch-banner-kicker">Next step</p>
-            <h2>Bring one process. Not a transformation deck.</h2>
-            <p>
-              Also related:{" "}
-              {item.relatedWork.map((link, index) => (
-                <span key={link.href}>
-                  {index > 0 ? " · " : null}
-                  <a href={link.href}>{link.label}</a>
-                  {index === item.relatedWork.length - 1 ? "." : ""}
-                </span>
-              ))}{" "}
-              We start from the work that actually hurts.
-            </p>
-          </div>
-          <a className="uch-btn uch-btn-solid" href={ROUTES.contact}>
-            Talk to Us <ArrowIcon />
-          </a>
-        </aside>
-      </div>
     </article>
   );
 }

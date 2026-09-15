@@ -1,5 +1,5 @@
 import { createI18nMiddleware } from "next-international/middleware";
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const I18nMiddleware = createI18nMiddleware({
   locales: ["en", "fr"],
@@ -7,6 +7,12 @@ const I18nMiddleware = createI18nMiddleware({
 });
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  if (pathname === "/fr" || pathname.startsWith("/fr/")) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace(/^\/fr/, "/en") || "/en";
+    return NextResponse.redirect(url, 308);
+  }
   return I18nMiddleware(request);
 }
 

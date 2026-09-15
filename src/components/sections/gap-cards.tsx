@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { BookOpen, Hand, ShieldCheck, type LucideIcon } from "lucide-react";
+import { SCROLL_REVEAL_VIEWPORT } from "~/components/sections/scroll-reveal";
 import "~/styles/gap-cards.css";
 
 type GapCard = {
@@ -66,7 +67,7 @@ export default function GapCards({
                 className="gap-card"
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
+                viewport={SCROLL_REVEAL_VIEWPORT}
                 transition={{
                   duration: 0.7,
                   ease: "easeOut",

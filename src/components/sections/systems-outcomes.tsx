@@ -49,7 +49,7 @@ export default function SystemsOutcomes({
       <div className="il-inner">
         <motion.div
           className="il-head"
-          initial={live ? { opacity: 0, y: -28 } : false}
+          initial={live ? { opacity: 0, y: 20 } : false}
           whileInView={live ? { opacity: 1, y: 0 } : undefined}
           viewport={live ? SCROLL_REVEAL_VIEWPORT : undefined}
           transition={{ duration: 0.55, ease: SCROLL_REVEAL_EASE }}
@@ -76,9 +76,7 @@ export default function SystemsOutcomes({
                       : { opacity: 0, y: 16 }
                 }
                 whileInView={live ? reveal.whileInView : { opacity: 1, y: 0 }}
-                viewport={
-                  live ? SCROLL_REVEAL_VIEWPORT : { once: true, amount: 0.3 }
-                }
+                viewport={SCROLL_REVEAL_VIEWPORT}
                 transition={{
                   duration: 0.5,
                   ease: live ? SCROLL_REVEAL_EASE : "easeOut",

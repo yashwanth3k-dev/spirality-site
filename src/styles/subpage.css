@@ -159,12 +159,14 @@ html.il-dark .sp-brand-mark--on-dark {
   top: 9px;
 }
 
-.sp-burger.is-open .sp-burger-lines span:first-child {
+.sp-burger.is-open .sp-burger-lines span:first-child,
+.sp-burger[aria-expanded="true"] .sp-burger-lines span:first-child {
   top: 6px;
   transform: rotate(45deg);
 }
 
-.sp-burger.is-open .sp-burger-lines span:last-child {
+.sp-burger.is-open .sp-burger-lines span:last-child,
+.sp-burger[aria-expanded="true"] .sp-burger-lines span:last-child {
   top: 6px;
   transform: rotate(-45deg);
 }
@@ -615,12 +617,6 @@ html.sp-nav-lock .il-page > :not(.sp-nav) {
   margin-right: auto;
   max-width: none;
   width: 100%;
-}
-
-.sp-close-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 28px;
 }
 
 .sp-close-note {

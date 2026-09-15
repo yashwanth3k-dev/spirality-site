@@ -37,7 +37,7 @@ export type SubpageSection =
       id?: string;
       eyebrow: string;
       heading: string;
-      footer: string;
+      footer?: string;
     }
   | {
       kind: "outcomeCards";
@@ -68,6 +68,7 @@ export type SubpageSection =
       heading: string;
       footer?: string;
       iconSet?: "digital" | "systems" | "ops";
+      copySide?: "left" | "right";
       items: Array<{ title: string; line: string }>;
     }
   | {
@@ -76,6 +77,8 @@ export type SubpageSection =
       eyebrow: string;
       heading: string;
       footer?: string;
+      iconSet?: "model" | "engage";
+      copySide?: "left" | "right";
       items: Array<{ title: string; line: string }>;
     }
   | {
@@ -107,7 +110,7 @@ export type SubpageSection =
       id?: string;
       eyebrow: string;
       heading: string;
-      footer: string;
+      footer?: string;
       steps: Array<{ title: string; line: string }>;
     }
   | {
@@ -164,7 +167,6 @@ export type SubpageContent = {
     heading: string;
     body: string;
     note?: string;
-    ctaLabel?: string;
   };
 };
 
@@ -214,8 +216,6 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
         kind: "agentFlow",
         eyebrow: "How we make an agent work",
         heading: "AI is only useful when it knows what to do.",
-        footer:
-          "We design every agent around the work, the systems it needs, the decisions it can make and the points where your team stays in control.",
       },
       {
         kind: "outcomeCards",
@@ -229,7 +229,6 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
       heading: "Have a business process worth giving to an agent?",
       body: "Tell us what the work looks like today. We'll help you determine what AI can handle, what your team should handle, and what it would take to put it into production.",
       note: "No technical explanation required. Start with the work.",
-      ctaLabel: "Build an AI Agent",
     },
   },
 
@@ -242,8 +241,6 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
     lead: "We design and build websites, portals, applications and digital experiences that help your business get noticed, earn trust and make it easier for people to take action.",
     tagline:
       "From brand identity to digital products — built around your business.",
-    heroSupport:
-      "Websites · Portals · Applications · Branding · SEO · Digital Growth",
     heroVisual: "website-design",
     primaryCta: { label: "Start a Project", href: ROUTES.contact },
     sections: [
@@ -276,6 +273,29 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
         ],
       },
       {
+        kind: "deliverySteps",
+        eyebrow: "How we deliver",
+        heading: "From first idea to something people can use.",
+        steps: [
+          {
+            title: "Understand",
+            line: "We learn about your business, audience, goals and what needs to work better.",
+          },
+          {
+            title: "Design",
+            line: "We shape the brand, experience, structure and user journey before building.",
+          },
+          {
+            title: "Build",
+            line: "We develop the website, portal, application or digital system and connect what it needs.",
+          },
+          {
+            title: "Launch & Grow",
+            line: "We launch, measure, optimise and support the digital experience as your business evolves.",
+          },
+        ],
+      },
+      {
         kind: "principles",
         eyebrow: "The difference",
         heading: "Built for how people use the web now.",
@@ -302,38 +322,12 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
           },
         ],
       },
-      {
-        kind: "deliverySteps",
-        eyebrow: "How we deliver",
-        heading: "From first idea to something people can use.",
-        footer:
-          "Need only a website? We can build it. Need a complete digital system? We can build that too.",
-        steps: [
-          {
-            title: "Understand",
-            line: "We learn about your business, audience, goals and what needs to work better.",
-          },
-          {
-            title: "Design",
-            line: "We shape the brand, experience, structure and user journey before building.",
-          },
-          {
-            title: "Build",
-            line: "We develop the website, portal, application or digital system and connect what it needs.",
-          },
-          {
-            title: "Launch & Grow",
-            line: "We launch, measure, optimise and support the digital experience as your business evolves.",
-          },
-        ],
-      },
     ],
     close: {
       eyebrow: "Start here",
       heading: "Have something digital you want to build?",
       body: "Whether you need a new website, a customer portal, a new brand or a stronger digital presence, tell us what you're trying to achieve.",
       note: "Start with what you need. We'll help shape what comes next.",
-      ctaLabel: "Talk to Us",
     },
   },
 
@@ -418,6 +412,7 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
         footer:
           "Your systems become the place where people, automation and AI work together.",
         iconSet: "systems",
+        copySide: "right",
         items: [
           {
             title: "AI-enabled CRM",
@@ -465,7 +460,6 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
       eyebrow: "Start here",
       heading: "Have a system that could work better?",
       body: "Tell us where your team is losing time, information or visibility.",
-      ctaLabel: "Talk to Us",
     },
   },
 
@@ -535,10 +529,13 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
         ],
       },
       {
-        kind: "offerCards",
+        kind: "opsModel",
         eyebrow: "How we work with your business",
         heading: "You choose what you want us to take care of.",
-        iconSet: "opsEngage",
+        footer:
+          "Run the process for you, sit with your existing team, or scale as the load changes.",
+        iconSet: "engage",
+        copySide: "right",
         items: [
           {
             title: "Fully Managed",
@@ -596,7 +593,6 @@ export const SOLUTION_PAGES: Record<string, SubpageContent> = {
       heading: "Have work your team shouldn't be spending all day on?",
       body: "Tell us what needs to be handled. We'll help you determine what should stay with your team, what can be outsourced, and where AI or automation can make the operation better.",
       note: "People when people matter. Technology where it helps.",
-      ctaLabel: "Talk to Us",
     },
   },
 

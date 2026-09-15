@@ -3,21 +3,9 @@ import BrandLogo from "~/components/sections/brand-logo";
 import FooterLegal from "~/components/sections/footer-legal";
 import OfferCard from "~/components/sections/offer-card";
 import SpotlightCard from "~/components/sections/spotlight-card";
-import { BENEFITS, CLOSE, FOOTER, OFFER, SECTIONS } from "~/lib/content/home";
+import { BENEFITS, FOOTER, OFFER, SECTIONS } from "~/lib/content/home";
 import { SECTION_ICONS } from "~/lib/content/section-icons";
 import "~/styles/home-sections.css";
-
-function Arrow() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path
-        d="M5 12h13M13 6l6 6-6 6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export default function HomeSections() {
   return (
@@ -81,25 +69,6 @@ export default function HomeSections() {
                 </SpotlightCard>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* closing CTA */}
-      <section className="il-section" id={SECTIONS.close}>
-        <div className="il-inner">
-          <div className="il-band">
-            <p className="il-eyebrow il-eyebrow-center">{CLOSE.eyebrow}</p>
-            <h2 className="il-h2">{CLOSE.heading}</h2>
-            <p className="il-lead">{CLOSE.body}</p>
-            <div className="il-actions">
-              <a className="il-btn il-btn-solid" href={CLOSE.primary.href}>
-                {CLOSE.primary.label} <Arrow />
-              </a>
-              <a className="il-btn il-btn-ghost" href={CLOSE.secondary.href}>
-                {CLOSE.secondary.label}
-              </a>
-            </div>
           </div>
         </div>
       </section>

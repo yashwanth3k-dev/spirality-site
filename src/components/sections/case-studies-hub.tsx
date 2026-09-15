@@ -20,7 +20,6 @@ function StudyCard({ item }: { item: CaseStudy }) {
       <div className="csd-card-body">
         <div className="csd-card-meta">
           <span className="uch-pill uch-pill-systems">{item.status}</span>
-          <span className="uch-pattern">Study {item.pattern}</span>
         </div>
         <p className="csd-client">{item.client}</p>
         <h2 className="csd-card-name">
@@ -77,23 +76,6 @@ export default function CaseStudiesHub() {
           </div>
         </div>
       </section>
-
-      <div className="uch-inner">
-        <aside className="uch-banner">
-          <div className="uch-banner-glow" aria-hidden />
-          <div className="uch-banner-copy">
-            <p className="uch-banner-kicker">Honesty rule</p>
-            <h2>Empty numbers are better than fake ones.</h2>
-            <p>
-              When a study is far enough along, we will add what changed — still
-              without naming the client unless they ask us to.
-            </p>
-          </div>
-          <a className="uch-btn uch-btn-solid" href={ROUTES.contact}>
-            Talk about your process <ArrowIcon />
-          </a>
-        </aside>
-      </div>
     </main>
   );
 }

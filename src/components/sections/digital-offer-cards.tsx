@@ -81,9 +81,7 @@ export default function DigitalOfferCards({
                       : { opacity: 0, y: 18 }
                 }
                 whileInView={live ? reveal.whileInView : { opacity: 1, y: 0 }}
-                viewport={
-                  live ? SCROLL_REVEAL_VIEWPORT : { once: true, amount: 0.3 }
-                }
+                viewport={SCROLL_REVEAL_VIEWPORT}
                 transition={{
                   duration: live ? 0.55 : 0.55,
                   ease: live ? SCROLL_REVEAL_EASE : "easeOut",

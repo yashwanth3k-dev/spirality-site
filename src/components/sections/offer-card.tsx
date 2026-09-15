@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { cn } from "~/lib/utils";
 
 export default function OfferCard({
   title,
@@ -41,7 +42,7 @@ export default function OfferCard({
   }, []);
 
   return (
-    <div className={`il-offer-flip${open ? "is-open" : ""}`}>
+    <div className={cn("il-offer-flip", open && "is-open")}>
       <div className="il-offer-flip-inner">
         <div
           className="il-offer-face il-offer-back"

@@ -274,7 +274,8 @@
 
 .ucd-card:hover h3,
 .ucd-node:hover strong,
-.ucd-node-active strong {
+.ucd-node-active strong,
+.ucd-node[aria-pressed="true"] strong {
   color: var(--uch-blue-hi);
 }
 
@@ -405,7 +406,8 @@
     border-color 0.2s ease;
 }
 
-.ucd-node-active {
+.ucd-node-active,
+.ucd-node[aria-pressed="true"] {
   border-color: rgba(107, 124, 255, 0.35);
   box-shadow:
     0 0 0 1px rgba(21, 57, 209, 0.2),

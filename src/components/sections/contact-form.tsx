@@ -1,60 +1,34 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { ArrowIcon, UseCaseIcon } from "~/components/sections/use-case-icons";
-import {
-  CONTACT_DEPTHS,
-  CONTACT_FORM,
-  CONTACT_SYSTEM_SPECIAL,
-  CONTACT_SYSTEMS,
-  CONTACT_VECTORS,
-} from "~/lib/content/contact";
+import { ArrowIcon } from "~/components/sections/use-case-icons";
+import { CONTACT_FORM } from "~/lib/content/contact";
 import { FOOTER } from "~/lib/content/site";
 
 type FormState = {
-  vector: string;
   name: string;
   email: string;
   company: string;
-  depth: string;
-  systems: string[];
   process: string;
 };
 
 const EMPTY: FormState = {
-  vector: "",
   name: "",
   email: "",
   company: "",
-  depth: "",
-  systems: [],
   process: "",
 };
 
-function vectorLabel(id: string) {
-  return CONTACT_VECTORS.find((item) => item.id === id)?.title ?? id;
-}
-
-function depthLabel(id: string) {
-  return CONTACT_DEPTHS.find((item) => item.id === id)?.title ?? id;
-}
-
 function buildMailto(state: FormState) {
-  const subject = `Spirality intake — ${vectorLabel(state.vector)}`;
   const lines = [
     `Name: ${state.name}`,
     `Email: ${state.email}`,
     state.company ? `Company: ${state.company}` : null,
-    `Vector: ${vectorLabel(state.vector)}`,
-    `Depth: ${depthLabel(state.depth)}`,
-    state.systems.length
-      ? `Already running: ${state.systems.join(", ")}`
-      : null,
     "",
     "The process:",
     state.process.trim(),
   ].filter((line) => line !== null);
-  return `mailto:${FOOTER.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+  return `mailto:${FOOTER.email}?subject=${encodeURIComponent("Spirality — one process")}&body=${encodeURIComponent(lines.join("\n"))}`;
 }
 
 function isEmail(value: string) {
@@ -66,7 +40,6 @@ export default function ContactForm() {
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const processRef = useRef<HTMLTextAreaElement>(null);
@@ -81,53 +54,15 @@ export default function ContactForm() {
     }
   }, [sent]);
 
-  function toggleSystem(label: string) {
-    const special = new Set<string>(CONTACT_SYSTEM_SPECIAL);
-    setState((current) => {
-      if (current.systems.includes(label)) {
-        return {
-          ...current,
-          systems: current.systems.filter((item) => item !== label),
-        };
-      }
-      if (special.has(label)) {
-        return { ...current, systems: [label] };
-      }
-      return {
-        ...current,
-        systems: [
-          ...current.systems.filter((item) => !special.has(item)),
-          label,
-        ],
-      };
-    });
-  }
-
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitting) return;
 
-    if (
-      !state.name.trim() ||
-      !state.vector ||
-      !state.depth ||
-      !state.process.trim()
-    ) {
+    if (!state.name.trim() || !state.process.trim()) {
       setError(CONTACT_FORM.errorRequired);
       requestAnimationFrame(() => {
-        if (!state.name.trim()) {
-          nameRef.current?.focus();
-        } else if (!state.vector) {
-          formRef.current
-            ?.querySelector<HTMLInputElement>('input[name="vector"]')
-            ?.focus();
-        } else if (!state.depth) {
-          formRef.current
-            ?.querySelector<HTMLInputElement>('input[name="depth"]')
-            ?.focus();
-        } else {
-          processRef.current?.focus();
-        }
+        if (!state.name.trim()) nameRef.current?.focus();
+        else processRef.current?.focus();
       });
       return;
     }
@@ -144,7 +79,12 @@ export default function ContactForm() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(state),
+        body: JSON.stringify({
+          ...state,
+          vector: "not-clear",
+          depth: "not-clear",
+          systems: [],
+        }),
       });
 
       if (!response.ok) {
@@ -192,43 +132,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form ref={formRef} className="ct-form" onSubmit={onSubmit} noValidate>
-      <fieldset className="ct-fieldset">
-        <legend>{CONTACT_FORM.vectorLegend}</legend>
-        <div className="ct-vectors">
-          {CONTACT_VECTORS.map((item) => {
-            const checked = state.vector === item.id;
-            return (
-              <label
-                key={item.id}
-                className={`ct-choice${checked ? "is-on" : ""}`}
-              >
-                <input
-                  type="radio"
-                  name="vector"
-                  value={item.id}
-                  checked={checked}
-                  onChange={() =>
-                    setState((current) => ({ ...current, vector: item.id }))
-                  }
-                  required
-                  aria-invalid={Boolean(error && !state.vector)}
-                  aria-describedby={error ? "ct-form-error" : undefined}
-                />
-                <span className="ct-choice-icon" aria-hidden>
-                  <UseCaseIcon name={item.icon} size={18} />
-                </span>
-                <span className="ct-choice-copy">
-                  <span className="ct-choice-title">{item.title}</span>
-                  <span className="ct-choice-line">{item.line}</span>
-                </span>
-                <span className="ct-choice-mark" aria-hidden />
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
-
+    <form className="ct-form" onSubmit={onSubmit} noValidate>
       <div className="ct-fields">
         <label className="ct-field">
           <span>{CONTACT_FORM.nameLabel}</span>
@@ -283,79 +187,26 @@ export default function ContactForm() {
             }
           />
         </label>
+        <label className="ct-field ct-field-wide">
+          <span>{CONTACT_FORM.processLabel}</span>
+          <textarea
+            ref={processRef}
+            name="process"
+            rows={5}
+            placeholder={CONTACT_FORM.processPlaceholder}
+            value={state.process}
+            onChange={(event) =>
+              setState((current) => ({
+                ...current,
+                process: event.target.value,
+              }))
+            }
+            required
+            aria-invalid={Boolean(error && !state.process.trim())}
+            aria-describedby={error ? "ct-form-error" : undefined}
+          />
+        </label>
       </div>
-
-      <fieldset className="ct-fieldset">
-        <legend>{CONTACT_FORM.depthLegend}</legend>
-        <div className="ct-depths">
-          {CONTACT_DEPTHS.map((item) => {
-            const checked = state.depth === item.id;
-            return (
-              <label
-                key={item.id}
-                className={`ct-choice ct-choice-plain${checked ? "is-on" : ""}`}
-              >
-                <input
-                  type="radio"
-                  name="depth"
-                  value={item.id}
-                  checked={checked}
-                  onChange={() =>
-                    setState((current) => ({ ...current, depth: item.id }))
-                  }
-                  required
-                  aria-invalid={Boolean(error && !state.depth)}
-                  aria-describedby={error ? "ct-form-error" : undefined}
-                />
-                <span className="ct-choice-copy">
-                  <span className="ct-choice-title">{item.title}</span>
-                  <span className="ct-choice-line">{item.line}</span>
-                </span>
-                <span className="ct-choice-mark" aria-hidden />
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
-
-      <fieldset className="ct-fieldset">
-        <legend>{CONTACT_FORM.systemsLegend}</legend>
-        <p className="ct-hint">{CONTACT_FORM.systemsHint}</p>
-        <div className="ct-systems">
-          {CONTACT_SYSTEMS.map((label) => {
-            const checked = state.systems.includes(label);
-            return (
-              <label key={label} className={`ct-chip${checked ? "is-on" : ""}`}>
-                <input
-                  type="checkbox"
-                  name="systems"
-                  value={label}
-                  checked={checked}
-                  onChange={() => toggleSystem(label)}
-                />
-                <span className="ct-chip-label">{label}</span>
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
-
-      <label className="ct-field ct-field-wide">
-        <span>{CONTACT_FORM.processLabel}</span>
-        <textarea
-          ref={processRef}
-          name="process"
-          rows={6}
-          placeholder={CONTACT_FORM.processPlaceholder}
-          value={state.process}
-          onChange={(event) =>
-            setState((current) => ({ ...current, process: event.target.value }))
-          }
-          required
-          aria-invalid={Boolean(error && !state.process.trim())}
-          aria-describedby={error ? "ct-form-error" : undefined}
-        />
-      </label>
 
       {error ? (
         <p id="ct-form-error" className="ct-error" role="alert">

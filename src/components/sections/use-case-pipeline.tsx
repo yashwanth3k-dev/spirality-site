@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { UseCaseIcon } from "~/components/sections/use-case-icons";
+import { cn } from "~/lib/utils";
 import type { UseCaseFlowStep } from "~/lib/content/use-cases";
 
 export default function UseCasePipeline({
@@ -32,7 +33,7 @@ export default function UseCasePipeline({
               <button
                 key={item.title}
                 type="button"
-                className={`ucd-node${selected ? "ucd-node-active" : ""}`}
+                className={cn("ucd-node", selected && "ucd-node-active")}
                 aria-pressed={selected}
                 onClick={() => setActive(index)}
               >

@@ -17,6 +17,33 @@
   align-items: start;
 }
 
+.dn-section-flip {
+  background:
+    radial-gradient(
+      ellipse 60% 45% at 0% 0%,
+      rgba(21, 57, 209, 0.12),
+      transparent 55%
+    ),
+    #f4f7fc;
+}
+
+@media (min-width: 901px) {
+  .dn-layout-flip {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+
+  .dn-layout-flip .dn-copy {
+    order: 2;
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .dn-layout-flip .dn-heading,
+  .dn-layout-flip .dn-footer {
+    margin-left: auto;
+  }
+}
+
 .dn-heading {
   max-width: 16ch !important;
 }

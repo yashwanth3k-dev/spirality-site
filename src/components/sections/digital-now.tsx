@@ -14,6 +14,8 @@ import {
   Workflow,
   type LucideIcon,
 } from "lucide-react";
+import { SCROLL_REVEAL_VIEWPORT } from "~/components/sections/scroll-reveal";
+import { cn } from "~/lib/utils";
 import "~/styles/digital-now.css";
 
 const ICON_SETS: Record<string, LucideIcon[]> = {
@@ -27,19 +29,27 @@ export default function DigitalNow({
   items,
   footer,
   iconSet = "digital",
+  copySide = "left",
 }: {
   eyebrow: string;
   heading: string;
   items: Array<{ title: string; line: string }>;
   footer?: string;
   iconSet?: "digital" | "systems" | "ops";
+  copySide?: "left" | "right";
 }) {
   const icons = ICON_SETS[iconSet] ?? ICON_SETS.digital;
+  const flip = copySide === "right";
 
   return (
-    <section className="il-section sp-section dn-section">
+    <section
+      className={cn(
+        "il-section sp-section dn-section",
+        flip && "dn-section-flip"
+      )}
+    >
       <div className="il-inner">
-        <div className="dn-layout">
+        <div className={cn("dn-layout", flip && "dn-layout-flip")}>
           <div className="dn-copy">
             <p className="il-eyebrow">{eyebrow}</p>
             <h2 className="il-h2 dn-heading">{heading}</h2>
@@ -53,13 +63,9 @@ export default function DigitalNow({
                 <motion.li
                   key={item.title}
                   className="dn-item"
-                  initial={{ opacity: 0, x: 16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{
-                    once: false,
-                    margin: "-12% 0px -12% 0px",
-                    amount: 0.4,
-                  }}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={SCROLL_REVEAL_VIEWPORT}
                   transition={{
                     duration: 0.5,
                     ease: "easeOut",

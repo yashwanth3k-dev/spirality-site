@@ -30,25 +30,25 @@ function HeroPanel() {
         <p className="ih-sub ih-step ih-step-3">
           We build AI around the way your business actually works.
         </p>
-
-        <span className="ih-cta-wrap ih-step ih-step-4">
-          <a className="ih-cta" href={HERO_CTA.secondary.href}>
-            {HERO_CTA.secondary.label}
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                d="M5 12h13M13 6l6 6-6 6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
-        </span>
       </div>
+
+      <span className="ih-cta-wrap ih-step ih-step-4">
+        <a className="ih-cta" href={HERO_CTA.secondary.href}>
+          {HERO_CTA.secondary.label}
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              d="M5 12h13M13 6l6 6-6 6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
+      </span>
 
       <div className="ih-stage">
         <div className="ih-hand ih-hand-left">

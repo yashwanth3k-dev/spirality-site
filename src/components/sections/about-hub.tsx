@@ -2,13 +2,12 @@ import AboutUsLottie from "~/components/sections/about-us-lottie";
 import { ArrowIcon, UseCaseIcon } from "~/components/sections/use-case-icons";
 import {
   ABOUT_BELIEFS,
-  ABOUT_CLOSE,
   ABOUT_DIRECTION,
   ABOUT_FOUNDERS,
   ABOUT_INDEX,
   ABOUT_ORIGIN,
 } from "~/lib/content/about";
-import { FOOTER, ROUTES } from "~/lib/content/home";
+import { ROUTES } from "~/lib/content/home";
 import "~/styles/about-hub.css";
 
 export default function AboutHub() {
@@ -144,28 +143,6 @@ export default function AboutHub() {
                 <p className="abt-founder-focus">{person.focus}</p>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        className="abt-band abt-band-alt abt-close"
-        aria-labelledby="abt-close-heading"
-      >
-        <div className="uch-inner abt-close-grid">
-          <div className="abt-close-copy">
-            <h2 id="abt-close-heading">{ABOUT_CLOSE.heading}</h2>
-            <p>{ABOUT_CLOSE.body}</p>
-          </div>
-          <div className="abt-close-panel">
-            <a className="uch-btn uch-btn-solid" href={ABOUT_CLOSE.cta.href}>
-              {ABOUT_CLOSE.cta.label} <ArrowIcon />
-            </a>
-            <a className="abt-close-mail" href={`mailto:${FOOTER.email}`}>
-              <span>Email</span>
-              {FOOTER.email}
-            </a>
-            <p className="abt-close-note">{ABOUT_CLOSE.note}</p>
           </div>
         </div>
       </section>

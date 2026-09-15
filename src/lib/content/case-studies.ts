@@ -139,7 +139,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     scope: "Document management · CRM · AI alerts",
     image: "/case-studies/ca-practice.png",
     imageAlt:
-      "Quiet professional office with files and a desk, used as a stand-in for this engagement — client not named.",
+      "A large chartered-accountancy practice at night: client files, tax volumes, and a practice system on screen — stand-in for this engagement, client not named.",
     specs: [
       {
         label: "Who",

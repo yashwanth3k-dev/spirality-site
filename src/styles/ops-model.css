@@ -25,6 +25,33 @@
   max-width: 18ch !important;
 }
 
+.om-section-flip {
+  background:
+    radial-gradient(
+      ellipse 50% 45% at 10% 40%,
+      rgba(21, 57, 209, 0.14),
+      transparent 62%
+    ),
+    #f4f7fc;
+}
+
+@media (min-width: 901px) {
+  .om-layout-flip {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+
+  .om-layout-flip .om-copy {
+    order: 2;
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .om-layout-flip .om-heading,
+  .om-layout-flip .om-footer {
+    margin-left: auto;
+  }
+}
+
 .om-footer {
   margin: 20px 0 0;
   max-width: 32ch;

@@ -3,6 +3,7 @@
 import { Instrument_Serif } from "next/font/google";
 import { useEffect, useRef } from "react";
 import {
+  BRIDGE_AGENT_MOBILE,
   BRIDGE_AGENTS,
   BRIDGE_CAPTIONS,
   BRIDGE_FLOWS,
@@ -92,7 +93,7 @@ export default function BridgeSection({
       const b = proc.getBoundingClientRect();
       if (mqMobile.matches) {
         return {
-          x: b.left - stageRect.left + Math.min(56, b.width * 0.4) + slot * 10,
+          x: b.left - stageRect.left + b.width / 2,
           y: b.top - stageRect.top + b.height / 2,
         };
       }
@@ -196,7 +197,11 @@ export default function BridgeSection({
 
       const total = sr.height - vh;
       const p = clamp(total > 0 ? -sr.top / total : 1);
-      const center = { x: 0.5 * stageRect.width, y: 0.47 * stageRect.height };
+      const hubYRaw = parseFloat(
+        getComputedStyle(stage).getPropertyValue("--bridge-hub-y")
+      );
+      const hubY = Number.isFinite(hubYRaw) ? hubYRaw / 100 : 0.47;
+      const center = { x: 0.5 * stageRect.width, y: hubY * stageRect.height };
       const slots = new Map<string, number>();
 
       const o1 = 1 - clamp((p - 0.11) / 0.06);
@@ -255,10 +260,17 @@ export default function BridgeSection({
         const agent = AGENT_BY_LABEL.get(label) ?? BRIDGE_AGENTS[i];
         if (!agent) return;
 
-        const start = {
-          x: (agent.x / 100) * stageRect.width,
-          y: (agent.y / 100) * stageRect.height,
-        };
+        const mobile = BRIDGE_AGENT_MOBILE[i];
+        const start =
+          mqMobile.matches && mobile
+            ? {
+                x: (mobile.x / 100) * stageRect.width,
+                y: (mobile.y / 100) * stageRect.height,
+              }
+            : {
+                x: (agent.x / 100) * stageRect.width,
+                y: (agent.y / 100) * stageRect.height,
+              };
         const si = 0.26 + (i % 12) * 0.02;
         const e = ease(clamp((p - si) / 0.2));
         const amp = 4.5 * (1 - clamp((p - 0.26) / 0.08));
@@ -500,14 +512,19 @@ export default function BridgeSection({
           </div>
 
           <div className="il-bridge-agents" aria-hidden="true">
-            {BRIDGE_AGENTS.map((a) => (
+            {BRIDGE_AGENTS.map((a, i) => (
               <div
                 key={a.label}
                 className="il-bridge-chip"
                 data-chip=""
                 data-chip-label={a.label}
                 data-chip-target={a.target ?? ""}
-                style={{ left: `${a.x}%`, top: `${a.y}%` }}
+                style={{
+                  left: `${a.x}%`,
+                  top: `${a.y}%`,
+                  ["--cb-mx" as string]: `${BRIDGE_AGENT_MOBILE[i]?.x ?? a.x}%`,
+                  ["--cb-my" as string]: `${BRIDGE_AGENT_MOBILE[i]?.y ?? a.y}%`,
+                }}
               >
                 <span
                   className="il-bridge-chip-dot"

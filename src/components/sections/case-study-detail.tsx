@@ -26,7 +26,6 @@ export default function CaseStudyDetail({ item }: { item: CaseStudy }) {
 
             <div className="uch-pills">
               <span className="uch-pill uch-pill-systems">{item.status}</span>
-              <span className="uch-pattern">Study {item.pattern}</span>
             </div>
 
             <h1 className="ucd-h1">{item.name}</h1>
@@ -146,7 +145,6 @@ export default function CaseStudyDetail({ item }: { item: CaseStudy }) {
                     <span className="uch-pill uch-pill-systems">
                       {other.status}
                     </span>
-                    <span className="uch-pattern">Study {other.pattern}</span>
                   </div>
                   <h3>{other.name}</h3>
                   <p>{other.promise}</p>
@@ -159,31 +157,6 @@ export default function CaseStudyDetail({ item }: { item: CaseStudy }) {
           </div>
         </section>
       ) : null}
-
-      <div className="uch-inner">
-        <aside className="uch-banner">
-          <div className="uch-banner-glow" aria-hidden />
-          <div className="uch-banner-copy">
-            <p className="uch-banner-kicker">Next step</p>
-            <h2>{item.ctaHeading}</h2>
-            <p>
-              Also related:{" "}
-              {item.related.map((link, index) => (
-                <span key={link.href}>
-                  {index > 0 ? " · " : null}
-                  <a href={link.href}>{link.label}</a>
-                  {index === item.related.length - 1 ? "." : ""}
-                </span>
-              ))}{" "}
-              No invented results — we start from the process that actually
-              hurts.
-            </p>
-          </div>
-          <a className="uch-btn uch-btn-solid" href={ROUTES.contact}>
-            Talk to Us <ArrowIcon />
-          </a>
-        </aside>
-      </div>
     </article>
   );
 }

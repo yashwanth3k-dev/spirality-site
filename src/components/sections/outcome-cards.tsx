@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Gauge, Shield, Timer, Users, type LucideIcon } from "lucide-react";
+import { SCROLL_REVEAL_VIEWPORT } from "~/components/sections/scroll-reveal";
 import "~/styles/outcome-cards.css";
 
 type Outcome = {
@@ -68,11 +69,7 @@ export default function OutcomeCards({
                 className="oc-card"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{
-                  once: false,
-                  margin: "-12% 0px -12% 0px",
-                  amount: 0.3,
-                }}
+                viewport={SCROLL_REVEAL_VIEWPORT}
                 transition={{
                   duration: 0.55,
                   ease: "easeOut",

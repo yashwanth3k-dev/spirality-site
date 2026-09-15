@@ -3,11 +3,14 @@ import StubPage from "~/components/sections/stub-page";
 import { INSTINCT, ROUTES } from "~/lib/content/home";
 import { pageMetadata } from "~/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Instinct | Spirality Solutions",
-  description: INSTINCT.body,
-  path: ROUTES.instinct,
-});
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: "Instinct | Spirality Solutions",
+    description: INSTINCT.body,
+    path: ROUTES.instinct,
+  }),
+  robots: { index: false, follow: true },
+};
 
 export default function InstinctPage() {
   return (

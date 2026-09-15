@@ -37,7 +37,7 @@ export const SECTIONS = {
 
 /** Hero CTAs — spec labels, pointed at on-page sections for now. */
 export const HERO_CTA = {
-  primary: { label: "Talk to Us", href: `#${SECTIONS.close}` },
+  primary: { label: "Talk to Us", href: ROUTES.contact },
   secondary: { label: "See what we do", href: `#${SECTIONS.offer}` },
 };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { SCROLL_REVEAL_VIEWPORT } from "~/components/sections/scroll-reveal";
 import { getUseCasePath, type UseCase } from "~/lib/content/use-cases";
 import "~/styles/agent-use-cases.css";
 
@@ -34,11 +35,7 @@ export default function AgentUseCases({
               className="auc-card"
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{
-                once: false,
-                margin: "-12% 0px -12% 0px",
-                amount: 0.25,
-              }}
+              viewport={SCROLL_REVEAL_VIEWPORT}
               transition={{
                 duration: 0.5,
                 ease: "easeOut",

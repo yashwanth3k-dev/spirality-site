@@ -23,8 +23,6 @@ const REVEAL_SELECTOR = [
   ".ucd-hero",
   ".ucd-section",
   ".uch-banner",
-  ".il-offer-flip",
-  ".il-benefit-card",
   ".ct-person",
   ".ct-stages > li",
   ".ct-faq-list > details",
@@ -32,18 +30,27 @@ const REVEAL_SELECTOR = [
   ".abt-manifesto",
   ".abt-belief",
   ".abt-founder",
-  ".uch-card",
-  ".blg-card",
-  ".csd-card",
-  ".ucd-card",
 ].join(",");
 
-const DIRECTIONS = ["left", "right", "up", "down"] as const;
+const CARD_SCENE_SELECTOR = [
+  ".om-section",
+  ".gfc-section",
+  ".oc-section",
+  ".doc-section",
+  ".so-section",
+  ".auc-section",
+  ".gap-section",
+  ".dd-section",
+  ".dn-section",
+  ".sc-section",
+].join(", ");
+
+const DIRECTIONS = ["up"] as const;
 
 /**
- * Site-wide, bidirectional viewport motion for marketing content.
- * Content re-enters whenever it returns to the viewport; navigation and
- * footers intentionally remain stable.
+ * Site-wide viewport entrance for marketing content. Plays once, then stays.
+ * Cards that already use Framer Motion are not observed here. Navigation and
+ * footers stay stable.
  *
  * Do not mutate React-owned nodes until after hydration. Streaming RSC
  * inserts HTML, then hydrates; touching className in that window produces
@@ -58,7 +65,6 @@ export default function SiteScrollReveal() {
 
     let cancelled = false;
     let directionIndex = 0;
-    let startTimer = 0;
     let mutationTimer = 0;
     let observer: IntersectionObserver | null = null;
     let mutationObserver: MutationObserver | null = null;
@@ -71,7 +77,10 @@ export default function SiteScrollReveal() {
       for (const element of elements) {
         if (
           observed.has(element) ||
-          element.closest("footer, .il-footer, .sp-nav, [data-no-reveal]")
+          element.closest(
+            "footer, .il-footer, .sp-nav, [data-no-reveal], " +
+              CARD_SCENE_SELECTOR
+          )
         ) {
           continue;
         }
@@ -97,12 +106,14 @@ export default function SiteScrollReveal() {
       observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
-            entry.target.classList.toggle("ssr-visible", entry.isIntersecting);
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.add("ssr-visible");
+            observer?.unobserve(entry.target);
           }
         },
         {
-          threshold: 0.12,
-          rootMargin: "-7% 0px -10% 0px",
+          threshold: 0,
+          rootMargin: "0px",
         }
       );
 
@@ -123,24 +134,15 @@ export default function SiteScrollReveal() {
 
     const kick = () => {
       if (cancelled) return;
-      if (typeof window.requestIdleCallback === "function") {
-        window.requestIdleCallback(() => start(), { timeout: 1200 });
-      } else {
-        startTimer = window.setTimeout(start, 400);
-      }
+      start();
     };
 
-    if (document.readyState === "complete") {
-      startTimer = window.setTimeout(kick, 250);
-    } else {
-      window.addEventListener("load", kick, { once: true });
-    }
+    const frame = window.requestAnimationFrame(kick);
 
     return () => {
       cancelled = true;
-      window.clearTimeout(startTimer);
+      window.cancelAnimationFrame(frame);
       window.clearTimeout(mutationTimer);
-      window.removeEventListener("load", kick);
       mutationObserver?.disconnect();
       observer?.disconnect();
     };

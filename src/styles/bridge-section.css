@@ -50,6 +50,7 @@
   width: 100%;
   margin: 0 auto;
   min-height: 340px;
+  --bridge-hub-y: 47%;
 }
 
 .il-bridge-svg {
@@ -223,7 +224,7 @@
 .il-bridge-glow {
   position: absolute;
   left: 50%;
-  top: 47%;
+  top: var(--bridge-hub-y, 47%);
   width: 210px;
   height: 210px;
   transform: translate(-50%, -50%);
@@ -241,7 +242,7 @@
 .il-bridge-orbit {
   position: absolute;
   left: 50%;
-  top: 47%;
+  top: var(--bridge-hub-y, 47%);
   width: 148px;
   height: 148px;
   margin: -74px 0 0 -74px;
@@ -255,7 +256,7 @@
 .il-bridge-badge {
   position: absolute;
   left: 50%;
-  top: 47%;
+  top: var(--bridge-hub-y, 47%);
   transform: translate(-50%, -50%) scale(0.72);
   width: 104px;
   height: 104px;
@@ -272,7 +273,7 @@
 .il-bridge-gatelabel {
   position: absolute;
   left: 50%;
-  top: 47%;
+  top: var(--bridge-hub-y, 47%);
   transform: translate(-50%, 76px);
   background: var(--bridge-surface);
   border: 1px solid rgba(107, 124, 255, 0.45);
@@ -291,7 +292,7 @@
 .il-bridge-q {
   position: absolute;
   left: 50%;
-  top: 47%;
+  top: var(--bridge-hub-y, 47%);
   transform: translate(-50%, 112px);
   width: min(460px, 72%);
   height: 44px;
@@ -393,28 +394,63 @@
   line-height: 1.55;
 }
 
-/* Mobile: same scroll theater, scaled to fit the viewport */
+/* Mobile: keep the floor lighting, drop the unused 100vh/280vh empty track. */
 @media (max-width: 900px) {
   .il-bridge {
-    height: 320vh;
+    height: auto;
+    padding-bottom: 36vh;
   }
 
   .il-bridge-sticky {
-    padding: 76px 14px 16px;
+    height: auto;
+    padding: 64px 10px 18px;
+  }
+
+  .il-bridge-caps {
+    order: -1;
+    height: 76px;
+    margin: 0 0 4px;
+    flex: none;
   }
 
   .il-bridge-stage {
+    flex: none;
     min-height: 0;
+    height: auto;
+    --bridge-hub-y: 20%;
+  }
+
+  .il-bridge-svg {
+    display: none;
+  }
+
+  .il-bridge-chip {
+    left: var(--cb-mx) !important;
+    top: var(--cb-my) !important;
+    font-size: 8px;
+    padding: 3px 7px 3px 5px;
+    gap: 3px;
+    max-width: 42vw;
+  }
+
+  .il-bridge-chip-dot {
+    width: 6px;
+    height: 6px;
   }
 
   .il-bridge-panel {
-    right: 1.5%;
-    top: 2%;
-    width: 48%;
-    height: 96%;
-    padding: 10px;
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    padding: 8px 8px 8px;
     gap: 6px;
     border-radius: 14px;
+    z-index: 2;
   }
 
   .il-bridge-panel-title {
@@ -426,26 +462,43 @@
   }
 
   .il-bridge-floors {
-    gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px;
+    flex: none;
   }
 
-  /* Name on top; metric + AI-ENABLED stacked underneath */
-  .il-bridge-proc {
+  .il-bridge-floors .il-bridge-proc {
+    grid-column: span 2;
+  }
+
+  .il-bridge-floors .il-bridge-proc:nth-child(7) {
+    grid-column: 2 / span 2;
+  }
+
+  .il-bridge-floors .il-bridge-proc:nth-child(8) {
+    grid-column: 4 / span 2;
+  }
+
+  .il-bridge-floors .il-bridge-proc {
+    grid-column: span 2;
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: center;
-    gap: 3px;
-    padding: 5px 7px;
-    border-radius: 6px;
-    min-height: 0;
+    gap: 1px;
+    padding: 6px 7px 5px;
+    border-radius: 8px;
+    min-height: 44px;
   }
 
   .il-bridge-proc-left {
-    gap: 6px;
+    gap: 5px;
+    width: 100%;
   }
 
   .il-bridge-proc-name {
-    font-size: 10px;
+    font-size: 11px;
+    white-space: normal;
   }
 
   .il-bridge-proc-right {
@@ -453,7 +506,7 @@
     padding-left: 9px;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 4px 8px;
+    gap: 2px 6px;
   }
 
   .il-bridge-proc-metric {
@@ -471,7 +524,7 @@
   }
 
   .il-bridge-stats {
-    padding: 8px;
+    padding: 8px 10px;
     border-radius: 10px;
   }
 
@@ -480,61 +533,45 @@
   }
 
   .il-bridge-badge {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
   }
 
   .il-bridge-badge svg {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
   .il-bridge-orbit {
-    width: 108px;
-    height: 108px;
-    margin: -54px 0 0 -54px;
+    width: 96px;
+    height: 96px;
+    margin: -48px 0 0 -48px;
   }
 
   .il-bridge-glow {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
   }
 
   .il-bridge-gatelabel {
-    transform: translate(-50%, 52px);
+    transform: translate(-50%, 38px);
     font-size: 8px;
     padding: 3px 8px;
   }
 
   .il-bridge-q {
-    transform: translate(-50%, 78px);
-    width: min(280px, 58%);
+    transform: translate(-50%, 56px);
+    width: min(92%, 320px);
     height: auto;
-    min-height: 40px;
+    min-height: 32px;
   }
 
   .il-bridge-q-num {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .il-bridge-q-text {
     font-size: 11px;
-  }
-
-  .il-bridge-chip {
-    font-size: 10px;
-    padding: 5px 9px 5px 7px;
-    gap: 5px;
-  }
-
-  .il-bridge-chip-dot {
-    width: 7px;
-    height: 7px;
-  }
-
-  .il-bridge-caps {
-    height: 92px;
-    margin-top: 4px;
   }
 
   .il-bridge-cap h3 {

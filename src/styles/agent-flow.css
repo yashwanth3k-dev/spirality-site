@@ -62,7 +62,8 @@
   z-index: 2;
 }
 
-/* Icon center = wave point */
+/* Icon center = wave point. Match the li even if a modifier class is glued. */
+.af-wave-nodes > li,
 .af-wave-node {
   position: absolute;
   width: 44px;
@@ -102,12 +103,16 @@
   pointer-events: none;
 }
 
-.af-wave-node.is-up .af-wave-label {
-  bottom: calc(100% + 14px);
-}
-
+.af-wave-nodes > li:nth-child(odd) .af-wave-label,
 .af-wave-node.is-down .af-wave-label {
   top: calc(100% + 14px);
+  bottom: auto;
+}
+
+.af-wave-nodes > li:nth-child(even) .af-wave-label,
+.af-wave-node.is-up .af-wave-label {
+  bottom: calc(100% + 14px);
+  top: auto;
 }
 
 .af-wave-label-title {

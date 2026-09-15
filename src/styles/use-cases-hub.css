@@ -247,7 +247,8 @@
   color: var(--uch-ink);
 }
 
-.uch-tab-active {
+.uch-tab-active,
+.uch-tab[aria-selected="true"] {
   background: #1539d1;
   color: #fff;
 }
@@ -262,7 +263,8 @@
   color: var(--uch-dim);
 }
 
-.uch-tab-active .uch-count {
+.uch-tab-active .uch-count,
+.uch-tab[aria-selected="true"] .uch-count {
   background: rgba(239, 246, 255, 0.18);
   color: #eff6ff;
 }

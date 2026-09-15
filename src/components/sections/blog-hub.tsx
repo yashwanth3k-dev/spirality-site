@@ -17,6 +17,7 @@ import {
   type BlogPost,
 } from "~/lib/content/blog";
 import { ROUTES } from "~/lib/content/site";
+import { cn } from "~/lib/utils";
 import "~/styles/blog-hub.css";
 
 type FilterId = (typeof BLOG_FILTERS)[number]["id"];
@@ -39,7 +40,6 @@ function NoteCard({ item }: { item: BlogPost }) {
               {BLOG_CATEGORY_LABEL[item.category]}
             </span>
           </div>
-          <span className="uch-pattern">Note {item.pattern}</span>
         </div>
         <p className="blg-card-date">
           <span className="blg-inline-icon">
@@ -122,7 +122,7 @@ export default function BlogHub() {
                     type="button"
                     role="tab"
                     aria-selected={active}
-                    className={`uch-tab${active ? "uch-tab-active" : ""}`}
+                    className={cn("uch-tab", active && "uch-tab-active")}
                     onClick={() => setFilter(tab.id)}
                   >
                     <BlogIcon name={BLOG_FILTER_ICON[tab.id]} size={14} />
@@ -142,23 +142,6 @@ export default function BlogHub() {
           </div>
         </div>
       </section>
-
-      <div className="uch-inner">
-        <aside className="uch-banner">
-          <div className="uch-banner-glow" aria-hidden />
-          <div className="uch-banner-copy">
-            <p className="uch-banner-kicker">Have a process?</p>
-            <h2>If it is stuck between a demo and a desk, tell us.</h2>
-            <p>
-              It might become the next note. More likely it becomes a
-              diagnostic, a build, or a clear not-yet.
-            </p>
-          </div>
-          <a className="uch-btn uch-btn-solid" href={ROUTES.contact}>
-            Talk about your process <ArrowIcon />
-          </a>
-        </aside>
-      </div>
     </main>
   );
 }

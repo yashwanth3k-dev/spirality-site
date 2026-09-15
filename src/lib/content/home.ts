@@ -16,7 +16,7 @@ export {
   ROUTES,
   SECTIONS,
 } from "~/lib/content/site";
-import { ROUTES, SECTIONS } from "~/lib/content/site";
+import { ROUTES } from "~/lib/content/site";
 
 /** Locked solution pillars (PRODUCT.md IA). */
 export const SOLUTION_PILLARS = [
@@ -354,12 +354,4 @@ export const DOMAINS = {
       line: "Retrieval and reporting grounded in company memory.",
     },
   ],
-};
-
-export const CLOSE = {
-  eyebrow: "Start here",
-  heading: "Start with the work. Not the model.",
-  body: "Tell us the process that costs time, judgment, or risk. We'll tell you whether AI belongs there — and how to assemble the system around it.",
-  primary: { label: "Talk to Us", href: ROUTES.contact },
-  secondary: { label: "See the bridge", href: `#${SECTIONS.solution}` },
 };

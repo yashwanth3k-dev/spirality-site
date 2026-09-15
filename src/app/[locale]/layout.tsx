@@ -1,7 +1,8 @@
-import { type Metadata } from "next";
+import { type Metadata, type Viewport } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import GoogleAnalytics from "~/components/google-analytics";
+import ContactBubble from "~/components/sections/contact-bubble";
 import SiteScrollReveal from "~/components/sections/site-scroll-reveal";
 import ThemeProvider from "~/components/shared/theme-provider";
 import { Toaster } from "~/components/ui/toaster";
@@ -33,8 +34,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export const viewport = {
-  width: 1,
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -83,6 +86,7 @@ export default async function RootLayout({
           <GoogleAnalytics />
           <SiteScrollReveal />
           <main>{children}</main>
+          <ContactBubble />
           <Toaster />
         </ThemeProvider>
       </body>

@@ -3,11 +3,14 @@ import StubPage from "~/components/sections/stub-page";
 import { ENGAGEMENT, METHOD, ROUTES } from "~/lib/content/home";
 import { pageMetadata } from "~/lib/seo";
 
-export const metadata: Metadata = pageMetadata({
-  title: "How We Work | Spirality Solutions",
-  description: METHOD.intro,
-  path: ROUTES.howWeWork,
-});
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: "How We Work | Spirality Solutions",
+    description: METHOD.intro,
+    path: ROUTES.howWeWork,
+  }),
+  robots: { index: false, follow: true },
+};
 
 export default function HowWeWorkPage() {
   return (

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ROUTES } from "~/lib/content/site";
+import { cn } from "~/lib/utils";
 import {
   countUseCases,
   getUseCasePath,
@@ -54,7 +55,6 @@ function PatternCard({ item }: { item: UseCase }) {
                 {USE_CASE_CATEGORY_LABEL[item.category]}
               </span>
             </div>
-            <span className="uch-pattern">Example {item.pattern}</span>
           </div>
           <div>
             <h2 className="uch-card-name">{item.name}</h2>
@@ -144,7 +144,7 @@ export default function UseCasesHub() {
                     type="button"
                     role="tab"
                     aria-selected={active}
-                    className={`uch-tab${active ? "uch-tab-active" : ""}`}
+                    className={cn("uch-tab", active && "uch-tab-active")}
                     onClick={() => setFilter(tab.id)}
                   >
                     <span>{tab.label}</span>
@@ -163,23 +163,6 @@ export default function UseCasesHub() {
           </div>
         </div>
       </section>
-
-      <div className="uch-inner">
-        <aside className="uch-banner">
-          <div className="uch-banner-glow" aria-hidden />
-          <div className="uch-banner-copy">
-            <p className="uch-banner-kicker">Something else?</p>
-            <h2>Don’t see your process here?</h2>
-            <p>
-              These are examples. If your work looks different, we can still
-              build around it — including old systems and strict rules.
-            </p>
-          </div>
-          <a className="uch-btn uch-btn-solid" href={ROUTES.contact}>
-            Talk about your process <Arrow />
-          </a>
-        </aside>
-      </div>
     </main>
   );
 }

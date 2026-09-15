@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import { cn } from "~/lib/utils";
 import PrintButton from "../_components/print-button";
 import "../_styles/one-pager.css";
 
@@ -308,7 +309,7 @@ function ServiceBlock({ svc }: { svc: Service }) {
   const grouped = groups.length > 1;
 
   return (
-    <section className={`op-svc${svc.break ? "op-break" : ""}`}>
+    <section className={cn("op-svc", svc.break && "op-break")}>
       <div className="op-svc-head">
         <span className="op-svc-n">{svc.n}</span>
         <h3>{svc.title}</h3>

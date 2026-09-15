@@ -5,7 +5,7 @@ import { useEffect, useState, type ReactNode } from "react";
 
 export type RevealDirection = "up" | "down" | "left" | "right";
 
-const OFFSET = 42;
+const OFFSET = 20;
 
 const HIDDEN: Record<RevealDirection, { x?: number; y?: number }> = {
   up: { y: OFFSET },
@@ -19,23 +19,22 @@ type ScrollRevealProps = {
   direction?: RevealDirection;
   delay?: number;
   className?: string;
-  /** Fraction of element that must be visible (0–1). */
-  amount?: number;
+  /** How much of the element must enter view. `"some"` = any pixel. */
+  amount?: number | "some" | "all";
 } & Omit<
   HTMLMotionProps<"div">,
   "children" | "initial" | "animate" | "whileInView"
 >;
 
 /**
- * Bidirectional scroll reveal: enters from a direction when in view,
- * returns to hidden when the block leaves the viewport.
+ * Entrance-only scroll reveal: plays once, then the block stays in place.
  */
 export default function ScrollReveal({
   children,
   direction = "up",
   delay = 0,
   className,
-  amount = 0.28,
+  amount = "some",
   ...rest
 }: ScrollRevealProps) {
   const reduceMotion = useReducedMotion();
@@ -60,7 +59,7 @@ export default function ScrollReveal({
       className={className}
       initial={{ opacity: 0, ...HIDDEN[motionDirection] }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: false, amount, margin: "-12% 0px -12% 0px" }}
+      viewport={{ once: true, amount }}
       transition={{
         duration: 0.55,
         ease: [0.16, 1, 0.3, 1],
@@ -73,29 +72,24 @@ export default function ScrollReveal({
   );
 }
 
-/** Alternate left/right (or up) offsets for card grids on the BPO page. */
-export function cardReveal(index: number): {
+/** Small fade-up for cards. Play once, then leave the card in place. */
+export function cardReveal(_index?: number): {
   initial: { opacity: number; x: number; y: number };
   whileInView: { opacity: number; x: number; y: number };
 } {
-  const mobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 768px)").matches;
-  const fromLeft = index % 2 === 0;
   return {
     initial: {
       opacity: 0,
-      x: mobile ? 0 : fromLeft ? -OFFSET : OFFSET,
-      y: 18,
+      x: 0,
+      y: OFFSET,
     },
     whileInView: { opacity: 1, x: 0, y: 0 },
   };
 }
 
 export const SCROLL_REVEAL_VIEWPORT = {
-  once: false,
-  amount: 0.28,
-  margin: "-12% 0px -12% 0px",
+  once: true,
+  amount: "some",
 } as const;
 
 export const SCROLL_REVEAL_EASE = [0.16, 1, 0.3, 1] as const;

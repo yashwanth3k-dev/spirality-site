@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 /**
  * Native path uses CSS scroll-driven animations (desktop Chrome + current
- * Safari). This driver mirrors the same 0→1 converge math on engines that
+ * Safari). This driver mirrors hand converge and copy fades on engines that
  * do not support `animation-timeline` yet — older iOS in particular.
  */
 export default function HeroScrollDriver() {

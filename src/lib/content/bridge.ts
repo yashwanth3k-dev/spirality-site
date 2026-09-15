@@ -13,6 +13,21 @@ export const BRIDGE_PROCS = [
 
 export type BridgeProcName = (typeof BRIDGE_PROCS)[number]["name"];
 
+export const BRIDGE_AGENT_MOBILE = [
+  { x: 16, y: 6 },
+  { x: 38, y: 4 },
+  { x: 62, y: 4 },
+  { x: 84, y: 6 },
+  { x: 12, y: 18 },
+  { x: 88, y: 18 },
+  { x: 14, y: 32 },
+  { x: 86, y: 32 },
+  { x: 28, y: 11 },
+  { x: 72, y: 11 },
+  { x: 22, y: 26 },
+  { x: 78, y: 26 },
+] as const;
+
 export const BRIDGE_AGENTS = [
   { label: "Support agent", hue: "#f59e0b", x: 5, y: 16, target: "Service" },
   { label: "SDR bot", hue: "#3d5bff", x: 20, y: 9, target: "Sales" },

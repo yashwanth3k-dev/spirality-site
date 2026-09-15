@@ -1,94 +1,27 @@
-/* Digital Services — From idea to live product */
+/* Digital Services — How we deliver (agent-flow wave, four beats) */
 
 .dd-section {
-  background: #f4f7fc;
-  border-top: 1px solid rgba(21, 57, 209, 0.09);
+  --af-blue: #1539d1;
+  --af-blue-light: #6b7cff;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba(21, 57, 209, 0.14),
+      transparent 60%
+    ),
+    #f4f7fc;
+  overflow: visible;
 }
 
 .dd-heading {
   max-width: 22ch !important;
 }
 
-.dd-flow {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+/* Delivery copy is longer than agent-flow labels. */
+.dd-section .af-wave-label {
+  width: 210px;
 }
 
-.dd-step {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-right: 1.5rem;
-}
-
-.dd-num {
-  display: block;
-  margin-bottom: 0.85rem;
-  font-family: var(--il-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  color: var(--il-magenta);
-}
-
-.dd-title {
-  margin: 0 0 0.45rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: #101624;
-}
-
-.dd-line {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: rgba(16, 22, 36, 0.48);
-}
-
-.dd-arrow {
-  display: none;
-  position: absolute;
-  top: 0.15rem;
-  right: 0;
-  color: rgba(107, 124, 255, 0.55);
-  font-size: 1rem;
-  line-height: 1;
-}
-
-@media (min-width: 900px) {
-  .dd-arrow {
-    display: block;
-  }
-}
-
-.dd-footer {
-  margin: clamp(28px, 4vw, 44px) 0 0;
-  max-width: 48ch;
-  padding-top: 22px;
-  border-top: 1px solid rgba(21, 57, 209, 0.15);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: rgba(16, 22, 36, 0.62);
-}
-
-@media (max-width: 900px) {
-  .dd-flow {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem 1.25rem;
-  }
-
-  .dd-step {
-    padding-right: 0;
-  }
-}
-
-@media (max-width: 560px) {
-  .dd-flow {
-    grid-template-columns: 1fr;
-  }
+.dd-section .af-wave-wrap {
+  padding: 88px 0 108px;
 }

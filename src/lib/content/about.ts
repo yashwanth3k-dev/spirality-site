@@ -1,4 +1,3 @@
-import { ROUTES } from "~/lib/content/home";
 import type { UseCaseGlyph } from "~/lib/content/use-cases";
 
 export const ABOUT_INDEX = {
@@ -105,11 +104,4 @@ export const ABOUT_DIRECTION = {
       "Build technology that makes real business work simpler, smarter and more capable.",
     body: "We bring AI, software, digital experiences, automation and operational expertise together around the specific needs of each business, from the first idea through to real-world use.",
   },
-} as const;
-
-export const ABOUT_CLOSE = {
-  heading: "Have something worth building?",
-  body: "Tell us what you're trying to improve. We'll start with the problem, not the technology.",
-  note: "Direct conversation with the people who do the work.",
-  cta: { label: "Talk to Us", href: ROUTES.contact },
 } as const;

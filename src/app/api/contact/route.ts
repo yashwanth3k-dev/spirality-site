@@ -60,13 +60,7 @@ export async function POST(request: Request) {
 
   const data = normalizePayload(payload);
 
-  if (
-    !data.name ||
-    !data.email ||
-    !data.vector ||
-    !data.depth ||
-    !data.process
-  ) {
+  if (!data.name || !data.email || !data.process) {
     return NextResponse.json(
       { error: "Please complete the required fields." },
       { status: 400 }
@@ -80,20 +74,24 @@ export async function POST(request: Request) {
     );
   }
 
+  const vector = data.vector || "not-clear";
+  const depth = data.depth || "not-clear";
+  const systems = data.systems;
+
   const lines = [
     `Name: ${data.name}`,
     `Email: ${data.email}`,
     data.company ? `Company: ${data.company}` : null,
-    `Vector: ${data.vector}`,
-    `Depth: ${data.depth}`,
-    data.systems.length ? `Already running: ${data.systems.join(", ")}` : null,
+    `Vector: ${vector}`,
+    `Depth: ${depth}`,
+    systems.length ? `Already running: ${systems.join(", ")}` : null,
     "",
     "The process:",
     data.process,
   ].filter((line): line is string => line !== null);
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const subject = `Spirality intake - ${data.vector}`;
+  const subject = `Spirality intake - ${vector}`;
 
   const { error } = await resend.emails.send({
     from: RESEND_FROM,
@@ -110,12 +108,12 @@ export async function POST(request: Request) {
           ? `<p><strong>Company:</strong> ${escapeHtml(data.company)}</p>`
           : ""
       }
-      <p><strong>Vector:</strong> ${escapeHtml(data.vector)}</p>
-      <p><strong>Depth:</strong> ${escapeHtml(data.depth)}</p>
+      <p><strong>Vector:</strong> ${escapeHtml(vector)}</p>
+      <p><strong>Depth:</strong> ${escapeHtml(depth)}</p>
       ${
-        data.systems.length
+        systems.length
           ? `<p><strong>Already running:</strong> ${escapeHtml(
-              data.systems.join(", ")
+              systems.join(", ")
             )}</p>`
           : ""
       }

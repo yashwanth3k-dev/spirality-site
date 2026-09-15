@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { HERO_NAV, ROUTES } from "~/lib/content/site";
+import { cn } from "~/lib/utils";
 
 const MENU_ID = "sp-site-menu";
 
@@ -67,10 +68,10 @@ export default function MobileNav() {
     );
 
   return (
-    <div className={`sp-mobile${open ? "is-open" : ""}`}>
+    <div className={cn("sp-mobile", open && "is-open")}>
       <button
         type="button"
-        className={`sp-burger${open ? "is-open" : ""}`}
+        className={cn("sp-burger", open && "is-open")}
         aria-expanded={open}
         aria-controls={MENU_ID}
         aria-label={open ? "Close menu" : "Open menu"}

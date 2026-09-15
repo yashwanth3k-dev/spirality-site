@@ -10,6 +10,7 @@ import {
   UserRoundPlus,
   type LucideIcon,
 } from "lucide-react";
+import { SCROLL_REVEAL_VIEWPORT } from "~/components/sections/scroll-reveal";
 import "~/styles/glow-feature-cards.css";
 
 export type GlowCardData = {
@@ -30,7 +31,7 @@ export function FeatureCard({
       className="gfc-card"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, margin: "-12% 0px -12% 0px", amount: 0.25 }}
+      viewport={SCROLL_REVEAL_VIEWPORT}
       transition={{ duration: 0.55, ease: "easeOut", delay }}
     >
       <div className="gfc-icon" aria-hidden="true">

@@ -15,7 +15,6 @@ import SystemsOutcomes from "~/components/sections/systems-outcomes";
 import OpsModel from "~/components/sections/ops-model";
 import AgentUseCases from "~/components/sections/agent-use-cases";
 import FooterLegal from "~/components/sections/footer-legal";
-import ScrollReveal from "~/components/sections/scroll-reveal";
 import { FOOTER, ROUTES } from "~/lib/content/home";
 import { cn } from "~/lib/utils";
 import {
@@ -171,6 +170,7 @@ function SectionBlock({
           items={section.items}
           footer={section.footer}
           iconSet={section.iconSet}
+          copySide={section.copySide}
         />
       );
 
@@ -202,6 +202,8 @@ function SectionBlock({
           heading={section.heading}
           footer={section.footer}
           items={section.items}
+          iconSet={section.iconSet}
+          copySide={section.copySide}
           scrollReveal={scrollReveal}
         />
       );
@@ -317,7 +319,6 @@ export default function Subpage({ page }: { page: SubpageContent }) {
     href: ROUTES.contact,
   };
   const secondary = page.secondaryCta;
-  const closeCtaLabel = page.close?.ctaLabel ?? primary.label;
   /* Bidirectional scroll reveal on all marketing subpages (footer stays static). */
   const scrollReveal = page.scrollReveal !== false;
 
@@ -362,24 +363,6 @@ export default function Subpage({ page }: { page: SubpageContent }) {
       </div>
     ) : null;
 
-  const closeBlock = page.close ? (
-    <section className="il-section sp-close">
-      <div className="il-inner sp-close-inner">
-        <p className="il-eyebrow">{page.close.eyebrow}</p>
-        <h2 className="il-h2">{page.close.heading}</h2>
-        <p className="il-lead il-lead-wide">{page.close.body}</p>
-        <div className="il-actions sp-close-actions">
-          <a className="il-btn il-btn-solid" href={primary.href}>
-            {closeCtaLabel} <Arrow />
-          </a>
-        </div>
-        {page.close.note ? (
-          <p className="sp-close-note">{page.close.note}</p>
-        ) : null}
-      </div>
-    </section>
-  ) : null;
-
   return (
     <div className="il-page sp-page">
       <SubpageNav />
@@ -401,16 +384,6 @@ export default function Subpage({ page }: { page: SubpageContent }) {
           scrollReveal={scrollReveal}
         />
       ))}
-
-      {closeBlock ? (
-        scrollReveal ? (
-          <ScrollReveal direction="up" amount={0.35}>
-            {closeBlock}
-          </ScrollReveal>
-        ) : (
-          closeBlock
-        )
-      ) : null}
 
       <footer className="il-footer">
         <div className="il-inner il-footer-grid">

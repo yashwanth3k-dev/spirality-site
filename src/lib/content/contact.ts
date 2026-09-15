@@ -4,9 +4,9 @@ import type { UseCaseGlyph } from "~/lib/content/use-cases";
 
 export const CONTACT_INDEX = {
   eyebrow: "Talk to Us",
-  titleLead: "Start with the problem.",
-  titleAccent: "We'll engineer the solution.",
-  lead: "Tell us the process that costs time, judgment, or risk. We'll tell you whether AI belongs there — and how to assemble the system around it.",
+  titleLead: "Start with the work.",
+  titleAccent: "We'll take it from there.",
+  lead: "Name, email, and the process that hurts. We'll say whether AI belongs there — on a call, not in a twelve-field form.",
   description:
     "Talk to Spirality about one real business process. Advice, a build, or build-and-run — start with the work, not the model.",
 } as const;
@@ -92,32 +92,25 @@ export const CONTACT_SYSTEMS = [
 export const CONTACT_SYSTEM_SPECIAL = ["All in one", "Not clear"] as const;
 
 export const CONTACT_FORM = {
-  consoleLabel: "Intake",
-  consoleNote: "One process. The depth you think you need.",
-  vectorLegend: "What are you trying to improve?",
+  consoleLabel: "Talk to Us",
+  consoleNote: "One process is enough. The rest we can ask on the call.",
   nameLabel: "Name",
   namePlaceholder: "Your name",
   emailLabel: "Work email",
   emailPlaceholder: "you@company.com",
   companyLabel: "Company",
   companyPlaceholder: "Optional",
-  depthLegend: "How far do you want to go?",
-  systemsLegend: "What do you already run?",
-  systemsHint:
-    "Optional. Helps us see the desk, not a stack we pretend to certify.",
   processLabel: "The process that hurts",
-  processPlaceholder:
-    "What happens today, who does it, where it breaks, and what 2am looks like if it fails.",
-  submit: "Send the process",
+  processPlaceholder: "What happens today, who does it, and where it breaks.",
+  submit: "Send",
   sending: "Sending…",
-  errorRequired:
-    "Name, work email, what you're improving, how far you want to go, and the process are required.",
+  errorRequired: "Name, work email, and the process are required.",
   errorEmail: "Use a work email we can reply to.",
   errorSubmit:
     "We couldn't send this just now. Please try again or email us directly.",
-  successHeading: "We got your brief.",
+  successHeading: "We got it.",
   successBody:
-    "Thanks. It has been sent to the Spirality team, and we'll start with the process you named — not a model shortlist.",
+    "Thanks. We'll start with the process you named — not a model shortlist.",
   successAgain: "Send another",
 } as const;
 

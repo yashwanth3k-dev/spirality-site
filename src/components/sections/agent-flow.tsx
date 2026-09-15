@@ -11,6 +11,7 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
+import { cn } from "~/lib/utils";
 import "~/styles/agent-flow.css";
 
 const STEPS: Array<{
@@ -86,7 +87,7 @@ export default function AgentFlow({
 }: {
   eyebrow: string;
   heading: string;
-  footer: string;
+  footer?: string;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -170,7 +171,7 @@ export default function AgentFlow({
                 return (
                   <li
                     key={step.title}
-                    className={`af-wave-node${isUp ? "is-up" : "is-down"}`}
+                    className={cn("af-wave-node", isUp ? "is-up" : "is-down")}
                     style={{
                       left: `${(pt.x / VIEW_W) * 100}%`,
                       top: `${(pt.y / VIEW_H) * 100}%`,
@@ -249,15 +250,17 @@ export default function AgentFlow({
           })}
         </ol>
 
-        <motion.p
-          className="af-footer"
-          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-12% 0px -12% 0px", amount: 0.6 }}
-          transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.15 }}
-        >
-          {footer}
-        </motion.p>
+        {footer ? (
+          <motion.p
+            className="af-footer"
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-12% 0px -12% 0px", amount: 0.6 }}
+            transition={{ duration: 0.45, delay: reduceMotion ? 0 : 0.15 }}
+          >
+            {footer}
+          </motion.p>
+        ) : null}
       </div>
     </section>
   );
