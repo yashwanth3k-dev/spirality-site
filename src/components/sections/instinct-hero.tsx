@@ -22,17 +22,17 @@ function HeroPanel() {
           <span className="ih-line">
             AI knows <span className="lo">a lot.</span>
           </span>
-          <span className="ih-line ih-step ih-step-2">
+          <span className="ih-line">
             <span className="lo">But does it know</span> your business?
           </span>
         </h1>
 
-        <p className="ih-sub ih-step ih-step-3">
+        <p className="ih-sub">
           We build AI around the way your business actually works.
         </p>
       </div>
 
-      <span className="ih-cta-wrap ih-step ih-step-4">
+      <span className="ih-cta-wrap">
         <a className="ih-cta" href={HERO_CTA.secondary.href}>
           {HERO_CTA.secondary.label}
           <svg

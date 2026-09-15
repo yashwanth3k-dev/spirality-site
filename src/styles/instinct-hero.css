@@ -269,13 +269,14 @@
     0 0 28px var(--ih-bg);
 }
 
+/* Sit under the subtitle, not at 50vh — that overlaps copy on shorter windows. */
 .ih-cta-wrap {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  position: relative;
   z-index: 40;
-  display: inline-block;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 28px;
 }
 
 .ih-cta {
@@ -388,8 +389,11 @@
   }
 
   .ih-cta-wrap {
+    position: absolute;
+    left: 50%;
     top: 52%;
-    bottom: auto;
+    width: auto;
+    margin-top: 0;
     transform: translate(-50%, -50%);
   }
 
@@ -429,10 +433,10 @@
   }
 }
 
-/* start with a clear gap; end with both index fingertips almost touching */
+/* Rest pose = the static layout (screenshot). Travel in as you scroll. */
 @keyframes ih-converge-left {
   from {
-    transform: translate(-8%, 2%) rotate(-4deg);
+    transform: none;
   }
   to {
     transform: translate(56%, -4%) rotate(-1deg);
@@ -441,7 +445,7 @@
 
 @keyframes ih-converge-right {
   from {
-    transform: translate(8%, 6%) rotate(8deg);
+    transform: none;
   }
   to {
     transform: translate(-54%, 4%) rotate(4deg);
@@ -480,31 +484,15 @@
       height: 100svh;
     }
 
-    .ih-step {
-      animation: ih-reveal linear both;
-      animation-timeline: scroll(root block);
-      will-change: opacity;
-    }
+    /* Copy and CTA stay visible from the first frame (the live rest pose). */
 
-    .ih-step-2 {
-      animation-range: 4svh 26svh;
-    }
-
-    .ih-step-3 {
-      animation-range: 30svh 50svh;
-    }
-
-    .ih-step-4 {
-      animation-range: 54svh 74svh;
-    }
-
-    /* the two hands close in as the question resolves */
+    /* Hands stay apart until you actually scroll; tiny restoration won't close them. */
     .ih-hand-left,
     .ih-hand-right {
       animation: ih-converge-left linear both;
       animation-timeline: scroll();
       animation-timeline: scroll(root block);
-      animation-range: 0 95svh;
+      animation-range: 18svh 95svh;
     }
 
     .ih-hand-right {
@@ -538,32 +526,20 @@
       height: 100svh;
     }
 
-    .ih-scroll.ih-scroll-js .ih-step-2 {
-      opacity: max(0, min(1, calc((var(--ih-p, 0) - 0.04) / 0.18)));
-    }
-
-    .ih-scroll.ih-scroll-js .ih-step-3 {
-      opacity: max(0, min(1, calc((var(--ih-p, 0) - 0.26) / 0.18)));
-    }
-
-    .ih-scroll.ih-scroll-js .ih-step-4 {
-      opacity: max(0, min(1, calc((var(--ih-p, 0) - 0.48) / 0.18)));
-    }
-
     .ih-scroll.ih-scroll-js .ih-hand-left {
       transform: translate(
-          calc(-8% + 64% * var(--ih-p, 0)),
-          calc(2% + -6% * var(--ih-p, 0))
+          calc(56% * max(0, (var(--ih-p, 0) - 0.08) / 0.92)),
+          calc(-4% * max(0, (var(--ih-p, 0) - 0.08) / 0.92))
         )
-        rotate(calc(-4deg + 3deg * var(--ih-p, 0)));
+        rotate(calc(-1deg * max(0, (var(--ih-p, 0) - 0.08) / 0.92)));
     }
 
     .ih-scroll.ih-scroll-js .ih-hand-right {
       transform: translate(
-          calc(8% + -62% * var(--ih-p, 0)),
-          calc(6% + -2% * var(--ih-p, 0))
+          calc(-54% * max(0, (var(--ih-p, 0) - 0.08) / 0.92)),
+          calc(4% * max(0, (var(--ih-p, 0) - 0.08) / 0.92))
         )
-        rotate(calc(8deg + -4deg * var(--ih-p, 0)));
+        rotate(calc(4deg * max(0, (var(--ih-p, 0) - 0.08) / 0.92)));
     }
 
     @media (max-width: 960px) {

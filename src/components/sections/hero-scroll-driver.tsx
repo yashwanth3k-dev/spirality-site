@@ -9,17 +9,33 @@ import { useEffect } from "react";
  */
 export default function HeroScrollDriver() {
   useEffect(() => {
+    const previousRestoration = history.scrollRestoration;
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+
+    const restore = () => {
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = previousRestoration;
+      }
+    };
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
+      return restore;
     }
 
     const native =
       CSS.supports("animation-timeline: scroll(root block)") ||
       CSS.supports("animation-timeline: scroll()");
-    if (native) return;
+    if (native) {
+      return restore;
+    }
 
     const root = document.querySelector<HTMLElement>(".ih-scroll");
-    if (!root) return;
+    if (!root) return restore;
 
     root.classList.add("ih-scroll-js");
 
@@ -39,6 +55,7 @@ export default function HeroScrollDriver() {
     return () => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
+      restore();
     };
   }, []);
 
