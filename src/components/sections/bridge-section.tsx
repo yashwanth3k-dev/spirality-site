@@ -3,7 +3,6 @@
 import { Instrument_Serif } from "next/font/google";
 import { useEffect, useRef } from "react";
 import {
-  BRIDGE_AGENT_MOBILE,
   BRIDGE_AGENTS,
   BRIDGE_CAPTIONS,
   BRIDGE_FLOWS,
@@ -28,8 +27,8 @@ const AGENT_BY_LABEL = new Map<string, (typeof BRIDGE_AGENTS)[number]>(
 );
 
 /**
- * Scroll-driven bridge on desktop. Hidden on phones. Reduced-motion users
- * get the final resting state only.
+ * Scroll-driven bridge. Phones use the same layout, scaled down.
+ * Reduced-motion users get the final resting state only.
  */
 export default function BridgeSection({
   id,
@@ -48,7 +47,6 @@ export default function BridgeSection({
 
     const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mqMobile = window.matchMedia("(max-width: 960px)");
-    if (mqMobile.matches) return;
     const isCanvasLayout = () => {
       const chip = stage.querySelector<HTMLElement>("[data-chip]");
       return !!chip && getComputedStyle(chip).position === "absolute";
@@ -74,6 +72,7 @@ export default function BridgeSection({
         cycleEl: stage.querySelector<HTMLElement>("[data-bridge-cycle]"),
         liveEl: stage.querySelector<HTMLElement>("[data-bridge-live]"),
         panel: stage.querySelector<HTMLElement>("[data-bridge-panel]"),
+        enabledEl: stage.querySelector<HTMLElement>("[data-bridge-enabled]"),
         badge: stage.querySelector<HTMLElement>("[data-bridge-badge]"),
         glow: stage.querySelector<HTMLElement>("[data-bridge-glow]"),
         gateLabel: stage.querySelector<HTMLElement>("[data-bridge-gatelabel]"),
@@ -92,14 +91,10 @@ export default function BridgeSection({
       slot: number
     ): Point => {
       const b = proc.getBoundingClientRect();
-      if (mqMobile.matches) {
-        return {
-          x: b.left - stageRect.left + b.width / 2,
-          y: b.top - stageRect.top + b.height / 2,
-        };
-      }
+      const inset = mqMobile.matches ? 22 : 92;
+      const gap = mqMobile.matches ? 6 : 18;
       return {
-        x: b.left - stageRect.left + 92 + slot * 18,
+        x: b.left - stageRect.left + inset + slot * gap,
         y: b.top - stageRect.top + b.height / 2,
       };
     };
@@ -170,6 +165,7 @@ export default function BridgeSection({
       if (n.liveEl)
         n.liveEl.textContent = `${n.procs.length}/${n.procs.length}`;
       if (n.cycleEl) n.cycleEl.textContent = "19 hrs";
+      if (n.enabledEl) n.enabledEl.classList.add("is-on");
       n.chips.forEach((c, i) => {
         const agent = BRIDGE_AGENTS[i];
         c.style.opacity = agent?.target ? "0" : "0.55";
@@ -261,17 +257,10 @@ export default function BridgeSection({
         const agent = AGENT_BY_LABEL.get(label) ?? BRIDGE_AGENTS[i];
         if (!agent) return;
 
-        const mobile = BRIDGE_AGENT_MOBILE[i];
-        const start =
-          mqMobile.matches && mobile
-            ? {
-                x: (mobile.x / 100) * stageRect.width,
-                y: (mobile.y / 100) * stageRect.height,
-              }
-            : {
-                x: (agent.x / 100) * stageRect.width,
-                y: (agent.y / 100) * stageRect.height,
-              };
+        const start = {
+          x: (agent.x / 100) * stageRect.width,
+          y: (agent.y / 100) * stageRect.height,
+        };
         const si = 0.26 + (i % 12) * 0.02;
         const e = ease(clamp((p - si) / 0.2));
         const amp = 4.5 * (1 - clamp((p - 0.26) / 0.08));
@@ -309,7 +298,7 @@ export default function BridgeSection({
           }
         } else {
           const gate = {
-            x: center.x - 74,
+            x: center.x - (mqMobile.matches ? 36 : 74),
             y: center.y + (rnd(i + 3) * 60 - 30),
           };
           const rej = { x: start.x * 0.5, y: start.y + 52 };
@@ -353,6 +342,9 @@ export default function BridgeSection({
 
       const live = [...procOn.values()].filter(Boolean).length;
       if (n.liveEl) n.liveEl.textContent = `${live}/${n.procs.length}`;
+      if (n.enabledEl) {
+        n.enabledEl.classList.toggle("is-on", live === n.procs.length);
+      }
       if (n.cycleEl) {
         let hrs = 101 - live * 9;
         if (live === n.procs.length) {
@@ -426,7 +418,12 @@ export default function BridgeSection({
 
           <div className="il-bridge-panel" data-bridge-panel="">
             <div className="il-bridge-panel-head">
-              <div className="il-bridge-panel-title">Your organization</div>
+              <div className="il-bridge-panel-heading">
+                <div className="il-bridge-panel-title">Your organization</div>
+                <div className="il-bridge-panel-enabled" data-bridge-enabled="">
+                  AI ENABLED
+                </div>
+              </div>
               <div className="il-bridge-panel-meta">8 FLOORS</div>
             </div>
 
@@ -513,19 +510,14 @@ export default function BridgeSection({
           </div>
 
           <div className="il-bridge-agents" aria-hidden="true">
-            {BRIDGE_AGENTS.map((a, i) => (
+            {BRIDGE_AGENTS.map((a) => (
               <div
                 key={a.label}
                 className="il-bridge-chip"
                 data-chip=""
                 data-chip-label={a.label}
                 data-chip-target={a.target ?? ""}
-                style={{
-                  left: `${a.x}%`,
-                  top: `${a.y}%`,
-                  ["--cb-mx" as string]: `${BRIDGE_AGENT_MOBILE[i]?.x ?? a.x}%`,
-                  ["--cb-my" as string]: `${BRIDGE_AGENT_MOBILE[i]?.y ?? a.y}%`,
-                }}
+                style={{ left: `${a.x}%`, top: `${a.y}%` }}
               >
                 <span
                   className="il-bridge-chip-dot"

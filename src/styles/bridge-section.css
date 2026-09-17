@@ -85,6 +85,11 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  gap: 8px;
+}
+
+.il-bridge-panel-heading {
+  min-width: 0;
 }
 
 .il-bridge-panel-title {
@@ -94,11 +99,27 @@
   color: var(--bridge-ink);
 }
 
+.il-bridge-panel-enabled {
+  display: none;
+  margin-top: 3px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #5a6fd8;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.il-bridge-panel-enabled.is-on {
+  opacity: 1;
+}
+
 .il-bridge-panel-meta {
   font-size: 8.5px;
   font-weight: 800;
   letter-spacing: 0.12em;
   color: var(--bridge-faint);
+  flex: none;
 }
 
 .il-bridge-floors {
@@ -394,10 +415,173 @@
   line-height: 1.55;
 }
 
-/* Phones: drop the homepage bridge entirely. Desktop keeps the scroll scene. */
+/* Phones: same desktop scene, scaled to fit the viewport */
 @media (max-width: 960px) {
   .il-bridge {
-    display: none !important;
+    height: 280vh;
+  }
+
+  .il-bridge-sticky {
+    padding: 64px 8px 8px;
+  }
+
+  .il-bridge-stage {
+    min-height: 0;
+  }
+
+  .il-bridge-panel {
+    right: 1%;
+    top: 2%;
+    width: 30%;
+    height: 96%;
+    padding: 7px 6px 7px;
+    gap: 5px;
+    border-radius: 12px;
+  }
+
+  .il-bridge-panel-head {
+    align-items: flex-start;
+  }
+
+  .il-bridge-panel-title {
+    font-size: 9.5px;
+    line-height: 1.2;
+  }
+
+  .il-bridge-panel-enabled {
+    display: block;
+    font-size: 7px;
+    min-height: 10px;
+  }
+
+  .il-bridge-panel-meta {
+    font-size: 6px;
+    letter-spacing: 0.08em;
+    padding-top: 1px;
+  }
+
+  .il-bridge-floors {
+    gap: 3px;
+  }
+
+  .il-bridge-proc {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    border-bottom-width: 2px;
+  }
+
+  .il-bridge-proc-left {
+    gap: 5px;
+    width: 100%;
+  }
+
+  .il-bridge-proc-name {
+    font-size: 9px;
+  }
+
+  .il-bridge-proc-right {
+    width: 100%;
+    padding-left: 8px;
+    justify-content: flex-start;
+    gap: 4px;
+  }
+
+  .il-bridge-proc-metric {
+    font-size: 7px;
+  }
+
+  .il-bridge-proc-status {
+    display: none;
+  }
+
+  .il-bridge-proc-bar {
+    width: 3px;
+    height: 10px;
+  }
+
+  .il-bridge-stats {
+    padding: 6px 8px;
+    border-radius: 8px;
+  }
+
+  .il-bridge-stats-label {
+    font-size: 6.5px;
+  }
+
+  .il-bridge-stats-value {
+    font-size: 14px;
+  }
+
+  .il-bridge-badge {
+    width: 56px;
+    height: 56px;
+  }
+
+  .il-bridge-badge svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .il-bridge-orbit {
+    width: 84px;
+    height: 84px;
+    margin: -42px 0 0 -42px;
+  }
+
+  .il-bridge-glow {
+    width: 120px;
+    height: 120px;
+  }
+
+  .il-bridge-gatelabel {
+    transform: translate(-50%, 38px);
+    font-size: 7px;
+    padding: 2px 6px;
+  }
+
+  .il-bridge-q {
+    transform: translate(-50%, 54px);
+    width: min(200px, 52%);
+    height: auto;
+    min-height: 28px;
+  }
+
+  .il-bridge-q-num {
+    font-size: 11px;
+  }
+
+  .il-bridge-q-text {
+    font-size: 10px;
+  }
+
+  .il-bridge-chip {
+    font-size: 8px;
+    padding: 3px 7px 3px 5px;
+    gap: 4px;
+  }
+
+  .il-bridge-chip-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .il-bridge-caps {
+    height: 72px;
+    margin-top: 2px;
+  }
+
+  .il-bridge-cap h3 {
+    font-size: clamp(1rem, 4.4vw, 1.25rem);
+    margin: 0 0 4px;
+  }
+
+  .il-bridge-cap p {
+    font-size: 11.5px;
+    line-height: 1.4;
   }
 }
 

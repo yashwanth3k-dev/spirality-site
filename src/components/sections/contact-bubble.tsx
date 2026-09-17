@@ -34,10 +34,6 @@ function stripLocale(path: string) {
   return clean.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
 }
 
-function isHomePath(path: string) {
-  return stripLocale(path) === "/";
-}
-
 function isContactPath(path: string) {
   return stripLocale(path) === ROUTES.contact;
 }
@@ -45,7 +41,7 @@ function isContactPath(path: string) {
 export default function ContactBubble() {
   const path = usePathname() ?? "";
   const titleId = useId();
-  const [open, setOpen] = useState(() => isHomePath(path));
+  const [open, setOpen] = useState(false);
   const [state, setState] = useState<BubbleState>(EMPTY);
   const [topic, setTopic] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -53,10 +49,6 @@ export default function ContactBubble() {
   const [sent, setSent] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<number | null>(null);
-
-  useEffect(() => {
-    setOpen(isHomePath(path));
-  }, [path]);
 
   useEffect(() => {
     return () => {
