@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const CONTACT_TO = process.env.CONTACT_TO || "info@spiralitysolutions.com";
-const RESEND_FROM =
-  process.env.RESEND_FROM ||
-  "Spirality Solutions <info@spiralitysolutions.com>";
+function envValue(name: string, fallback: string) {
+  const raw = process.env[name];
+  if (!raw) return fallback;
+  return raw.trim().replace(/^["']+|["']+$/g, "");
+}
+
+const CONTACT_TO = envValue("CONTACT_TO", "info@spiralitysolutions.com");
+const RESEND_FROM = envValue(
+  "RESEND_FROM",
+  "Spirality Solutions <info@spiralitysolutions.com>"
+);
+const RESEND_API_KEY = envValue("RESEND_API_KEY", "");
 
 type ContactPayload = {
   vector?: string;
@@ -44,7 +52,7 @@ function normalizePayload(input: ContactPayload) {
 }
 
 export async function POST(request: Request) {
-  if (!process.env.RESEND_API_KEY) {
+  if (!RESEND_API_KEY) {
     return NextResponse.json(
       { error: "Email service is not configured." },
       { status: 500 }
@@ -90,16 +98,9 @@ export async function POST(request: Request) {
     data.process,
   ].filter((line): line is string => line !== null);
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = new Resend(RESEND_API_KEY);
   const subject = `Spirality intake - ${vector}`;
-
-  const { error } = await resend.emails.send({
-    from: RESEND_FROM,
-    to: CONTACT_TO,
-    replyTo: data.email,
-    subject,
-    text: lines.join("\n"),
-    html: `
+  const html = `
       <h2>New Spirality intake</h2>
       <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
       <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
@@ -119,7 +120,15 @@ export async function POST(request: Request) {
       }
       <h3>The process</h3>
       <p>${escapeHtml(data.process).replace(/\n/g, "<br />")}</p>
-    `,
+    `;
+
+  const { error } = await resend.emails.send({
+    from: RESEND_FROM,
+    to: CONTACT_TO,
+    replyTo: data.email,
+    subject,
+    text: lines.join("\n"),
+    html,
   });
 
   if (error) {
