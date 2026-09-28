@@ -122,14 +122,24 @@ export async function POST(request: Request) {
       <p>${escapeHtml(data.process).replace(/\n/g, "<br />")}</p>
     `;
 
-  const { error } = await resend.emails.send({
-    from: RESEND_FROM,
-    to: CONTACT_TO,
-    replyTo: data.email,
-    subject,
-    text: lines.join("\n"),
-    html,
-  });
+  let error;
+  try {
+    const result = await resend.emails.send({
+      from: RESEND_FROM,
+      to: CONTACT_TO,
+      replyTo: data.email,
+      subject,
+      text: lines.join("\n"),
+      html,
+    });
+    error = result.error;
+  } catch (sendError) {
+    console.error("Resend contact form exception", sendError);
+    return NextResponse.json(
+      { error: "Could not send your message right now." },
+      { status: 502 }
+    );
+  }
 
   if (error) {
     console.error("Resend contact form error", error);

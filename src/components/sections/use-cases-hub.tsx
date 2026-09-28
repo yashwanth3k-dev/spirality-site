@@ -103,7 +103,7 @@ export default function UseCasesHub() {
 
   return (
     <main>
-      <header className="uch-hero">
+      <header className="uch-hero" data-no-reveal>
         <div className="uch-halo" aria-hidden />
         <div className="uch-inner uch-hero-row">
           <div className="uch-hero-copy">

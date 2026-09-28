@@ -69,6 +69,7 @@ export default function SiteScrollReveal() {
     let observer: IntersectionObserver | null = null;
     let mutationObserver: MutationObserver | null = null;
     const observed = new WeakSet<Element>();
+    const tagged: HTMLElement[] = [];
 
     const register = (root: ParentNode) => {
       if (!observer) return;
@@ -85,17 +86,22 @@ export default function SiteScrollReveal() {
           continue;
         }
 
-        observed.add(element);
         const rect = element.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) {
+          continue;
+        }
         const isInitiallyVisible =
           rect.bottom > 0 && rect.top < window.innerHeight;
         if (isInitiallyVisible) {
+          observed.add(element);
           continue;
         }
+        observed.add(element);
         element.classList.add("ssr-item");
         element.dataset.revealDirection =
           DIRECTIONS[directionIndex % DIRECTIONS.length];
         directionIndex += 1;
+        tagged.push(element);
         observer.observe(element);
       }
     };
@@ -137,14 +143,33 @@ export default function SiteScrollReveal() {
       start();
     };
 
-    const frame = window.requestAnimationFrame(kick);
+    // Layout hydrates before streamed page Client Components. A 0ms timeout
+    // still races that segment. Idle (or a short fallback) runs after it.
+    let idleId = 0;
+    const delay = window.setTimeout(() => {
+      const run = () => {
+        window.requestAnimationFrame(kick);
+      };
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(run, { timeout: 300 });
+      } else {
+        run();
+      }
+    }, 1);
 
     return () => {
       cancelled = true;
-      window.cancelAnimationFrame(frame);
+      window.clearTimeout(delay);
+      if (idleId && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
       window.clearTimeout(mutationTimer);
       mutationObserver?.disconnect();
       observer?.disconnect();
+      for (const element of tagged) {
+        element.classList.remove("ssr-item", "ssr-visible");
+        delete element.dataset.revealDirection;
+      }
     };
   }, []);
 
