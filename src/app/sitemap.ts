@@ -40,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry(ROUTES.managedOperations, 0.6, "monthly"),
     entry(ROUTES.contact, 0.7, "monthly"),
     entry(ROUTES.about, 0.5, "monthly"),
+    entry(ROUTES.whatsapp, 0.5, "monthly"),
     entry(ROUTES.privacy, 0.3, "yearly"),
     entry(ROUTES.terms, 0.3, "yearly"),
     entry(ROUTES.cookies, 0.3, "yearly"),

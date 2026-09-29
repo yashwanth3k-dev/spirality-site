@@ -20,6 +20,6 @@ export function middleware(request: NextRequest) {
 // excluded here. Must stay a literal — Next parses this config statically.
 export const config = {
   matcher: [
-    "/((?!api|static|solutions|how-we-work|instinct|bizdaptive|contact|about|docs|use-cases|case-studies|blog|insights|privacy|terms|cookies|maintenance|.*\\..*|_next|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!api|static|solutions|how-we-work|instinct|bizdaptive|contact|about|docs|use-cases|case-studies|blog|insights|privacy|terms|cookies|maintenance|whatsapp|.*\\..*|_next|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };

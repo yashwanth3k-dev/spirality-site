@@ -450,6 +450,15 @@ html.il-dark .il-footer-mark {
   color: #eef2fb;
 }
 
+html.il-dark .wa-close,
+html.il-dark .wa-signoff {
+  color: rgba(238, 242, 251, 0.78);
+}
+
+html.il-dark .wa-signoff a {
+  color: #8ea0ff;
+}
+
 html.il-dark .il-more,
 html.il-dark .il-path,
 html.il-dark .il-domain:hover dd {

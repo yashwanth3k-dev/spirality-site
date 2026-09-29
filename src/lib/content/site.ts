@@ -24,7 +24,12 @@ export const ROUTES = {
   terms: "/terms",
   cookies: "/cookies",
   maintenance: "/maintenance",
+  whatsapp: "/whatsapp",
 } as const;
+
+/** Shown on /whatsapp and repeated in every site footer for Meta's review. */
+export const WHATSAPP_BLURB =
+  "Spirality Solutions provides Bizdaptive, a customer messaging workspace for other businesses. Each client connects their own WhatsApp Business Account. Their staff use Bizdaptive to manage customer conversations, create WhatsApp message templates such as appointment reminders, and send messages to their own customers. The phone number, templates, and Meta charges stay with the client. Spirality does not send from its own WhatsApp number.";
 
 /** In-page anchors — the hero nav and CTAs point at these. */
 export const SECTIONS = {
@@ -99,6 +104,7 @@ export const FOOTER = {
   email: "info@spiralitysolutions.com",
   legal: "Spirality Solutions Private Limited",
   legalLinks: [
+    { label: "WhatsApp", href: ROUTES.whatsapp },
     { label: "Privacy", href: ROUTES.privacy },
     { label: "Terms", href: ROUTES.terms },
     { label: "Cookies", href: ROUTES.cookies },

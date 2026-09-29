@@ -1227,6 +1227,14 @@ body:has(.il-page) {
   padding-left: 4px;
 }
 
+.il-footer-whatsapp {
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  max-width: 78ch;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--il-dim);
+}
+
 .il-footer-legal {
   display: flex;
   flex-wrap: wrap;
