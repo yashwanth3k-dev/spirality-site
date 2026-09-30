@@ -51,6 +51,69 @@
   scroll-margin-top: 24px;
 }
 
+/* Trusted-by logos, shown once. */
+.lm-section {
+  position: relative;
+  padding: 28px clamp(20px, 4vw, 56px) 40px;
+  border-top: 1px solid var(--il-line);
+}
+
+.lm-label {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto 18px;
+}
+
+.lm-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.lm-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 200px;
+  max-width: 240px;
+  height: 96px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(21, 57, 209, 0.12);
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.lm-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(21, 57, 209, 0.35);
+  box-shadow: 0 14px 32px rgba(21, 57, 209, 0.12);
+}
+
+.lm-logo {
+  display: block;
+  width: 100%;
+  height: 64px;
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lm-item:hover {
+    transform: none;
+  }
+}
+
 html:has(.ih-root),
 html:has(.il-page) {
   background: #f4f7fc;

@@ -450,6 +450,16 @@ html.il-dark .il-footer-mark {
   color: #eef2fb;
 }
 
+html.il-dark .lm-item {
+  background: #fff;
+  border-color: rgba(142, 160, 255, 0.28);
+}
+
+html.il-dark .lm-item:hover {
+  border-color: rgba(142, 160, 255, 0.5);
+  box-shadow: 0 14px 32px rgba(21, 57, 209, 0.28);
+}
+
 html.il-dark .wa-close,
 html.il-dark .wa-signoff {
   color: rgba(238, 242, 251, 0.78);

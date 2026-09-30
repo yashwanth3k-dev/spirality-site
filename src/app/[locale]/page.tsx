@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import HomeSections from "~/components/sections/home-sections";
 import InstinctHero from "~/components/sections/instinct-hero";
+import LogoMarquee from "~/components/sections/logo-marquee";
 import SubpageNav from "~/components/sections/subpage-nav";
 import { absoluteUrl, BRAND_LOGO_PATH, organizationJsonLd } from "~/lib/seo";
 
@@ -66,6 +67,7 @@ export default function Home() {
       ))}
       <SubpageNav />
       <InstinctHero />
+      <LogoMarquee />
       <HomeSections />
     </div>
   );
