@@ -450,14 +450,26 @@ html.il-dark .il-footer-mark {
   color: #eef2fb;
 }
 
-html.il-dark .lm-item {
+html.il-dark .lm-section,
+html.il-dark .lm-marquee,
+html.il-dark .lm-track,
+html.il-dark .lm-set {
   background: #fff;
-  border-color: rgba(142, 160, 255, 0.28);
 }
 
-html.il-dark .lm-item:hover {
-  border-color: rgba(142, 160, 255, 0.5);
-  box-shadow: 0 14px 32px rgba(21, 57, 209, 0.28);
+html.il-dark .lm-label {
+  color: rgba(16, 22, 36, 0.6);
+}
+
+html.il-dark .lm-label::before {
+  background: #1539d1;
+  box-shadow: 0 0 10px 1px rgba(21, 57, 209, 0.7);
+}
+
+html.il-dark .lm-item {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 html.il-dark .wa-close,
