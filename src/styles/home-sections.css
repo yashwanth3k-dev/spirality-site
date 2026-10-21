@@ -51,12 +51,13 @@
   scroll-margin-top: 24px;
 }
 
-/* Trusted-by logos. Plain white strip: still on desktop, scrolling on small screens. */
+/* Trusted-by logos. Plain white strip, scrolling on every screen size. */
 .lm-section {
   position: relative;
-  padding: 28px clamp(20px, 4vw, 56px) 40px;
+  padding: 28px 0 40px;
   border-top: 1px solid var(--il-line);
   background: #fff;
+  overflow: hidden;
 }
 
 .lm-label {
@@ -64,31 +65,62 @@
   justify-content: center;
   width: 100%;
   margin: 0 auto 18px;
+  padding-inline: 20px;
 }
 
 .lm-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
   padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
   list-style: none;
 }
 
+.lm-marquee,
+.lm-track,
+.lm-set {
+  background: #fff;
+}
+
 .lm-marquee {
-  display: none;
+  display: block;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 24px,
+    #000 calc(100% - 24px),
+    transparent
+  );
+}
+
+.lm-track {
+  display: flex;
+  width: max-content;
+  animation: lm-scroll 40s linear infinite;
+}
+
+.lm-set {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  margin: 0;
+  padding: 0 48px 0 0;
+  list-style: none;
 }
 
 .lm-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 200px;
-  max-width: 240px;
+  flex: 0 0 200px;
+  width: 200px;
+  max-width: none;
   height: 72px;
   padding: 0;
   background: transparent;
@@ -103,65 +135,19 @@
 }
 
 @media (max-width: 768px) {
-  .lm-section {
-    padding-inline: 0;
-    overflow: hidden;
-  }
-
-  .lm-label {
-    padding-inline: 20px;
-  }
-
-  .lm-row {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .lm-marquee {
-    display: block;
-    overflow: hidden;
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      #000 12px,
-      #000 calc(100% - 12px),
-      transparent
-    );
-  }
-
   .lm-track {
-    display: flex;
-    width: max-content;
-    animation: lm-scroll 32s linear infinite;
+    animation-duration: 28s;
   }
 
   .lm-set {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 0;
-    padding: 0 14px 0 0;
-    list-style: none;
-  }
-
-  .lm-marquee,
-  .lm-track,
-  .lm-set {
-    background: #fff;
+    gap: 28px;
+    padding-right: 28px;
   }
 
   .lm-set .lm-item {
-    flex: 0 0 168px;
-    width: 168px;
-    max-width: none;
-    height: 64px;
+    flex-basis: 156px;
+    width: 156px;
+    height: 60px;
   }
 }
 
@@ -181,12 +167,24 @@
 
   .lm-row {
     position: static;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
     width: 100%;
+    max-width: 920px;
     height: auto;
     margin: 0 auto;
     overflow: visible;
     clip: auto;
     white-space: normal;
+  }
+
+  .lm-row .lm-item {
+    flex: 1 1 160px;
+    width: auto;
+    max-width: 200px;
   }
 
   .lm-track {

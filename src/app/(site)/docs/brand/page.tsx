@@ -4,57 +4,19 @@ import "../_styles/brand.css";
 
 export const metadata: Metadata = {
   title: "Brand assets | Spirality Solutions",
-  description:
-    "Transparent Spirality logos for light and dark backgrounds. SVG and PNG downloads.",
+  description: "The Spirality Solutions spiral mark, as a transparent PNG.",
   robots: { index: false, follow: false },
 };
 
 const ASSETS = [
   {
-    id: "mark-dark",
-    title: "Mark · dark",
+    id: "mark",
+    title: "Spiral mark",
     blurb:
-      "Ink spiral on a clear background. Use on light slides, decks and docs.",
-    preview: "/brand/spirality-mark-dark.png",
+      "Blue and gold spiral on a clear background. Use it on light and dark slides, decks, and the site.",
+    preview: "/brand/spirality-mark.png",
     previewClass: "bx-preview-light bx-preview-mark",
-    files: [
-      { label: "SVG", href: "/brand/spirality-mark-dark.svg" },
-      { label: "PNG 1024", href: "/brand/spirality-mark-dark.png" },
-    ],
-  },
-  {
-    id: "mark-light",
-    title: "Mark · light",
-    blurb: "Light spiral on a clear background. Use on dark slides and UI.",
-    preview: "/brand/spirality-mark-light.png",
-    previewClass: "bx-preview-dark bx-preview-mark",
-    files: [
-      { label: "SVG", href: "/brand/spirality-mark-light.svg" },
-      { label: "PNG 1024", href: "/brand/spirality-mark-light.png" },
-    ],
-  },
-  {
-    id: "wordmark-dark",
-    title: "Wordmark · dark",
-    blurb:
-      "Mark plus Spirality. Transparent PNG and SVG for light backgrounds.",
-    preview: "/brand/spirality-wordmark-dark.png",
-    previewClass: "bx-preview-light bx-preview-wordmark",
-    files: [
-      { label: "SVG", href: "/brand/spirality-wordmark-dark.svg" },
-      { label: "PNG", href: "/brand/spirality-wordmark-dark.png" },
-    ],
-  },
-  {
-    id: "wordmark-light",
-    title: "Wordmark · light",
-    blurb: "Mark plus Spirality. Transparent PNG and SVG for dark backgrounds.",
-    preview: "/brand/spirality-wordmark-light.png",
-    previewClass: "bx-preview-dark bx-preview-wordmark",
-    files: [
-      { label: "SVG", href: "/brand/spirality-wordmark-light.svg" },
-      { label: "PNG", href: "/brand/spirality-wordmark-light.png" },
-    ],
+    files: [{ label: "PNG", href: "/brand/spirality-mark.png" }],
   },
 ] as const;
 
@@ -70,8 +32,8 @@ export default function BrandAssetsPage() {
         <section className="op-section">
           <h1 className="op-label">Logo downloads</h1>
           <p className="op-statement">
-            Transparent files. No white box, no black box. Pick dark for light
-            backgrounds, light for dark ones.
+            One spiral mark. The background is clear, so it sits on light and
+            dark surfaces.
           </p>
 
           <ul className="bx-grid">
@@ -97,8 +59,8 @@ export default function BrandAssetsPage() {
           </ul>
 
           <p className="bx-note">
-            <strong>Tip:</strong> SVG is best for decks and print. PNG is best
-            when the host only accepts raster. Keep the terracotta stamp as-is.
+            <strong>Tip:</strong> Use the PNG as-is. The gold edge and blue
+            spiral stay the same on light and dark backgrounds.
           </p>
         </section>
       </article>

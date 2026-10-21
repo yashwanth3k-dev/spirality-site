@@ -283,7 +283,7 @@ export default function ContactBubble() {
                 <div className="cb-brand">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/brand/spirality-mark-dark.png"
+                    src="/brand/spirality-mark.png"
                     alt=""
                     width={36}
                     height={36}

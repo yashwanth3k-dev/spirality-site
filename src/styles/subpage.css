@@ -54,19 +54,6 @@
   object-fit: contain;
 }
 
-/* Dark spiral for light UI; light spiral only when html.il-dark */
-.sp-brand-mark--on-dark {
-  display: none;
-}
-
-html.il-dark .sp-brand-mark--on-light {
-  display: none;
-}
-
-html.il-dark .sp-brand-mark--on-dark {
-  display: block;
-}
-
 .sp-brand-word {
   color: inherit;
   font-size: 1.1rem;

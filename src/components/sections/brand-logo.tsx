@@ -1,7 +1,6 @@
 /**
- * Spirality mark + wordmark.
- * Light theme: dark spiral (your brand mark). Dark theme: light spiral.
- * Orange center stays on both.
+ * Spirality mark plus the word Spirality.
+ * One spiral for light and dark backgrounds.
  */
 export default function BrandLogo({
   wordmark = true,
@@ -14,17 +13,8 @@ export default function BrandLogo({
     <span className={`sp-brand ${className}`.trim()}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className="sp-brand-mark sp-brand-mark--on-light"
-        src="/brand/spirality-mark-dark.png"
-        alt=""
-        width={28}
-        height={28}
-        decoding="async"
-      />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="sp-brand-mark sp-brand-mark--on-dark"
-        src="/brand/spirality-mark-light.png"
+        className="sp-brand-mark"
+        src="/brand/spirality-mark.png"
         alt=""
         width={28}
         height={28}

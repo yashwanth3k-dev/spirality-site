@@ -4,7 +4,7 @@ import { siteUrl } from "~/config/site";
 const origin = siteUrl.replace(/\/$/, "");
 
 /** Brand mark used in Open Graph / schema when a page has no custom image. */
-export const BRAND_LOGO_PATH = "/brand/spirality-mark-dark.png";
+export const BRAND_LOGO_PATH = "/brand/spirality-mark.png";
 
 export function absoluteUrl(path: string): string {
   if (path.startsWith("http")) return path;
