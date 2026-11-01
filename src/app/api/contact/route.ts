@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { collapseText, CONTACT_INTAKE, visitorIp } from "~/lib/contact-intake";
+import {
+  collapseText,
+  CONTACT_INTAKE,
+  messageDetailLength,
+  trimmedMessage,
+  visitorIp,
+} from "~/lib/contact-intake";
 
 const MIN_FILL_MS = 3_000;
 const RATE_MAX = 8;
@@ -129,7 +135,7 @@ export async function POST(request: Request) {
   const name = collapseText(asString(body.name));
   const email = asString(body.email).trim();
   const company = collapseText(asString(body.company));
-  const message = collapseText(
+  const message = trimmedMessage(
     asString(body.message) || asString(body.process)
   );
   const submissionId = asString(body.submission_id).trim();
@@ -155,7 +161,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (message.length < CONTACT_INTAKE.messageMin) {
+  if (messageDetailLength(message) < CONTACT_INTAKE.messageMin) {
     return NextResponse.json(
       { error: CONTACT_INTAKE.errorNote },
       { status: 400 }

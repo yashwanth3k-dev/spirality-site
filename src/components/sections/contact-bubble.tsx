@@ -4,7 +4,11 @@ import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Mail, MessageCircle, MessageSquare, User, X } from "lucide-react";
 import { ArrowIcon } from "~/components/sections/use-case-icons";
-import { collapseText, CONTACT_INTAKE } from "~/lib/contact-intake";
+import {
+  collapseText,
+  CONTACT_INTAKE,
+  messageDetailLength,
+} from "~/lib/contact-intake";
 import { CONTACT_FORM } from "~/lib/content/contact";
 import { ROUTES } from "~/lib/content/site";
 import "~/styles/contact-bubble.css";
@@ -96,7 +100,7 @@ export default function ContactBubble() {
       setError(CONTACT_FORM.errorName);
       return;
     }
-    if (collapseText(state.process).length < CONTACT_INTAKE.messageMin) {
+    if (messageDetailLength(state.process) < CONTACT_INTAKE.messageMin) {
       setError(CONTACT_FORM.errorNote);
       return;
     }

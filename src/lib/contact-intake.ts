@@ -14,6 +14,14 @@ export function collapseText(value: string) {
   return value.replace(/\s+/g, " ").trim();
 }
 
+export function trimmedMessage(value: string) {
+  return value.trim();
+}
+
+export function messageDetailLength(value: string) {
+  return trimmedMessage(value).replace(/\s/g, "").length;
+}
+
 function cleanIp(value: string | null | undefined) {
   const cleaned = (value ?? "")
     .trim()

@@ -2,7 +2,11 @@
 
 import { useMemo, useRef, useState } from "react";
 import { ArrowIcon } from "~/components/sections/use-case-icons";
-import { collapseText, CONTACT_INTAKE } from "~/lib/contact-intake";
+import {
+  collapseText,
+  CONTACT_INTAKE,
+  messageDetailLength,
+} from "~/lib/contact-intake";
 import { CONTACT_FORM } from "~/lib/content/contact";
 import { FOOTER } from "~/lib/content/site";
 
@@ -75,13 +79,12 @@ export default function ContactForm() {
     if (submitting) return;
 
     const name = collapseText(state.name);
-    const process = collapseText(state.process);
     if (name.length < CONTACT_INTAKE.nameMin) {
       setError(CONTACT_FORM.errorName);
       requestAnimationFrame(() => nameRef.current?.focus());
       return;
     }
-    if (process.length < CONTACT_INTAKE.messageMin) {
+    if (messageDetailLength(state.process) < CONTACT_INTAKE.messageMin) {
       setError(CONTACT_FORM.errorNote);
       requestAnimationFrame(() => processRef.current?.focus());
       return;
@@ -246,7 +249,7 @@ export default function ContactForm() {
             aria-invalid={Boolean(
               error === CONTACT_FORM.errorNote ||
                 (error === CONTACT_FORM.errorForm &&
-                  collapseText(state.process).length <
+                  messageDetailLength(state.process) <
                     CONTACT_INTAKE.messageMin)
             )}
             aria-describedby={error ? "ct-form-error" : undefined}
