@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Mail, MessageCircle, MessageSquare, User, X } from "lucide-react";
 import { ArrowIcon } from "~/components/sections/use-case-icons";
+import { collapseText, CONTACT_INTAKE } from "~/lib/contact-intake";
 import { CONTACT_FORM } from "~/lib/content/contact";
 import { ROUTES } from "~/lib/content/site";
 import "~/styles/contact-bubble.css";
@@ -59,6 +60,7 @@ export default function ContactBubble() {
   const nameRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<number | null>(null);
   const startedAt = useRef(Date.now());
+  const submissionId = useRef<string | null>(null);
 
   useEffect(() => {
     return () => {
@@ -90,8 +92,12 @@ export default function ContactBubble() {
     event.preventDefault();
     if (submitting) return;
 
-    if (!state.name.trim() || !state.process.trim()) {
-      setError("Name, work email, and a short note are required.");
+    if (collapseText(state.name).length < CONTACT_INTAKE.nameMin) {
+      setError(CONTACT_FORM.errorName);
+      return;
+    }
+    if (collapseText(state.process).length < CONTACT_INTAKE.messageMin) {
+      setError(CONTACT_FORM.errorNote);
       return;
     }
     if (!isEmail(state.email.trim())) {
@@ -118,7 +124,7 @@ export default function ContactBubble() {
           email: state.email.trim(),
           process: note,
           honeypot: String(new FormData(form).get("website_url") ?? ""),
-          submission_id: crypto.randomUUID(),
+          submission_id: (submissionId.current ??= crypto.randomUUID()),
           startedAt: startedAt.current,
         }),
       });
@@ -130,6 +136,7 @@ export default function ContactBubble() {
         throw new Error(payload?.error || CONTACT_FORM.errorSubmit);
       }
 
+      submissionId.current = null;
       setSent(true);
       setState(EMPTY);
       setTopic(null);
@@ -336,7 +343,10 @@ export default function ContactBubble() {
         <button
           type="button"
           className="cb-bubble"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            startedAt.current = Date.now();
+            setOpen(true);
+          }}
           aria-expanded={false}
           aria-label="Talk to Us"
         >

@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { ArrowIcon } from "~/components/sections/use-case-icons";
+import { collapseText, CONTACT_INTAKE } from "~/lib/contact-intake";
 import { CONTACT_FORM } from "~/lib/content/contact";
 import { FOOTER } from "~/lib/content/site";
 
@@ -54,6 +55,7 @@ export default function ContactForm() {
   const [sent, setSent] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const startedAt = useRef(Date.now());
+  const submissionId = useRef<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const processRef = useRef<HTMLTextAreaElement>(null);
@@ -72,12 +74,16 @@ export default function ContactForm() {
     event.preventDefault();
     if (submitting) return;
 
-    if (!state.name.trim() || !state.process.trim()) {
-      setError(CONTACT_FORM.errorRequired);
-      requestAnimationFrame(() => {
-        if (!state.name.trim()) nameRef.current?.focus();
-        else processRef.current?.focus();
-      });
+    const name = collapseText(state.name);
+    const process = collapseText(state.process);
+    if (name.length < CONTACT_INTAKE.nameMin) {
+      setError(CONTACT_FORM.errorName);
+      requestAnimationFrame(() => nameRef.current?.focus());
+      return;
+    }
+    if (process.length < CONTACT_INTAKE.messageMin) {
+      setError(CONTACT_FORM.errorNote);
+      requestAnimationFrame(() => processRef.current?.focus());
       return;
     }
     if (!isEmail(state.email.trim())) {
@@ -101,7 +107,7 @@ export default function ContactForm() {
           company: state.company,
           process: state.process,
           honeypot: honeypotValue(form),
-          submission_id: crypto.randomUUID(),
+          submission_id: (submissionId.current ??= crypto.randomUUID()),
           startedAt: startedAt.current,
         }),
       });
@@ -113,6 +119,7 @@ export default function ContactForm() {
         throw new Error(payload?.error || CONTACT_FORM.errorSubmit);
       }
 
+      submissionId.current = null;
       setSent(buildMailto(state));
     } catch (submitError) {
       setError(
@@ -177,7 +184,11 @@ export default function ContactForm() {
               setState((current) => ({ ...current, name: event.target.value }))
             }
             required
-            aria-invalid={Boolean(error && !state.name.trim())}
+            aria-invalid={Boolean(
+              error === CONTACT_FORM.errorName ||
+                (error === CONTACT_FORM.errorForm &&
+                  collapseText(state.name).length < CONTACT_INTAKE.nameMin)
+            )}
             aria-describedby={error ? "ct-form-error" : undefined}
           />
         </label>
@@ -232,7 +243,12 @@ export default function ContactForm() {
               }))
             }
             required
-            aria-invalid={Boolean(error && !state.process.trim())}
+            aria-invalid={Boolean(
+              error === CONTACT_FORM.errorNote ||
+                (error === CONTACT_FORM.errorForm &&
+                  collapseText(state.process).length <
+                    CONTACT_INTAKE.messageMin)
+            )}
             aria-describedby={error ? "ct-form-error" : undefined}
           />
         </label>

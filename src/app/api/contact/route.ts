@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
+import { collapseText, CONTACT_INTAKE, visitorIp } from "~/lib/contact-intake";
 
 const MIN_FILL_MS = 3_000;
 const RATE_MAX = 8;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const CRM_TIMEOUT_MS = 8_000;
-const NAME_MAX = 80;
-const EMAIL_MAX = 120;
-const COMPANY_MAX = 120;
-const MESSAGE_MAX = 4000;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const UUID_PATTERN =
@@ -34,21 +31,11 @@ function honeypotText(value: unknown) {
   return "filled";
 }
 
-function cleanIp(value: string | null | undefined) {
-  const cleaned = (value ?? "")
-    .trim()
-    .replace(/[^\d.a-fA-F:]/g, "")
-    .slice(0, 64);
-  if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(cleaned)) return cleaned;
-  if (cleaned.includes(":") && /^[0-9a-fA-F:]+$/.test(cleaned)) return cleaned;
-  return "";
-}
-
 function clientIp(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for");
-  const firstHop = cleanIp(forwarded?.split(",")[0]);
-  if (firstHop) return firstHop;
-  return cleanIp(request.headers.get("x-real-ip")) || "unknown";
+  return visitorIp(
+    request.headers.get("x-forwarded-for"),
+    request.headers.get("x-real-ip")
+  );
 }
 
 function isRateLimited(ip: string) {
@@ -98,7 +85,7 @@ function honeypotFilled(body: IntakeBody) {
   );
 }
 
-function startedTooSoon(body: IntakeBody) {
+function isQuickSubmit(body: IntakeBody) {
   const startedAt =
     typeof body.startedAt === "number"
       ? body.startedAt
@@ -135,31 +122,54 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  if (honeypotFilled(body) || startedTooSoon(body)) {
+  if (honeypotFilled(body)) {
     return fakeSuccess();
   }
 
-  const name = asString(body.name).trim();
+  const name = collapseText(asString(body.name));
   const email = asString(body.email).trim();
-  const company = asString(body.company).trim();
-  const message = (asString(body.message) || asString(body.process)).trim();
+  const company = collapseText(asString(body.company));
+  const message = collapseText(
+    asString(body.message) || asString(body.process)
+  );
   const submissionId = asString(body.submission_id).trim();
+  const quickSubmit = isQuickSubmit(body);
 
-  if (!name || !email || !message) {
+  if (!email || !name || !message) {
     return NextResponse.json(
-      { error: "Please complete the required fields." },
+      {
+        error: !name
+          ? CONTACT_INTAKE.errorName
+          : !message
+            ? CONTACT_INTAKE.errorNote
+            : "Please complete the required fields.",
+      },
+      { status: 400 }
+    );
+  }
+
+  if (name.length < CONTACT_INTAKE.nameMin) {
+    return NextResponse.json(
+      { error: CONTACT_INTAKE.errorName },
+      { status: 400 }
+    );
+  }
+
+  if (message.length < CONTACT_INTAKE.messageMin) {
+    return NextResponse.json(
+      { error: CONTACT_INTAKE.errorNote },
       { status: 400 }
     );
   }
 
   if (
-    name.length > NAME_MAX ||
-    email.length > EMAIL_MAX ||
-    company.length > COMPANY_MAX ||
-    message.length > MESSAGE_MAX
+    name.length > CONTACT_INTAKE.nameMax ||
+    email.length > CONTACT_INTAKE.emailMax ||
+    company.length > CONTACT_INTAKE.companyMax ||
+    message.length > CONTACT_INTAKE.messageMax
   ) {
     return NextResponse.json(
-      { error: "Please check the form and try again." },
+      { error: CONTACT_INTAKE.errorForm },
       { status: 400 }
     );
   }
@@ -176,7 +186,7 @@ export async function POST(request: Request) {
   }
 
   const ip = clientIp(request);
-  if (isRateLimited(ip)) {
+  if (ip && isRateLimited(ip)) {
     return NextResponse.json({ error: RATE_LIMIT_ERROR }, { status: 429 });
   }
 
@@ -188,24 +198,29 @@ export async function POST(request: Request) {
 
   let response: Response;
   try {
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${endpoint.key}`,
+      "Content-Type": "application/json",
+    };
+    if (ip) headers["x-client-ip"] = ip;
+
+    const payload: Record<string, string | boolean> = {
+      name,
+      email,
+      company,
+      message,
+      honeypot: "",
+      submission_id: submissionId,
+      quick_submit: quickSubmit,
+    };
+    if (ip) payload.visitor_ip = ip;
+
     response = await fetch(endpoint.url, {
       method: "POST",
       redirect: "error",
       signal: AbortSignal.timeout(CRM_TIMEOUT_MS),
-      headers: {
-        Authorization: `Bearer ${endpoint.key}`,
-        "Content-Type": "application/json",
-        "x-client-ip": ip,
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        company,
-        message,
-        honeypot: "",
-        submission_id: submissionId,
-        visitor_ip: ip,
-      }),
+      headers,
+      body: JSON.stringify(payload),
     });
   } catch (error) {
     console.error(
@@ -217,6 +232,14 @@ export async function POST(request: Request) {
 
   if (response.status === 429) {
     return NextResponse.json({ error: RATE_LIMIT_ERROR }, { status: 429 });
+  }
+
+  if (response.status === 400) {
+    console.error("CRM intake rejected the form");
+    return NextResponse.json(
+      { error: CONTACT_INTAKE.errorForm },
+      { status: 400 }
+    );
   }
 
   if (!response.ok) {
