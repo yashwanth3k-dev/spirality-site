@@ -1,6 +1,7 @@
 import { ABOUT_FOUNDERS } from "~/lib/content/about";
 import { METHOD, ROUTES } from "~/lib/content/home";
 import type { UseCaseGlyph } from "~/lib/content/use-cases";
+import { CONTACT_INTAKE } from "~/lib/contact-intake";
 
 export const CONTACT_INDEX = {
   eyebrow: "Talk to Us",
@@ -105,6 +106,9 @@ export const CONTACT_FORM = {
   submit: "Send",
   sending: "Sending…",
   errorRequired: "Name, work email, and the process are required.",
+  errorName: CONTACT_INTAKE.errorName,
+  errorNote: CONTACT_INTAKE.errorNote,
+  errorForm: CONTACT_INTAKE.errorForm,
   errorEmail: "Use a work email we can reply to.",
   errorSubmit:
     "We couldn't send this just now. Please try again or email us directly.",

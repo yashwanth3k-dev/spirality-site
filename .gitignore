@@ -48,7 +48,8 @@ workbox-*.*
 .env*
 .flaskenv*
 !.env.project
-!.env.vault
+# .env.vault stays ignored with the other .env files.
+# DOTENV_KEY and other decryption keys stay out of the repo.
 
 .velite
 

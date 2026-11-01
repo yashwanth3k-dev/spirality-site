@@ -4,6 +4,11 @@ import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Mail, MessageCircle, MessageSquare, User, X } from "lucide-react";
 import { ArrowIcon } from "~/components/sections/use-case-icons";
+import {
+  collapseText,
+  CONTACT_INTAKE,
+  messageDetailLength,
+} from "~/lib/contact-intake";
 import { CONTACT_FORM } from "~/lib/content/contact";
 import { ROUTES } from "~/lib/content/site";
 import "~/styles/contact-bubble.css";
@@ -14,15 +19,24 @@ type BubbleState = {
   process: string;
 };
 
+const HONEYPOT_STYLE = {
+  position: "fixed",
+  left: "-10000px",
+  top: 0,
+  width: "1px",
+  height: "1px",
+  overflow: "hidden",
+} as const;
+
 const EMPTY: BubbleState = { name: "", email: "", process: "" };
 const PROCESS_MAX = 500;
 
 const TOPICS = [
-  { id: "ai-solutions", label: "AI Solutions", vector: "ai-agents" },
-  { id: "consulting", label: "Consulting", vector: "not-clear" },
-  { id: "partnership", label: "Partnership", vector: "all-in-one" },
-  { id: "careers", label: "Career Opportunities", vector: "not-clear" },
-  { id: "other", label: "Other", vector: "not-clear" },
+  { id: "ai-solutions", label: "AI Solutions" },
+  { id: "consulting", label: "Consulting" },
+  { id: "partnership", label: "Partnership" },
+  { id: "careers", label: "Career Opportunities" },
+  { id: "other", label: "Other" },
 ] as const;
 
 function isEmail(value: string) {
@@ -49,6 +63,8 @@ export default function ContactBubble() {
   const [sent, setSent] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<number | null>(null);
+  const startedAt = useRef(Date.now());
+  const submissionId = useRef<string | null>(null);
 
   useEffect(() => {
     return () => {
@@ -80,8 +96,12 @@ export default function ContactBubble() {
     event.preventDefault();
     if (submitting) return;
 
-    if (!state.name.trim() || !state.process.trim()) {
-      setError("Name, work email, and a short note are required.");
+    if (collapseText(state.name).length < CONTACT_INTAKE.nameMin) {
+      setError(CONTACT_FORM.errorName);
+      return;
+    }
+    if (messageDetailLength(state.process) < CONTACT_INTAKE.messageMin) {
+      setError(CONTACT_FORM.errorNote);
       return;
     }
     if (!isEmail(state.email.trim())) {
@@ -97,6 +117,8 @@ export default function ContactBubble() {
       ? `Topic: ${selected.label}\n\n${state.process.trim()}`
       : state.process.trim();
 
+    const form = event.currentTarget;
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -105,9 +127,9 @@ export default function ContactBubble() {
           name: state.name.trim(),
           email: state.email.trim(),
           process: note,
-          vector: selected?.vector ?? "not-clear",
-          depth: "not-clear",
-          systems: [],
+          honeypot: String(new FormData(form).get("website_url") ?? ""),
+          submission_id: (submissionId.current ??= crypto.randomUUID()),
+          startedAt: startedAt.current,
         }),
       });
 
@@ -118,6 +140,7 @@ export default function ContactBubble() {
         throw new Error(payload?.error || CONTACT_FORM.errorSubmit);
       }
 
+      submissionId.current = null;
       setSent(true);
       setState(EMPTY);
       setTopic(null);
@@ -173,6 +196,16 @@ export default function ContactBubble() {
             </p>
           ) : (
             <form className="cb-form" onSubmit={onSubmit} noValidate>
+              <div aria-hidden="true" style={HONEYPOT_STYLE}>
+                <input
+                  type="text"
+                  name="website_url"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  defaultValue=""
+                />
+              </div>
               <label className="cb-item">
                 <span className="cb-item-icon" aria-hidden="true">
                   <User size={16} strokeWidth={2.2} />
@@ -314,7 +347,10 @@ export default function ContactBubble() {
         <button
           type="button"
           className="cb-bubble"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            startedAt.current = Date.now();
+            setOpen(true);
+          }}
           aria-expanded={false}
           aria-label="Talk to Us"
         >

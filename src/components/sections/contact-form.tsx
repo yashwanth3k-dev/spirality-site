@@ -2,6 +2,11 @@
 
 import { useMemo, useRef, useState } from "react";
 import { ArrowIcon } from "~/components/sections/use-case-icons";
+import {
+  collapseText,
+  CONTACT_INTAKE,
+  messageDetailLength,
+} from "~/lib/contact-intake";
 import { CONTACT_FORM } from "~/lib/content/contact";
 import { FOOTER } from "~/lib/content/site";
 
@@ -35,11 +40,26 @@ function isEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+const HONEYPOT_STYLE = {
+  position: "fixed",
+  left: "-10000px",
+  top: 0,
+  width: "1px",
+  height: "1px",
+  overflow: "hidden",
+} as const;
+
+function honeypotValue(form: HTMLFormElement) {
+  return String(new FormData(form).get("website_url") ?? "");
+}
+
 export default function ContactForm() {
   const [state, setState] = useState<FormState>(EMPTY);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const startedAt = useRef(Date.now());
+  const submissionId = useRef<string | null>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const processRef = useRef<HTMLTextAreaElement>(null);
@@ -58,12 +78,15 @@ export default function ContactForm() {
     event.preventDefault();
     if (submitting) return;
 
-    if (!state.name.trim() || !state.process.trim()) {
-      setError(CONTACT_FORM.errorRequired);
-      requestAnimationFrame(() => {
-        if (!state.name.trim()) nameRef.current?.focus();
-        else processRef.current?.focus();
-      });
+    const name = collapseText(state.name);
+    if (name.length < CONTACT_INTAKE.nameMin) {
+      setError(CONTACT_FORM.errorName);
+      requestAnimationFrame(() => nameRef.current?.focus());
+      return;
+    }
+    if (messageDetailLength(state.process) < CONTACT_INTAKE.messageMin) {
+      setError(CONTACT_FORM.errorNote);
+      requestAnimationFrame(() => processRef.current?.focus());
       return;
     }
     if (!isEmail(state.email.trim())) {
@@ -75,15 +98,20 @@ export default function ContactForm() {
     setError(null);
     setSubmitting(true);
 
+    const form = event.currentTarget;
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...state,
-          vector: "not-clear",
-          depth: "not-clear",
-          systems: [],
+          name: state.name,
+          email: state.email,
+          company: state.company,
+          process: state.process,
+          honeypot: honeypotValue(form),
+          submission_id: (submissionId.current ??= crypto.randomUUID()),
+          startedAt: startedAt.current,
         }),
       });
 
@@ -94,6 +122,7 @@ export default function ContactForm() {
         throw new Error(payload?.error || CONTACT_FORM.errorSubmit);
       }
 
+      submissionId.current = null;
       setSent(buildMailto(state));
     } catch (submitError) {
       setError(
@@ -122,6 +151,7 @@ export default function ContactForm() {
             onClick={() => {
               setSent(null);
               setState(EMPTY);
+              startedAt.current = Date.now();
             }}
           >
             {CONTACT_FORM.successAgain}
@@ -133,6 +163,16 @@ export default function ContactForm() {
 
   return (
     <form className="ct-form" onSubmit={onSubmit} noValidate>
+      <div aria-hidden="true" style={HONEYPOT_STYLE}>
+        <input
+          type="text"
+          name="website_url"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          defaultValue=""
+        />
+      </div>
       <div className="ct-fields">
         <label className="ct-field">
           <span>{CONTACT_FORM.nameLabel}</span>
@@ -147,7 +187,11 @@ export default function ContactForm() {
               setState((current) => ({ ...current, name: event.target.value }))
             }
             required
-            aria-invalid={Boolean(error && !state.name.trim())}
+            aria-invalid={Boolean(
+              error === CONTACT_FORM.errorName ||
+                (error === CONTACT_FORM.errorForm &&
+                  collapseText(state.name).length < CONTACT_INTAKE.nameMin)
+            )}
             aria-describedby={error ? "ct-form-error" : undefined}
           />
         </label>
@@ -202,7 +246,12 @@ export default function ContactForm() {
               }))
             }
             required
-            aria-invalid={Boolean(error && !state.process.trim())}
+            aria-invalid={Boolean(
+              error === CONTACT_FORM.errorNote ||
+                (error === CONTACT_FORM.errorForm &&
+                  messageDetailLength(state.process) <
+                    CONTACT_INTAKE.messageMin)
+            )}
             aria-describedby={error ? "ct-form-error" : undefined}
           />
         </label>
