@@ -35,11 +35,25 @@ function isEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+const HONEYPOT_STYLE = {
+  position: "fixed",
+  left: "-10000px",
+  top: 0,
+  width: "1px",
+  height: "1px",
+  overflow: "hidden",
+} as const;
+
+function honeypotValue(form: HTMLFormElement) {
+  return String(new FormData(form).get("website_url") ?? "");
+}
+
 export default function ContactForm() {
   const [state, setState] = useState<FormState>(EMPTY);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const startedAt = useRef(Date.now());
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const processRef = useRef<HTMLTextAreaElement>(null);
@@ -75,15 +89,20 @@ export default function ContactForm() {
     setError(null);
     setSubmitting(true);
 
+    const form = event.currentTarget;
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...state,
-          vector: "not-clear",
-          depth: "not-clear",
-          systems: [],
+          name: state.name,
+          email: state.email,
+          company: state.company,
+          process: state.process,
+          honeypot: honeypotValue(form),
+          submission_id: crypto.randomUUID(),
+          startedAt: startedAt.current,
         }),
       });
 
@@ -122,6 +141,7 @@ export default function ContactForm() {
             onClick={() => {
               setSent(null);
               setState(EMPTY);
+              startedAt.current = Date.now();
             }}
           >
             {CONTACT_FORM.successAgain}
@@ -133,6 +153,16 @@ export default function ContactForm() {
 
   return (
     <form className="ct-form" onSubmit={onSubmit} noValidate>
+      <div aria-hidden="true" style={HONEYPOT_STYLE}>
+        <input
+          type="text"
+          name="website_url"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          defaultValue=""
+        />
+      </div>
       <div className="ct-fields">
         <label className="ct-field">
           <span>{CONTACT_FORM.nameLabel}</span>

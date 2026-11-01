@@ -14,15 +14,24 @@ type BubbleState = {
   process: string;
 };
 
+const HONEYPOT_STYLE = {
+  position: "fixed",
+  left: "-10000px",
+  top: 0,
+  width: "1px",
+  height: "1px",
+  overflow: "hidden",
+} as const;
+
 const EMPTY: BubbleState = { name: "", email: "", process: "" };
 const PROCESS_MAX = 500;
 
 const TOPICS = [
-  { id: "ai-solutions", label: "AI Solutions", vector: "ai-agents" },
-  { id: "consulting", label: "Consulting", vector: "not-clear" },
-  { id: "partnership", label: "Partnership", vector: "all-in-one" },
-  { id: "careers", label: "Career Opportunities", vector: "not-clear" },
-  { id: "other", label: "Other", vector: "not-clear" },
+  { id: "ai-solutions", label: "AI Solutions" },
+  { id: "consulting", label: "Consulting" },
+  { id: "partnership", label: "Partnership" },
+  { id: "careers", label: "Career Opportunities" },
+  { id: "other", label: "Other" },
 ] as const;
 
 function isEmail(value: string) {
@@ -49,6 +58,7 @@ export default function ContactBubble() {
   const [sent, setSent] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<number | null>(null);
+  const startedAt = useRef(Date.now());
 
   useEffect(() => {
     return () => {
@@ -97,6 +107,8 @@ export default function ContactBubble() {
       ? `Topic: ${selected.label}\n\n${state.process.trim()}`
       : state.process.trim();
 
+    const form = event.currentTarget;
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -105,9 +117,9 @@ export default function ContactBubble() {
           name: state.name.trim(),
           email: state.email.trim(),
           process: note,
-          vector: selected?.vector ?? "not-clear",
-          depth: "not-clear",
-          systems: [],
+          honeypot: String(new FormData(form).get("website_url") ?? ""),
+          submission_id: crypto.randomUUID(),
+          startedAt: startedAt.current,
         }),
       });
 
@@ -173,6 +185,16 @@ export default function ContactBubble() {
             </p>
           ) : (
             <form className="cb-form" onSubmit={onSubmit} noValidate>
+              <div aria-hidden="true" style={HONEYPOT_STYLE}>
+                <input
+                  type="text"
+                  name="website_url"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  defaultValue=""
+                />
+              </div>
               <label className="cb-item">
                 <span className="cb-item-icon" aria-hidden="true">
                   <User size={16} strokeWidth={2.2} />
