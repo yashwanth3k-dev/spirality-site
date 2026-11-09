@@ -15,6 +15,13 @@ export const ROUTES = {
   deliver: "/how-we-work#deliver",
   instinct: "/instinct",
   bizdaptive: "/bizdaptive",
+  bizdaptivePrivacy: "/bizdaptive/privacy",
+  bizdaptiveTerms: "/bizdaptive/terms",
+  bizdaptiveDataDeletion: "/bizdaptive/data-deletion",
+  bizdaptiveRefunds: "/bizdaptive/refunds",
+  bizdaptiveShipping: "/bizdaptive/shipping",
+  bizdaptiveSampleInvoice: "/bizdaptive/sample-invoice",
+  bizdaptiveContact: "/bizdaptive/contact",
   contact: "/contact",
   about: "/about",
   useCases: "/use-cases",
@@ -46,6 +53,20 @@ export const HERO_CTA = {
   secondary: { label: "See what we do", href: `#${SECTIONS.offer}` },
 };
 
+/** Product pages reviewers use for Bizdaptive (Meta and Razorpay). */
+export const BIZDAPTIVE_SIGN_IN = "https://bizdaptive.app/signin";
+
+export const BIZDAPTIVE_NAV = [
+  { label: "Product", href: ROUTES.bizdaptive },
+  { label: "Privacy", href: ROUTES.bizdaptivePrivacy },
+  { label: "Terms", href: ROUTES.bizdaptiveTerms },
+  { label: "Data deletion", href: ROUTES.bizdaptiveDataDeletion },
+  { label: "Refunds", href: ROUTES.bizdaptiveRefunds },
+  { label: "Shipping", href: ROUTES.bizdaptiveShipping },
+  { label: "Sample invoice", href: ROUTES.bizdaptiveSampleInvoice },
+  { label: "Contact", href: ROUTES.bizdaptiveContact },
+] as const;
+
 /** Parent labels are menus only — pages live on children. */
 export const HERO_NAV = [
   {
@@ -56,6 +77,10 @@ export const HERO_NAV = [
       { label: "Business Systems", href: ROUTES.automation },
       { label: "BPO & Operations", href: ROUTES.managedOperations },
     ],
+  },
+  {
+    label: "Bizdaptive",
+    children: BIZDAPTIVE_NAV,
   },
   {
     label: "Resources",
@@ -99,6 +124,10 @@ export const FOOTER = {
         { label: "About Us", href: ROUTES.about },
         { label: "Contact", href: ROUTES.contact },
       ],
+    },
+    {
+      title: "Bizdaptive",
+      links: BIZDAPTIVE_NAV,
     },
   ],
   email: "info@spiralitysolutions.com",
