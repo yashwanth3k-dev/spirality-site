@@ -25,6 +25,18 @@ const nextConfig = {
         destination: "/docs/founders/akil",
         permanent: false,
       },
+      // Marketing routes are unprefixed. Locale copies of Bizdaptive should
+      // land on the same public pages Meta and Razorpay will be given.
+      {
+        source: "/:locale(en|fr)/bizdaptive",
+        destination: "/bizdaptive",
+        permanent: false,
+      },
+      {
+        source: "/:locale(en|fr)/bizdaptive/:path*",
+        destination: "/bizdaptive/:path*",
+        permanent: false,
+      },
     ];
   },
   headers: async () => [
