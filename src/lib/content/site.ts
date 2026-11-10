@@ -109,5 +109,6 @@ export const FOOTER = {
     { label: "Terms", href: ROUTES.terms },
     { label: "Cookies", href: ROUTES.cookies },
     { label: "Contact", href: ROUTES.contact },
+    { label: "Sign in", href: "https://bizdaptive.app/signin" },
   ],
 };
